@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\PublicFormController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\PublicLandingPageController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -87,6 +89,9 @@ Route::get('/document/{id}', [DocumentController::class, 'serve'])->name('docume
 Route::get('/f/{slug}', [PublicFormController::class, 'show'])->name('forms.public');
 Route::post('/f/{slug}', [PublicFormController::class, 'submit'])->name('forms.submit');
 Route::get('/f/{slug}/thankyou', [PublicFormController::class, 'thankyou'])->name('forms.thankyou');
+Route::get('/lp/{slug}', [PublicLandingPageController::class, 'show'])->name('landing-pages.public');
+Route::post('/lp/{slug}', [PublicLandingPageController::class, 'submit'])->name('landing-pages.submit');
+Route::get('/lp/{slug}/thankyou', [PublicLandingPageController::class, 'thankyou'])->name('landing-pages.thankyou');
 Route::get('/u/{id?}', [UserController::class, 'userRedirect'])->name('userRedirect');
 
 Route::get('/report', function () {return view('report');});
@@ -127,6 +132,15 @@ Route::delete('/studio/forms/{formId}/fields/{fieldId}', [FormController::class,
 Route::post('/studio/forms/{formId}/reorder', [FormController::class, 'reorderFields'])->name('forms.fields.reorder');
 Route::get('/studio/forms/{id}/responses', [FormController::class, 'responses'])->name('forms.responses');
 Route::get('/studio/forms/{id}/export', [FormController::class, 'exportCsv'])->name('forms.export');
+Route::get('/studio/landing-pages', [LandingPageController::class, 'index'])->name('landing-pages.index');
+Route::get('/studio/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
+Route::post('/studio/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
+Route::get('/studio/landing-pages/{id}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
+Route::put('/studio/landing-pages/{id}', [LandingPageController::class, 'update'])->name('landing-pages.update');
+Route::delete('/studio/landing-pages/{id}', [LandingPageController::class, 'destroy'])->name('landing-pages.destroy');
+Route::post('/studio/landing-pages/{id}/content', [LandingPageController::class, 'saveContent'])->name('landing-pages.content');
+Route::post('/studio/landing-pages/{id}/settings', [LandingPageController::class, 'saveSettings'])->name('landing-pages.settings');
+Route::post('/studio/landing-pages/{id}/toggle', [LandingPageController::class, 'togglePublish'])->name('landing-pages.toggle');
 Route::get('/studio/theme', [UserController::class, 'showTheme'])->name('showTheme');
 Route::post('/studio/theme', [UserController::class, 'editTheme'])->name('editTheme');
 Route::get('/deleteLink/{id}', [UserController::class, 'deleteLink'])->name('deleteLink')->middleware('link-id');

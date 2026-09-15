@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ClickController;
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormController;
+use App\Http\Controllers\Api\LandingPageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,11 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('/forms/{id}', [FormController::class, 'show']);
     Route::get('/forms/{id}/responses', [FormController::class, 'responses']);
     Route::get('/forms/{id}/stats', [FormController::class, 'stats']);
+
+    // Landing Pages
+    Route::get('/landing-pages', [LandingPageController::class, 'index']);
+    Route::get('/landing-pages/{id}', [LandingPageController::class, 'show']);
+    Route::get('/landing-pages/{id}/stats', [LandingPageController::class, 'stats']);
 
     // Analytics
     Route::get('/analytics/overview', [AnalyticsController::class, 'overview']);
