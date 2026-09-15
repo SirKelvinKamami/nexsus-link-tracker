@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\ClickController;
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\DocumentController;
+use App\Http\Controllers\Api\FormController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,12 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('/documents/{id}', [DocumentController::class, 'show']);
     Route::get('/documents/{id}/stats', [DocumentController::class, 'stats']);
     Route::delete('/documents/{id}', [DocumentController::class, 'destroy']);
+
+    // Forms
+    Route::get('/forms', [FormController::class, 'index']);
+    Route::get('/forms/{id}', [FormController::class, 'show']);
+    Route::get('/forms/{id}/responses', [FormController::class, 'responses']);
+    Route::get('/forms/{id}/stats', [FormController::class, 'stats']);
 
     // Analytics
     Route::get('/analytics/overview', [AnalyticsController::class, 'overview']);

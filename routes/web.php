@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FormController;
+use App\Http\Controllers\PublicFormController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -82,6 +84,9 @@ Route::get('/theme/@{littlelink}', [UserController::class, 'theme'])->name('them
 Route::get('/vcard/{id?}', [UserController::class, 'vcard'])->name('vcard');
 Route::get('/download/{id}', [UserController::class, 'downloadDocument'])->name('downloadDocument');
 Route::get('/document/{id}', [DocumentController::class, 'serve'])->name('document.serve');
+Route::get('/f/{slug}', [PublicFormController::class, 'show'])->name('forms.public');
+Route::post('/f/{slug}', [PublicFormController::class, 'submit'])->name('forms.submit');
+Route::get('/f/{slug}/thankyou', [PublicFormController::class, 'thankyou'])->name('forms.thankyou');
 Route::get('/u/{id?}', [UserController::class, 'userRedirect'])->name('userRedirect');
 
 Route::get('/report', function () {return view('report');});
@@ -110,6 +115,18 @@ Route::post('/studio/sort-link', [UserController::class, 'sortLinks'])->name('so
 Route::get('/studio/links', [UserController::class, $LinkPage])->name($LinkPage);
 Route::get('/studio/analytics', [UserController::class, 'analytics'])->name('analytics');
 Route::get('/studio/documents', [UserController::class, 'documents'])->name('documents');
+Route::get('/studio/forms', [FormController::class, 'index'])->name('forms.index');
+Route::get('/studio/forms/create', [FormController::class, 'create'])->name('forms.create');
+Route::post('/studio/forms', [FormController::class, 'store'])->name('forms.store');
+Route::get('/studio/forms/{id}/edit', [FormController::class, 'edit'])->name('forms.edit');
+Route::put('/studio/forms/{id}', [FormController::class, 'update'])->name('forms.update');
+Route::delete('/studio/forms/{id}', [FormController::class, 'destroy'])->name('forms.destroy');
+Route::post('/studio/forms/{formId}/fields', [FormController::class, 'addField'])->name('forms.fields.add');
+Route::put('/studio/forms/{formId}/fields/{fieldId}', [FormController::class, 'updateField'])->name('forms.fields.update');
+Route::delete('/studio/forms/{formId}/fields/{fieldId}', [FormController::class, 'deleteField'])->name('forms.fields.delete');
+Route::post('/studio/forms/{formId}/reorder', [FormController::class, 'reorderFields'])->name('forms.fields.reorder');
+Route::get('/studio/forms/{id}/responses', [FormController::class, 'responses'])->name('forms.responses');
+Route::get('/studio/forms/{id}/export', [FormController::class, 'exportCsv'])->name('forms.export');
 Route::get('/studio/theme', [UserController::class, 'showTheme'])->name('showTheme');
 Route::post('/studio/theme', [UserController::class, 'editTheme'])->name('editTheme');
 Route::get('/deleteLink/{id}', [UserController::class, 'deleteLink'])->name('deleteLink')->middleware('link-id');
