@@ -8,6 +8,7 @@ use Cohensive\OEmbed\Facades\OEmbed;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 use JeroenDesloovere\VCard\VCard;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -201,6 +202,18 @@ class UserController extends Controller
             'topMediums', 'topCampaigns', 'devices', 'browsers', 'oses',
             'recent', 'pageViews'
         ));
+    }
+
+    //Show documents page
+    public function documents()
+    {
+        $userId = Auth::user()->id;
+        $documents = Link::where('user_id', $userId)
+            ->where('type', 'document')
+            ->orderByDesc('created_at')
+            ->get();
+
+        return view('studio.documents', compact('documents'));
     }
 
     //Show littlelink page. example => http://127.0.0.1:8000/+admin
@@ -571,6 +584,50 @@ if (empty($id)) {
         // Return the file download response
         return response()->make($file_contents, 200, $headers);
 
+    }
+
+    //Download Document
+    public function downloadDocument(request $request)
+    {
+        $linkId = $request->id;
+
+        $link = Link::findOrFail($linkId);
+
+        if ($link->type !== 'document') {
+            abort(404);
+        }
+
+        ClickTracker::record($link, $request);
+
+        $filePath = $link->link;
+        $disk = config('documents.storage_disk', 'local');
+
+        if ($disk === 'local') {
+            $fullPath = storage_path('app/' . $filePath);
+            if (!file_exists($fullPath)) {
+                abort(404);
+            }
+        } else {
+            if (!Storage::disk($disk)->exists($filePath)) {
+                abort(404);
+            }
+        }
+
+        $typeParams = json_decode($link->type_params, true) ?? [];
+        $originalName = $typeParams['original_name'] ?? $link->title;
+        $mimeType = $typeParams['mime_type'] ?? 'application/octet-stream';
+
+        Link::where('id', $linkId)->increment('click_number', 1);
+
+        if ($disk === 'local') {
+            return response()->download($fullPath, $originalName, [
+                'Content-Type' => $mimeType,
+            ]);
+        } else {
+            return Storage::disk($disk)->download($filePath, $originalName, [
+                'Content-Type' => $mimeType,
+            ]);
+        }
     }
 
     //Show link, click number, up link in links page

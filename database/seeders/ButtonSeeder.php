@@ -787,6 +787,14 @@ class ButtonSeeder extends Seeder
             ],
 
             [
+                "name" => "document",
+                "alt" => "Document",
+                "exclude" => true,
+                "group" => "default",
+                "mb" => false,
+            ],
+
+            [
                 "name" => "apple-books",
                 "alt" => "Apple Books",
                 "exclude" => false,

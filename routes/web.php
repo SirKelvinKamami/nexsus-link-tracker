@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -79,6 +80,8 @@ Route::get('/pages/'.strtolower(footer('Privacy')), [AdminController::class, 'pa
 Route::get('/pages/'.strtolower(footer('Contact')), [AdminController::class, 'pagesContact'])->name('pagesContact')->middleware('disableCookies');
 Route::get('/theme/@{littlelink}', [UserController::class, 'theme'])->name('theme');
 Route::get('/vcard/{id?}', [UserController::class, 'vcard'])->name('vcard');
+Route::get('/download/{id}', [UserController::class, 'downloadDocument'])->name('downloadDocument');
+Route::get('/document/{id}', [DocumentController::class, 'serve'])->name('document.serve');
 Route::get('/u/{id?}', [UserController::class, 'userRedirect'])->name('userRedirect');
 
 Route::get('/report', function () {return view('report');});
@@ -106,6 +109,7 @@ Route::get('/studio/edit-link/{id}', [UserController::class, 'AddUpdateLink'])->
 Route::post('/studio/sort-link', [UserController::class, 'sortLinks'])->name('sortLinks');
 Route::get('/studio/links', [UserController::class, $LinkPage])->name($LinkPage);
 Route::get('/studio/analytics', [UserController::class, 'analytics'])->name('analytics');
+Route::get('/studio/documents', [UserController::class, 'documents'])->name('documents');
 Route::get('/studio/theme', [UserController::class, 'showTheme'])->name('showTheme');
 Route::post('/studio/theme', [UserController::class, 'editTheme'])->name('editTheme');
 Route::get('/deleteLink/{id}', [UserController::class, 'deleteLink'])->name('deleteLink')->middleware('link-id');

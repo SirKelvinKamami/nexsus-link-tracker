@@ -67,6 +67,7 @@ class LinkType extends Model
             'heading',
             'spacer',
             'text',
+            'document',
         ];
     
         $sorted = $linkTypes->sortBy(function ($item) use ($custom_order) {

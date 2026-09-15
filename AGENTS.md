@@ -3,7 +3,7 @@
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
 **Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 1 Complete — Core Tracker
+**Status:** Phase 2 Complete — Bio Page & Documents
 
 ---
 
@@ -14,6 +14,7 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 ├── app/
 │   ├── Http/Controllers/
 │   │   ├── UserController.php        # Web + API controllers
+│   │   ├── DocumentController.php    # Document file serving
 │   │   ├── Api/                      # REST API controllers (Phase 1)
 │   │   └── ...
 │   ├── Models/
@@ -22,17 +23,26 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   └── ...
 │   ├── Services/
 │   │   ├── ClickTracker.php          # Click recording service
+│   │   ├── DocumentService.php       # Document file handling
 │   │   └── ...
 │   └── Support/
 │       └── UserAgentParser.php       # Device/browser/OS detection
+├── blocks/
+│   └── document/                     # Document block type (Phase 2)
+│       ├── config.yml
+│       ├── handler.php
+│       ├── form.blade.php
+│       └── display.blade.php
+├── config/
+│   └── documents.php                 # Document settings (Phase 2)
 ├── database/migrations/
 ├── routes/
 │   ├── web.php                       # Web routes (auth + public)
 │   └── api.php                       # REST API routes (Phase 1)
-├── resources/views/                  # Blade templates
-├── config/
-│   └── advanced-config.php           # App settings
-├── .env                              # Environment config
+├── resources/views/
+│   ├── studio/
+│   │   └── documents.blade.php       # Document management view
+│   └── ...
 └── AGENTS.md                         # This file
 ```
 
@@ -71,11 +81,16 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] Nexsus branding (APP_NAME, user name, meta tags)
 - [x] **REST API endpoints** (Phase 1 addition)
 
-### Phase 2 — Bio Page & Documents (planned)
-- [ ] Document/file upload module (PDF, DOCX, images)
-- [ ] Document-type link block for bio page
-- [ ] File preview/embed on bio page
-- [ ] Download tracking per document
+### Phase 2 — Bio Page & Documents ✅
+- [x] Document/file upload module (PDF, DOCX, images, ZIP)
+- [x] Document-type link block for bio page
+- [x] File preview/embed on bio page (icons, file size, download button)
+- [x] Download tracking per document (via ClickTracker)
+- [x] Document storage config (`config/documents.php`)
+- [x] DocumentService for file handling
+- [x] DocumentController for serving files
+- [x] Studio document management view (`/studio/documents`)
+- [x] Sidebar navigation link
 
 ### Phase 3 — Forms Module (planned)
 - [ ] `forms` table (title, description, slug, settings)
@@ -127,6 +142,10 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 | GET | `/api/v1/links` | List all links (with click counts) |
 | GET | `/api/v1/links/{id}` | Get single link + stats |
 | GET | `/api/v1/clicks` | List click events (filterable) |
+| GET | `/api/v1/documents` | List all documents |
+| GET | `/api/v1/documents/{id}` | Get single document |
+| GET | `/api/v1/documents/{id}/stats` | Get document download stats |
+| DELETE | `/api/v1/documents/{id}` | Delete a document |
 | GET | `/api/v1/analytics/overview` | Aggregate stats (today/week/month/all) |
 | GET | `/api/v1/analytics/top-links` | Top links by clicks |
 | GET | `/api/v1/analytics/by-device` | Device breakdown |
@@ -236,4 +255,5 @@ const daily = await trackerService.getDailyClicks();
 **Last Updated:** 2026-09-15
 **Authority:** SirKelvin Kamami (Boss)
 **Phase 1 Status:** Complete (core tracker + API endpoints)
-**Next:** Phase 2 (Bio Page & Documents)
+**Phase 2 Status:** Complete (bio page documents + download tracking)
+**Next:** Phase 3 (Forms Module)

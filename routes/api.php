@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\ClickController;
 use App\Http\Controllers\Api\AnalyticsController;
+use App\Http\Controllers\Api\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,12 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
 
     // Click events
     Route::get('/clicks', [ClickController::class, 'index']);
+
+    // Documents
+    Route::get('/documents', [DocumentController::class, 'index']);
+    Route::get('/documents/{id}', [DocumentController::class, 'show']);
+    Route::get('/documents/{id}/stats', [DocumentController::class, 'stats']);
+    Route::delete('/documents/{id}', [DocumentController::class, 'destroy']);
 
     // Analytics
     Route::get('/analytics/overview', [AnalyticsController::class, 'overview']);
