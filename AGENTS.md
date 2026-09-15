@@ -3,7 +3,7 @@
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
 **Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 5 Complete — Projects/Workspaces
+**Status:** Phase 6 Complete — Integrations & Export
 
 ---
 
@@ -20,6 +20,7 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   ├── LandingPageController.php # Landing pages CRUD (Phase 4)
 │   │   ├── PublicLandingPageController.php # Public LP renderer (Phase 4)
 │   │   ├── ProjectController.php     # Projects CRUD (Phase 5)
+│   │   ├── WebhookController.php     # Webhooks CRUD (Phase 6)
 │   │   └── Api/                      # REST API controllers (Phase 1)
 │   ├── Models/
 │   │   ├── Link.php                  # Link model (random 9-digit IDs)
@@ -29,10 +30,13 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   ├── FormResponse.php          # Form response model (Phase 3)
 │   │   ├── LandingPage.php           # Landing page model (Phase 4)
 │   │   ├── Project.php               # Project model (Phase 5)
+│   │   ├── Webhook.php               # Webhook model (Phase 6)
+│   │   ├── WebhookDelivery.php       # Webhook delivery log (Phase 6)
 │   │   └── ...
 │   ├── Services/
 │   │   ├── ClickTracker.php          # Click recording service
 │   │   ├── DocumentService.php       # Document file handling
+│   │   ├── WebhookService.php        # Webhook dispatch (Phase 6)
 │   │   └── ...
 │   └── Support/
 │       └── UserAgentParser.php       # Device/browser/OS detection
@@ -129,11 +133,15 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] API endpoints for projects
 - [x] ClickTracker records project_id with clicks
 
-### Phase 6 — Integrations & Export (planned)
-- [ ] Webhook support (click events → external URLs)
-- [ ] CSV/API export
-- [ ] Zapier/Make integration
-- [ ] OAuth2 API tokens for third-party apps
+### Phase 6 — Integrations & Export ✅
+- [x] Webhook support (click events, form submissions, page visits)
+- [x] CSV export (clicks, links, form responses)
+- [x] Webhook CRUD in studio + API
+- [x] Webhook delivery log with retry
+- [x] HMAC-SHA256 signature verification
+- [x] WebhookService for event dispatch
+- [x] API endpoints for webhooks
+- [x] Sidebar navigation link
 
 ---
 
@@ -170,6 +178,15 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 | GET | `/api/v1/projects` | List all projects |
 | GET | `/api/v1/projects/{id}` | Get single project + stats |
 | GET | `/api/v1/projects/{id}/stats` | Get project analytics summary |
+| GET | `/api/v1/webhooks` | List all webhooks |
+| GET | `/api/v1/webhooks/{id}` | Get single webhook + deliveries |
+| POST | `/api/v1/webhooks` | Create a webhook |
+| PUT | `/api/v1/webhooks/{id}` | Update a webhook |
+| DELETE | `/api/v1/webhooks/{id}` | Delete a webhook |
+| POST | `/api/v1/webhooks/{id}/test` | Test a webhook |
+| GET | `/api/v1/export/clicks` | Export clicks as CSV |
+| GET | `/api/v1/export/links` | Export links as CSV |
+| GET | `/api/v1/export/forms` | Export form responses as CSV |
 | GET | `/api/v1/analytics/overview` | Aggregate stats (today/week/month/all) |
 | GET | `/api/v1/analytics/top-links` | Top links by clicks |
 | GET | `/api/v1/analytics/by-device` | Device breakdown |
@@ -283,4 +300,5 @@ const daily = await trackerService.getDailyClicks();
 **Phase 3 Status:** Complete (forms module + API endpoints)
 **Phase 4 Status:** Complete (landing pages + API endpoints)
 **Phase 5 Status:** Complete (projects/workspaces + API endpoints)
-**Next:** Phase 6 (Integrations/Export)
+**Phase 6 Status:** Complete (webhooks + CSV export + API endpoints)
+**Next:** Phase 7 (OAuth2 API tokens — optional)

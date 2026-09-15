@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\LandingPageController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\WebhookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,19 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::get('/projects/{id}', [ProjectController::class, 'show']);
     Route::get('/projects/{id}/stats', [ProjectController::class, 'stats']);
+
+    // Webhooks
+    Route::get('/webhooks', [WebhookController::class, 'index']);
+    Route::get('/webhooks/{id}', [WebhookController::class, 'show']);
+    Route::post('/webhooks', [WebhookController::class, 'store']);
+    Route::put('/webhooks/{id}', [WebhookController::class, 'update']);
+    Route::delete('/webhooks/{id}', [WebhookController::class, 'destroy']);
+    Route::post('/webhooks/{id}/test', [WebhookController::class, 'test']);
+
+    // Export
+    Route::get('/export/clicks', [AnalyticsController::class, 'exportClicks']);
+    Route::get('/export/links', [AnalyticsController::class, 'exportLinks']);
+    Route::get('/export/forms', [FormController::class, 'exportAll']);
 
     // Analytics
     Route::get('/analytics/overview', [AnalyticsController::class, 'overview']);

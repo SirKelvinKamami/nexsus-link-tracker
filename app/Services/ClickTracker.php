@@ -18,7 +18,7 @@ class ClickTracker
         $ip = $request->ip();
 
         try {
-            return LinkClick::create([
+            $click = LinkClick::create([
                 'link_id' => $link->id,
                 'user_id' => $link->user_id,
                 'project_id' => $link->project_id,
@@ -40,9 +40,27 @@ class ClickTracker
                 'country' => null,
                 'language' => $request->getPreferredLanguage() ? Str::limit($request->getPreferredLanguage(), 8) : null,
             ]);
+
+            WebhookService::dispatch('click', [
+                'click_id' => $click->id,
+                'link_id' => $link->id,
+                'link_title' => $link->title,
+                'link_url' => $link->link,
+                'device_type' => $click->device_type,
+                'browser' => $click->browser,
+                'os' => $click->os,
+                'referrer' => $click->referrer,
+                'utm_source' => $click->utm_source,
+                'utm_medium' => $click->utm_medium,
+                'utm_campaign' => $click->utm_campaign,
+            ], $link->user_id);
+
+            return $click;
         } catch (\Throwable $e) {
             report($e);
             return null;
         }
+    }
+}
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Form;
 use App\Models\FormField;
 use App\Models\FormResponse;
+use App\Services\WebhookService;
 
 class PublicFormController extends Controller
 {
@@ -109,6 +110,15 @@ class PublicFormController extends Controller
             'referrer' => $request->headers->get('referer'),
             'user_agent' => $request->userAgent(),
         ]);
+
+        WebhookService::dispatch('form_submit', [
+            'form_id' => $form->id,
+            'form_title' => $form->title,
+            'response_id' => $response->id,
+            'email' => $response->email,
+            'answers' => $answers,
+            'submitted_at' => $response->created_at->toISOString(),
+        ], $form->user_id);
 
         return redirect()->route('forms.thankyou', $form->slug)
             ->with('form_title', $form->title);

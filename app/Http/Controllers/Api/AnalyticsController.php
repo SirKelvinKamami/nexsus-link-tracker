@@ -6,6 +6,7 @@ use App\Models\Link;
 use App\Models\LinkClick;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class AnalyticsController extends BaseController
 {
@@ -207,5 +208,80 @@ class AnalyticsController extends BaseController
         }
 
         return $this->success($data);
+    }
+
+    public function exportClicks(Request $request): Response
+    {
+        $userId = $this->getUserId($request);
+        $query = LinkClick::with('link:id,title,link')
+            ->whereNotNull('link_id');
+
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+
+        $this->applyDateFilters($query, $request);
+
+        $clicks = $query->orderByDesc('created_at')->limit(10000)->get();
+
+        $csv = "ID,Link ID,Link Title,URL,Device,Browser,OS,Referrer,UTM Source,UTM Medium,UTM Campaign,Country,Created At\n";
+
+        foreach ($clicks as $click) {
+            $link = $click->link;
+            $csv .= implode(',', [
+                $click->id,
+                $click->link_id,
+                '"' . str_replace('"', '""', $link->title ?? '') . '"',
+                '"' . str_replace('"', '""', $link->link ?? '') . '"',
+                $click->device_type,
+                $click->browser,
+                $click->os,
+                '"' . str_replace('"', '""', $click->referrer ?? '') . '"',
+                $click->utm_source,
+                $click->utm_medium,
+                $click->utm_campaign,
+                $click->country,
+                $click->created_at->toIso8601String(),
+            ]) . "\n";
+        }
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="clicks-export.csv"',
+        ]);
+    }
+
+    public function exportLinks(Request $request): Response
+    {
+        $userId = $this->getUserId($request);
+        $query = Link::query();
+
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+
+        $links = $query->orderByDesc('created_at')->limit(5000)->get();
+
+        $csv = "ID,Title,URL,Type,Click Count,Last Clicked,Created At\n";
+
+        foreach ($links as $link) {
+            $clickCount = LinkClick::where('link_id', $link->id)->count();
+            $lastClicked = LinkClick::where('link_id', $link->id)->max('created_at');
+
+            $csv .= implode(',', [
+                $link->id,
+                '"' . str_replace('"', '""', $link->title ?? '') . '"',
+                '"' . str_replace('"', '""', $link->link ?? '') . '"',
+                $link->type,
+                $clickCount,
+                $lastClicked ? $lastClicked->toIso8601String() : '',
+                $link->created_at->toIso8601String(),
+            ]) . "\n";
+        }
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="links-export.csv"',
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Models\Form;
 use App\Models\FormField;
 use App\Models\FormResponse;
@@ -168,5 +169,46 @@ class FormController extends BaseController
         ];
 
         return $this->success($data);
+    }
+
+    /**
+     * Export all form responses as CSV.
+     */
+    public function exportAll(Request $request): Response
+    {
+        $userId = $this->getUserId();
+        $formId = $request->input('form_id');
+
+        $query = FormResponse::with('form:id,title,slug');
+
+        if ($formId) {
+            $query->where('form_id', $formId);
+        } else {
+            $formIds = Form::where('user_id', $userId)->pluck('id');
+            $query->whereIn('form_id', $formIds);
+        }
+
+        $responses = $query->orderByDesc('created_at')->limit(10000)->get();
+
+        $csv = "Response ID,Form Title,Email,IP Hash,Referrer,Submitted At,Answers\n";
+
+        foreach ($responses as $response) {
+            $answers = json_encode($response->answers ?? [], JSON_UNESCAPED_UNICODE);
+
+            $csv .= implode(',', [
+                $response->id,
+                '"' . str_replace('"', '""', $response->form->title ?? '') . '"',
+                $response->email ?? '',
+                $response->ip_hash ?? '',
+                '"' . str_replace('"', '""', $response->referrer ?? '') . '"',
+                $response->created_at->toIso8601String(),
+                '"' . str_replace('"', '""', $answers) . '"',
+            ]) . "\n";
+        }
+
+        return response($csv, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="form-responses-export.csv"',
+        ]);
     }
 }

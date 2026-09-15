@@ -10,6 +10,7 @@ use App\Http\Controllers\PublicFormController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PublicLandingPageController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -142,6 +143,15 @@ Route::put('/studio/projects/{id}', [ProjectController::class, 'update'])->name(
 Route::delete('/studio/projects/{id}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 Route::post('/studio/projects/{id}/switch', [ProjectController::class, 'switch'])->name('projects.switch');
 Route::post('/studio/projects/{id}/default', [ProjectController::class, 'setDefault'])->name('projects.default');
+
+Route::get('/studio/webhooks', [WebhookController::class, 'index'])->name('webhooks.index');
+Route::get('/studio/webhooks/create', [WebhookController::class, 'create'])->name('webhooks.create');
+Route::post('/studio/webhooks', [WebhookController::class, 'store'])->name('webhooks.store');
+Route::get('/studio/webhooks/{id}/edit', [WebhookController::class, 'edit'])->name('webhooks.edit');
+Route::put('/studio/webhooks/{id}', [WebhookController::class, 'update'])->name('webhooks.update');
+Route::delete('/studio/webhooks/{id}', [WebhookController::class, 'destroy'])->name('webhooks.destroy');
+Route::post('/studio/webhooks/{id}/test', [WebhookController::class, 'test'])->name('webhooks.test');
+Route::post('/studio/webhooks/{id}/redeliver/{deliveryId}', [WebhookController::class, 'redeliver'])->name('webhooks.redeliver');
 Route::get('/studio/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
 Route::post('/studio/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
 Route::get('/studio/landing-pages/{id}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
