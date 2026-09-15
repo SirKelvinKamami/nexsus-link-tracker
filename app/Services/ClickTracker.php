@@ -21,6 +21,7 @@ class ClickTracker
             return LinkClick::create([
                 'link_id' => $link->id,
                 'user_id' => $link->user_id,
+                'project_id' => $link->project_id,
                 'session_id' => class_exists('Illuminate\Support\Facades\Session') && app()->bound('session.store')
                     ? Str::limit(session()->getId(), 100)
                     : null,

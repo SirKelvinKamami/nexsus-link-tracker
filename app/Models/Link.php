@@ -9,7 +9,7 @@ class Link extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['link', 'title', 'button_id', 'type_params', 'type', 'custom_icon'];
+    protected $fillable = ['link', 'title', 'button_id', 'type_params', 'type', 'custom_icon', 'project_id'];
 
     protected static function boot()
     {
@@ -29,5 +29,10 @@ class Link extends Model
             $link->id = $randomId;
           }
         });
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }

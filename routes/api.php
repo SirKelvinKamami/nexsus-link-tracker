@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\LandingPageController;
+use App\Http\Controllers\Api\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,11 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::get('/landing-pages', [LandingPageController::class, 'index']);
     Route::get('/landing-pages/{id}', [LandingPageController::class, 'show']);
     Route::get('/landing-pages/{id}/stats', [LandingPageController::class, 'stats']);
+
+    // Projects
+    Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/{id}', [ProjectController::class, 'show']);
+    Route::get('/projects/{id}/stats', [ProjectController::class, 'stats']);
 
     // Analytics
     Route::get('/analytics/overview', [AnalyticsController::class, 'overview']);

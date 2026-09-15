@@ -3,7 +3,7 @@
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
 **Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 4 Complete — Landing Pages
+**Status:** Phase 5 Complete — Projects/Workspaces
 
 ---
 
@@ -15,11 +15,20 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   ├── Http/Controllers/
 │   │   ├── UserController.php        # Web + API controllers
 │   │   ├── DocumentController.php    # Document file serving
-│   │   ├── Api/                      # REST API controllers (Phase 1)
-│   │   └── ...
+│   │   ├── FormController.php        # Forms CRUD (Phase 3)
+│   │   ├── PublicFormController.php  # Public form renderer (Phase 3)
+│   │   ├── LandingPageController.php # Landing pages CRUD (Phase 4)
+│   │   ├── PublicLandingPageController.php # Public LP renderer (Phase 4)
+│   │   ├── ProjectController.php     # Projects CRUD (Phase 5)
+│   │   └── Api/                      # REST API controllers (Phase 1)
 │   ├── Models/
 │   │   ├── Link.php                  # Link model (random 9-digit IDs)
 │   │   ├── LinkClick.php             # Click event log (Phase 1)
+│   │   ├── Form.php                  # Form model (Phase 3)
+│   │   ├── FormField.php             # Form field model (Phase 3)
+│   │   ├── FormResponse.php          # Form response model (Phase 3)
+│   │   ├── LandingPage.php           # Landing page model (Phase 4)
+│   │   ├── Project.php               # Project model (Phase 5)
 │   │   └── ...
 │   ├── Services/
 │   │   ├── ClickTracker.php          # Click recording service
@@ -41,7 +50,10 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   └── api.php                       # REST API routes (Phase 1)
 ├── resources/views/
 │   ├── studio/
-│   │   └── documents.blade.php       # Document management view
+│   │   ├── documents.blade.php       # Document management view
+│   │   ├── forms/                    # Form builder views (Phase 3)
+│   │   ├── landing-pages/            # LP builder views (Phase 4)
+│   │   └── projects/                 # Project management views (Phase 5)
 │   └── ...
 └── AGENTS.md                         # This file
 ```
@@ -108,11 +120,14 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] Form embed support in landing pages
 - [x] API endpoints for landing pages
 
-### Phase 5 — Projects/Workspaces (planned)
-- [ ] `projects` table (name, slug, settings)
-- [ ] Multi-project support (links, analytics per project)
-- [ ] Project switching in studio
-- [ ] Independent GA4/GTM per project
+### Phase 5 — Projects/Workspaces ✅
+- [x] `projects` table (name, slug, settings)
+- [x] Multi-project support (links, forms, landing pages per project)
+- [x] Project switching in studio
+- [x] Independent GA4/GTM per project
+- [x] Project CRUD in studio
+- [x] API endpoints for projects
+- [x] ClickTracker records project_id with clicks
 
 ### Phase 6 — Integrations & Export (planned)
 - [ ] Webhook support (click events → external URLs)
@@ -147,6 +162,14 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 | GET | `/api/v1/documents/{id}` | Get single document |
 | GET | `/api/v1/documents/{id}/stats` | Get document download stats |
 | DELETE | `/api/v1/documents/{id}` | Delete a document |
+| GET | `/api/v1/forms` | List all forms |
+| GET | `/api/v1/forms/{id}` | Get single form + stats |
+| GET | `/api/v1/forms/{id}/responses` | Get form responses |
+| GET | `/api/v1/landing-pages` | List all landing pages |
+| GET | `/api/v1/landing-pages/{id}` | Get single landing page + stats |
+| GET | `/api/v1/projects` | List all projects |
+| GET | `/api/v1/projects/{id}` | Get single project + stats |
+| GET | `/api/v1/projects/{id}/stats` | Get project analytics summary |
 | GET | `/api/v1/analytics/overview` | Aggregate stats (today/week/month/all) |
 | GET | `/api/v1/analytics/top-links` | Top links by clicks |
 | GET | `/api/v1/analytics/by-device` | Device breakdown |
@@ -259,4 +282,5 @@ const daily = await trackerService.getDailyClicks();
 **Phase 2 Status:** Complete (bio page documents + download tracking)
 **Phase 3 Status:** Complete (forms module + API endpoints)
 **Phase 4 Status:** Complete (landing pages + API endpoints)
-**Next:** Phase 5 (Projects/Workspaces)
+**Phase 5 Status:** Complete (projects/workspaces + API endpoints)
+**Next:** Phase 6 (Integrations/Export)

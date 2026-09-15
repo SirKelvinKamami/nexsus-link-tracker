@@ -247,6 +247,16 @@ $usrhandl = Auth::user()->littlelink_name;
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(2) == 'projects' ? 'active' : ''}}" href="{{ url('/studio/projects') }}">
+                            <i class="icon">
+                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M3 3C3 1.89543 3.89543 1 5 1H19C20.1046 1 21 1.89543 21 3V21C21 22.1046 20.1046 23 19 23H5C3.89543 23 3 22.1046 3 21V3ZM5 3H19V21H5V3ZM7 7H17V9H7V7ZM7 11H17V13H7V11ZM7 15H12V17H7V15Z" fill="currentColor"/>
+                                </svg>
+                            </i>
+                            <span class="item-name">Projects</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::segment(2) == 'page' ? 'active' : ''}}" href="{{ url('/studio/page') }}">
                             <i class="icon">
                                  <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

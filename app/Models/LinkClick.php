@@ -9,6 +9,7 @@ class LinkClick extends Model
     protected $fillable = [
         'link_id',
         'user_id',
+        'project_id',
         'session_id',
         'ip_hash',
         'referrer',
@@ -34,5 +35,10 @@ class LinkClick extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
     }
 }
