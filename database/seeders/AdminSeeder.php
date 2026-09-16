@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             [
                 'name' => 'admin',
                 'email' => 'admin@admin.com',
-                'email_verified_at' => '0000-00-00 00:00:00',
+                'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
                 'role' => 'admin',
                 'littlelink_name' => 'admin',
@@ -28,6 +28,9 @@ class AdminSeeder extends Seeder
             ]
         ];
 
-        User::insert($admin);
+        // Idempotent: safe to run on every container boot
+        if (!User::where('email', 'admin@admin.com')->exists()) {
+            User::insert($admin);
+        }
     }
 }

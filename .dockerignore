@@ -1,7 +1,6 @@
 # Dependencies
 /node_modules
 /vendor
-composer.lock
 
 # IDE
 .vscode
@@ -35,6 +34,11 @@ npm-debug.log
 /public/hot
 /public/storage
 /public/mix-manifest.json
+
+# Generated Laravel caches (regenerated inside the image by composer/artisan,
+# stale copies may reference dev-only providers)
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
 
 # Testing
 phpunit.xml

@@ -353,6 +353,9 @@ class PageSeeder extends Seeder
             ]
          ];
 
-         Page::insert($page);
+        // Idempotent: safe to run on every container boot
+        if (Page::count() === 0) {
+            Page::insert($page);
+        }
     }
 }

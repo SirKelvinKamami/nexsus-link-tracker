@@ -1,11 +1,15 @@
 <?php
 
-function locales($key, $default)
-{
-    $value = env($key, $default);
-    $array = explode(',', $value);
-    $trimmedArray = array_map('trim', $array);
-    return $trimmedArray;
+// config:cache re-includes every config file, so guard against the function
+// being declared twice
+if (!function_exists('locales')) {
+    function locales($key, $default)
+    {
+        $value = env($key, $default);
+        $array = explode(',', $value);
+        $trimmedArray = array_map('trim', $array);
+        return $trimmedArray;
+    }
 }
 
 return [

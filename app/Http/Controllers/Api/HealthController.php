@@ -40,8 +40,13 @@ class HealthController extends BaseController
         }
 
         try {
-            $checks['disk_free'] = round(disk_free_free_space('/') / 1024 / 1024 / 1024, 2) . ' GB';
             $checks['memory_usage'] = round(memory_get_usage(true) / 1024 / 1024, 2) . ' MB';
+        } catch (\Throwable $e) {
+            // Ignore
+        }
+
+        try {
+            $checks['disk_free'] = round(disk_free_space('/') / 1024 / 1024 / 1024, 2) . ' GB';
         } catch (\Throwable $e) {
             // Ignore
         }
