@@ -64,7 +64,9 @@ services:
       - key: ALLOW_REGISTRATION
         value: "true"
       - key: FORCE_HTTPS
-        value: "true"
+        value: "false"
+      - key: FORCE_ROUTE_HTTPS
+        value: "false"
       - key: SESSION_DRIVER
         value: database
       - key: CACHE_DRIVER
