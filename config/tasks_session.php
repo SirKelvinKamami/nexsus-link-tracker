@@ -45,7 +45,7 @@ return [
     | Task Scheduler Rules
     |--------------------------------------------------------------------------
     */
-    rules: [
+    'rules' => [
         # Naming
         'task_models' => 'app/Models/Task.php, app/Models/TaskItem.php',
         'task_controller' => 'app/Http/Controllers/Api/TaskController.php',

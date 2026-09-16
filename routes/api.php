@@ -7,7 +7,6 @@ use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\TaskController;
-use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\LandingPageController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\WebhookController;
