@@ -17,7 +17,6 @@ services:
           name: nexsus-link-tracker
           type: web
           property: host
-          envVarKey: RENDER_EXTERNAL_URL
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST
