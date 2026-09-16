@@ -61,6 +61,9 @@ COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 # Copy supervisor config
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Create supervisord log directory
+RUN mkdir -p /var/log/supervisor
+
 # Expose port
 EXPOSE 80
 
