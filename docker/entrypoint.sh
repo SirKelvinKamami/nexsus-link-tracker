@@ -3,6 +3,10 @@ set -e
 
 cd /var/www/html
 
+# Regenerate the package manifest for the installed (no-dev) dependency set,
+# in case the image copied in a stale one
+php artisan package:discover --ansi || true
+
 # Generate APP_KEY on first boot if none was provided
 if [ -z "$APP_KEY" ]; then
     echo "APP_KEY not set — generating one..."
@@ -39,26 +43,24 @@ if [ "$DB_CONNECTION" = "sqlite" ] && [ -n "$DB_DATABASE" ] && [ ! -f "$DB_DATAB
     touch "$DB_DATABASE"
 fi
 
-# Make sure storage and cache directories are writable by the php-fpm pool user
-mkdir -p storage/framework/{cache/data,sessions,views} storage/logs bootstrap/cache
+# Make sure storage and cache directories are writable by the fpm pool user
+# (busybox /bin/sh has no brace expansion — list paths explicitly)
+mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
 chown -R www-data:www-data storage bootstrap/cache database 2>/dev/null || true
 chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
 
-# Regenerate the package manifest for the installed (no-dev) dependency set,
-# in case the image copied in a stale one
-php artisan package:discover --ansi || true
+# Run pending migrations on every deploy (seeders are idempotent)
+php artisan migrate --force || true
+php artisan db:seed --force || true
 
-# Run pending migrations on every deploy (as the fpm user so sqlite stays writable)
-su -s /bin/sh www-data -c "php artisan migrate --force" 2>/dev/null || php artisan migrate --force
+# Cache config for production speed — but never fail the boot on it
+# (safe: no route/view caching here)
+php artisan config:cache || php artisan config:clear
 
-# Seed baseline rows (pages row, admin user) — seeders are idempotent
-su -s /bin/sh www-data -c "php artisan db:seed --force" 2>/dev/null || php artisan db:seed --force
-
-# Cache config for production speed (safe: no route/view caching here)
-php artisan config:cache
-
-# Normalize ownership once more in case migrate created files as root
-chown -R www-data:www-data storage bootstrap/cache database 2>/dev/null || true
+# Bind nginx to the platform-provided port (Render sets PORT); default 8080
+LISTEN_PORT="${PORT:-8080}"
+sed -i "s/^    listen 80;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
+echo "nginx listening on port ${LISTEN_PORT}"
 
 echo "Entrypoint complete — starting services."
 exec "$@"

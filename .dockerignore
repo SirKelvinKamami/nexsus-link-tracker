@@ -2,6 +2,9 @@
 /node_modules
 /vendor
 
+# Local build-simulation scratch dir
+/.build-sim
+
 # IDE
 .vscode
 .idea

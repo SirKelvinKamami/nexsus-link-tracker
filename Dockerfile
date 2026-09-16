@@ -1,77 +1,97 @@
-FROM php:8.2-fpm-alpine
+# syntax=docker/dockerfile:1
 
-# Install system dependencies
+# ---------- base: PHP 8.2 fpm + all app extensions ----------
+FROM php:8.2-fpm-alpine AS base
+
 RUN apk add --no-cache \
-    git \
-    curl \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    oniguruma-dev \
-    libxml2-dev \
-    zip \
-    unzip \
-    icu-dev \
-    libzip-dev \
-    postgresql-dev \
-    nodejs \
-    npm \
-    supervisor \
-    nginx
-
-# Install PHP extensions
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+        oniguruma-dev \
+        libxml2-dev \
+        icu-dev \
+        libzip-dev \
+        postgresql-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
-    mbstring \
-    exif \
-    pcntl \
-    bcmath \
-    gd \
-    zip \
-    intl \
-    opcache
-
-# Install Redis extension (used by docker-compose cache/session/queue drivers)
-RUN apk add --no-cache $PHPIZE_DEPS \
+        pdo_mysql \
+        pdo_pgsql \
+        pgsql \
+        mbstring \
+        exif \
+        pcntl \
+        bcmath \
+        gd \
+        zip \
+        intl \
+        opcache \
+    && apk add --no-cache $PHPIZE_DEPS \
     && pecl install redis \
-    && docker-php-ext-enable redis
+    && docker-php-ext-enable redis \
+    && apk del $PHPIZE_DEPS
 
-# Install Composer
+# ---------- build: composer vendor dir + compiled frontend assets ----------
+FROM base AS build
+
+RUN apk add --no-cache nodejs npm
+
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+WORKDIR /var/www/html
+COPY . .
+
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress \
+    && npm ci --no-audit --no-fund \
+    && npm run production \
+    && rm -rf node_modules
+
+# ---------- runtime: slim image, non-root, production opcache ----------
+FROM base AS runtime
+
+# runtime shared libraries for the compiled extensions (no -dev packages)
+RUN apk add --no-cache \
+        libpng \
+        libjpeg-turbo \
+        freetype \
+        oniguruma \
+        icu-libs \
+        libzip \
+        postgresql-libs \
+        nginx \
+        supervisor
+
 WORKDIR /var/www/html
 
-# Copy application files
-COPY . /var/www/html/
+COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
 
-# Install PHP dependencies (composer.lock is kept in the image for reproducible builds)
-RUN if [ -f "composer.json" ]; then composer install --no-dev --optimize-autoloader --no-interaction --no-progress; fi
+# www-data is the built-in php-fpm pool user on the official image.
+# /etc/nginx/http.d is chowned so the entrypoint can rewrite the listen
+# port from $PORT at boot; /var/lib/nginx so nginx can run unprivileged.
+RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
+    && chown -R www-data:www-data storage bootstrap/cache database \
+    && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx \
+    && mkdir -p /run/nginx \
+    && chown -R www-data:www-data /run/nginx
 
-# Build frontend assets (css/app.css is served directly by blade templates and
-# is only produced by the Mix build; resources/ sources are part of the repo)
-RUN if [ -f "package.json" ] && [ ! -f "css/app.css" ]; then \
-        npm ci --no-audit --no-fund && npm run production && \
-        rm -rf node_modules package-lock.json.orig; \
-    fi
+# Production opcache: timestamps disabled (immutable image), generous caches
+RUN { \
+        echo "opcache.enable=1"; \
+        echo "opcache.enable_cli=0"; \
+        echo "opcache.memory_consumption=192"; \
+        echo "opcache.interned_strings_buffer=16"; \
+        echo "opcache.max_accelerated_files=20000"; \
+        echo "opcache.validate_timestamps=0"; \
+    } > /usr/local/etc/php/conf.d/opcache-prod.ini
 
-# Create system user
-RUN addgroup -g 1000 -S www && adduser -u 1000 -S www -G www \
-    && chown -R www:www /var/www/html \
-    && chmod -R 755 /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Copy nginx, supervisor and entrypoint config
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Expose port
-EXPOSE 80
+# Run everything (entrypoint, php-fpm, nginx) as the unprivileged pool user
+USER www-data
 
-# Prepare app, then start nginx + php-fpm under supervisord
+EXPOSE 8080
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
