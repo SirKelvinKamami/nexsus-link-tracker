@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     unzip \
     icu-dev \
     libzip-dev \
+    postgresql-dev \
     supervisor \
     nginx
 
@@ -20,6 +21,7 @@ RUN apk add --no-cache \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install \
     pdo_mysql \
+    pdo_pgsql \
     mbstring \
     exif \
     pcntl \
@@ -61,11 +63,15 @@ COPY docker/nginx.conf /etc/nginx/http.d/default.conf
 # Copy supervisor config
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Copy start script
+COPY docker/start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
 # Create supervisord log directory
-RUN mkdir -p /var/log/supervisor
+RUN mkdir -p /var/log/supervisor /var/log/nginx /var/run
 
-# Expose port
-EXPOSE 80
+# Expose ports (80 + Render's 10000)
+EXPOSE 80 10000
 
-# Start services
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# Start services via start script (handles PORT + migrations)
+CMD ["/usr/local/bin/start.sh"]
