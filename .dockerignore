@@ -1,0 +1,45 @@
+# Dependencies
+/node_modules
+/vendor
+composer.lock
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docker
+docker-compose.yml
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+npm-debug.log
+
+# Environment
+.env
+.env.backup
+.env.production
+
+# Build
+/public/hot
+/public/storage
+/public/mix-manifest.json
+
+# Testing
+phpunit.xml
+tests
+
+# Documentation
+*.md
+LICENSE

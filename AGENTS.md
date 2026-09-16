@@ -3,7 +3,7 @@
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
 **Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 7 Complete — OAuth2 API Tokens
+**Status:** Phase 8 Complete — Docker Deployment
 
 ---
 
@@ -249,6 +249,54 @@ Tokens support scopes (read, write, admin) and optional expiration.
 
 ---
 
+## Docker Deployment
+
+### Production Deployment
+```bash
+# Clone and enter directory
+git clone https://github.com/SirKelvinKamami/nexsus-link-tracker.git
+cd nexsus-link-tracker/LinkStack
+
+# Copy environment file
+cp .env.docker .env
+
+# Edit .env with your settings
+nano .env
+
+# Build and start
+./deploy.sh build
+
+# Access at http://localhost:8080
+# Admin: admin / 12345678
+```
+
+### Development (Docker)
+```bash
+# Start dev environment
+docker-compose -f docker-compose.dev.yml up -d
+
+# Access at http://localhost:8000
+```
+
+### Docker Commands
+| Command | Description |
+|---------|-------------|
+| `./deploy.sh build` | Build and start all containers |
+| `./deploy.sh start` | Start existing containers |
+| `./deploy.sh stop` | Stop all containers |
+| `./deploy.sh restart` | Restart all containers |
+| `./deploy.sh logs` | View container logs |
+| `./deploy.sh status` | Show container status |
+
+### Docker Services
+- **app**: PHP-FPM (Laravel)
+- **nginx**: Web server (port 8080)
+- **redis**: Cache/sessions
+- **queue**: Background job worker
+- **scheduler**: Cron task runner
+
+---
+
 ## Session Rules (for AI collaboration)
 
 ### Session Start (MANDATORY)
@@ -319,4 +367,5 @@ const daily = await trackerService.getDailyClicks();
 **Phase 5 Status:** Complete (projects/workspaces + API endpoints)
 **Phase 6 Status:** Complete (webhooks + CSV export + API endpoints)
 **Phase 7 Status:** Complete (OAuth2 API tokens + scopes)
-**Next:** Phase 8 (Future enhancements — Docker deploy, etc.)
+**Phase 8 Status:** Complete (Docker deployment)
+**Next:** Phase 9 (Production hardening, monitoring, backups)
