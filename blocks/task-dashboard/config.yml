@@ -1,0 +1,4 @@
+id: 11
+typename: task-dashboard
+icon: "bi bi-speedometer2"
+custom_html: true
