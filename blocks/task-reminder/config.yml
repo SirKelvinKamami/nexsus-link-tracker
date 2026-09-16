@@ -1,0 +1,4 @@
+id: 10
+typename: task-reminder
+icon: "bi bi-calendar-check"
+custom_html: true

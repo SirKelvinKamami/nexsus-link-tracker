@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\ClickController;
 use App\Http\Controllers\Api\AnalyticsController;
 use App\Http\Controllers\Api\DocumentController;
 use App\Http\Controllers\Api\FormController;
+use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\LandingPageController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\WebhookController;
@@ -96,4 +98,35 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
 
     // Page views
     Route::get('/page-views', [AnalyticsController::class, 'pageViews']);
+
+    // Tasks (Phase 4.0 + 4.1 + 4.2)
+    Route::prefix('tasks')->group(function () {
+        // Task CRUD (Phase 4.0)
+        Route::get('/', [TaskController::class, 'index']);
+        Route::get('/{id}', [TaskController::class, 'show']);
+        Route::post('/', [TaskController::class, 'store']);
+        Route::put('/{id}', [TaskController::class, 'update']);
+        Route::delete('/{id}', [TaskController::class, 'destroy']);
+        Route::post('/{id}/complete', [TaskController::class, 'complete']);
+
+        // AI Parse (Phase 4.1)
+        Route::post('/parse', [TaskController::class, 'parse']);
+        Route::get('/daily-digest', [TaskController::class, 'dailyDigest']);
+
+        // Task Analytics (Phase 4.4)
+        Route::prefix('analytics')->group(function () {
+            Route::get('/overview', [TaskController::class, 'analyticsOverview']);
+            Route::get('/completion-trend', [TaskController::class, 'completionTrend']);
+            Route::get('/priority-distribution', [TaskController::class, 'priorityDistribution']);
+            Route::get('/productivity-score', [TaskController::class, 'productivityScore']);
+            Route::get('/top-completed', [TaskController::class, 'topCompleted']);
+        });
+
+        // Smart Scheduling (Phase 4.2)
+        Route::get('/schedule', [TaskController::class, 'schedule']);
+        Route::post('/{id}/schedule', [TaskController::class, 'scheduleTask']);
+        Route::post('/recalculate', [TaskController::class, 'recalculate']);
+        Route::get('/rules', [TaskController::class, 'getRules']);
+        Route::post('/rules', [TaskController::class, 'createRule']);
+    });
 });
