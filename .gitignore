@@ -17,6 +17,6 @@ npm-debug.log
 yarn-error.log
 _ide_*
 /public
-mix-manifest.json
-js/
-css/
+/mix-manifest.json
+/js
+/css
