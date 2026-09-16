@@ -39,14 +39,14 @@ services:
         fromDatabase:
           name: nexsus-db
           property: password
-      # Drivers: the database has no sessions/cache/jobs tables, so use
-      # file-based sessions/cache and the sync queue until those migrations exist
+      # Drivers: sessions/cache/jobs tables are created by the
+      # 2024_01_08_* migrations, so the database drivers are safe here
       - key: SESSION_DRIVER
-        value: file
+        value: database
       - key: CACHE_DRIVER
-        value: file
+        value: database
       - key: QUEUE_CONNECTION
-        value: sync
+        value: database
       - key: LOG_CHANNEL
         value: stderr
       - key: MAIL_MAILER
