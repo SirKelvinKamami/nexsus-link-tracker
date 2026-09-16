@@ -27,13 +27,37 @@ if [ ! -f /var/www/html/.env ]; then
   cp /var/www/html/.env.example /var/www/html/.env 2>/dev/null || true
 fi
 
+# Clean placeholder DB vars from .env.example copy (Render injects real values via env)
+# If .env contains CHANGE_ME placeholders, remove those lines so env vars take precedence
+if grep -q "CHANGE_ME" /var/www/html/.env 2>/dev/null; then
+  echo "Removing placeholder DB vars from .env (using Render env vars)"
+  sed -i "/CHANGE_ME/d" /var/www/html/.env || true
+  sed -i "/^DB_HOST=/d; /^DB_PORT=/d; /^DB_DATABASE=/d; /^DB_USERNAME=/d; /^DB_PASSWORD=/d" /var/www/html/.env || true
+  # Re-add DB_CONNECTION if missing
+  if ! grep -q "^DB_CONNECTION=" /var/www/html/.env; then
+    echo "DB_CONNECTION=pgsql" >> /var/www/html/.env
+  fi
+fi
+
+# Detect placeholder DB_HOST from env (means Render DB not linked)
+if echo "$DB_HOST" | grep -q "CHANGE_ME"; then
+  echo "WARNING: DB_HOST is placeholder ($DB_HOST) — Render DB not linked!"
+  echo "Falling back to SQLite for now (data will not persist across deploys)"
+  export DB_CONNECTION=sqlite
+  export DB_DATABASE=/var/www/html/database/database.sqlite
+  mkdir -p /var/www/html/database
+  touch /var/www/html/database/database.sqlite
+  chown www:www /var/www/html/database/database.sqlite 2>/dev/null || true
+  # Update .env fallback
+  sed -i "s|^DB_CONNECTION=.*|DB_CONNECTION=sqlite|" /var/www/html/.env 2>/dev/null || true
+  echo "DB_DATABASE=/var/www/html/database/database.sqlite" >> /var/www/html/.env
+fi
+
 # Ensure APP_KEY is set (Render generateValue is random string, not base64)
 if [ -z "$APP_KEY" ] || echo "$APP_KEY" | grep -q "CHANGE_ME"; then
   echo "APP_KEY missing, generating..."
-  # Generate key and update .env + env
   GENERATED_KEY=$(php artisan key:generate --show 2>/dev/null || echo "base64:$(openssl rand -base64 32)")
   export APP_KEY="$GENERATED_KEY"
-  # Update .env file for future boots
   if grep -q "^APP_KEY=" /var/www/html/.env 2>/dev/null; then
     sed -i "s|^APP_KEY=.*|APP_KEY=$GENERATED_KEY|" /var/www/html/.env
   else
@@ -48,8 +72,7 @@ php artisan route:clear 2>/dev/null || true
 php artisan view:clear 2>/dev/null || true
 
 # Wait for database to be ready and run migrations
-echo "Running migrations..."
-# Retry DB connection up to 30s (Render DB may be slow to start)
+echo "Running migrations on $DB_CONNECTION (host=${DB_HOST:-local})..."
 for i in 1 2 3 4 5 6; do
   php artisan migrate --force 2>&1 && break
   echo "DB not ready, retry $i/6 in 5s..."
@@ -57,7 +80,7 @@ for i in 1 2 3 4 5 6; do
 done || echo "Migrations failed - check DB connection"
 
 # Seed admin if needed (only if users table empty)
-php artisan db:seed --class=AdminSeeder 2>&1 || echo "Seeding skipped"
+php artisan db:seed --class=AdminSeeder --force 2>&1 || echo "Seeding skipped"
 
 # Show recent Laravel log on failure
 if [ -f /var/www/html/storage/logs/laravel.log ]; then
