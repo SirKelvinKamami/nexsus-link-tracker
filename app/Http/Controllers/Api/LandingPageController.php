@@ -12,7 +12,7 @@ class LandingPageController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $query = LandingPage::where('user_id', $userId);
@@ -43,9 +43,9 @@ class LandingPageController extends BaseController
     /**
      * Get a single landing page with content.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $page = LandingPage::where('id', $id)
             ->where('user_id', $userId)
@@ -79,9 +79,9 @@ class LandingPageController extends BaseController
     /**
      * Get landing page statistics.
      */
-    public function stats($id)
+    public function stats(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $page = LandingPage::where('id', $id)
             ->where('user_id', $userId)

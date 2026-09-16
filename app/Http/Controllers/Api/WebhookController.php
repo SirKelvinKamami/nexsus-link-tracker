@@ -14,7 +14,7 @@ class WebhookController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $webhooks = Webhook::where('user_id', $userId)
@@ -41,9 +41,9 @@ class WebhookController extends BaseController
     /**
      * Get a single webhook with recent deliveries.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $webhook = Webhook::where('id', $id)
             ->where('user_id', $userId)
@@ -93,7 +93,7 @@ class WebhookController extends BaseController
             'events.*' => 'string|in:click,form_submit,page_visit,document_download',
         ]);
 
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $secret = 'whsec_' . bin2hex(random_bytes(32));
 
         $webhook = Webhook::create([
@@ -124,7 +124,7 @@ class WebhookController extends BaseController
      */
     public function update(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $webhook = Webhook::where('id', $id)
             ->where('user_id', $userId)
@@ -162,9 +162,9 @@ class WebhookController extends BaseController
     /**
      * Delete a webhook.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $webhook = Webhook::where('id', $id)
             ->where('user_id', $userId)
@@ -182,9 +182,9 @@ class WebhookController extends BaseController
     /**
      * Test a webhook.
      */
-    public function test($id)
+    public function test(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $webhook = Webhook::where('id', $id)
             ->where('user_id', $userId)

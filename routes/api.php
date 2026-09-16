@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\LandingPageController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\WebhookController;
 use App\Http\Controllers\Api\TokenController;
+use App\Http\Controllers\Api\HealthController;
+use App\Http\Controllers\Api\MetricsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,13 @@ use App\Http\Controllers\Api\TokenController;
 | Base URL: /api/v1
 |
 */
+
+// Health checks (no auth required)
+Route::prefix('v1')->group(function () {
+    Route::get('/health', [HealthController::class, 'check']);
+    Route::get('/health/live', [HealthController::class, 'live']);
+    Route::get('/health/ready', [HealthController::class, 'ready']);
+});
 
 Route::prefix('v1')->middleware('api.token')->group(function () {
 
@@ -66,6 +75,9 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::delete('/tokens/{id}', [TokenController::class, 'destroy']);
     Route::post('/tokens/{id}/revoke', [TokenController::class, 'revoke']);
     Route::post('/tokens/{id}/activate', [TokenController::class, 'activate']);
+
+    // Metrics (requires auth)
+    Route::get('/metrics', [MetricsController::class, 'index']);
 
     // Export
     Route::get('/export/clicks', [AnalyticsController::class, 'exportClicks']);

@@ -12,7 +12,7 @@ class TokenController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $tokens = ApiToken::where('user_id', $userId)
@@ -48,7 +48,7 @@ class TokenController extends BaseController
             'expires_in' => 'nullable|integer|min:1|max:365',
         ]);
 
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $result = ApiToken::createToken($request->name, $request->scopes, $userId);
 
         if ($request->expires_in) {
@@ -69,9 +69,9 @@ class TokenController extends BaseController
     /**
      * Delete a token.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $token = ApiToken::where('id', $id)
             ->where('user_id', $userId)
@@ -89,9 +89,9 @@ class TokenController extends BaseController
     /**
      * Revoke a token.
      */
-    public function revoke($id)
+    public function revoke(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $token = ApiToken::where('id', $id)
             ->where('user_id', $userId)
@@ -109,9 +109,9 @@ class TokenController extends BaseController
     /**
      * Activate a token.
      */
-    public function activate($id)
+    public function activate(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $token = ApiToken::where('id', $id)
             ->where('user_id', $userId)

@@ -12,7 +12,7 @@ class ProjectController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $projects = Project::where('user_id', $userId)
@@ -43,9 +43,9 @@ class ProjectController extends BaseController
     /**
      * Get a single project with stats.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $project = Project::where('id', $id)
             ->where('user_id', $userId)
@@ -78,9 +78,9 @@ class ProjectController extends BaseController
     /**
      * Get project analytics summary.
      */
-    public function stats($id)
+    public function stats(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $project = Project::where('id', $id)
             ->where('user_id', $userId)

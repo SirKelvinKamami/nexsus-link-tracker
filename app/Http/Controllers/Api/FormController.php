@@ -15,7 +15,7 @@ class FormController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $query = Form::where('user_id', $userId);
@@ -45,9 +45,9 @@ class FormController extends BaseController
     /**
      * Get a single form with fields.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $form = Form::where('id', $id)
             ->where('user_id', $userId)
@@ -94,7 +94,7 @@ class FormController extends BaseController
      */
     public function responses(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $form = Form::where('id', $id)
             ->where('user_id', $userId)
@@ -127,9 +127,9 @@ class FormController extends BaseController
     /**
      * Get form statistics.
      */
-    public function stats($id)
+    public function stats(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $form = Form::where('id', $id)
             ->where('user_id', $userId)
@@ -176,7 +176,7 @@ class FormController extends BaseController
      */
     public function exportAll(Request $request): Response
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $formId = $request->input('form_id');
 
         $query = FormResponse::with('form:id,title,slug');
