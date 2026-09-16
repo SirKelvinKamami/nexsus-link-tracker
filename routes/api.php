@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\FormController;
 use App\Http\Controllers\Api\LandingPageController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\WebhookController;
+use App\Http\Controllers\Api\TokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,13 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::put('/webhooks/{id}', [WebhookController::class, 'update']);
     Route::delete('/webhooks/{id}', [WebhookController::class, 'destroy']);
     Route::post('/webhooks/{id}/test', [WebhookController::class, 'test']);
+
+    // API Tokens
+    Route::get('/tokens', [TokenController::class, 'index']);
+    Route::post('/tokens', [TokenController::class, 'store']);
+    Route::delete('/tokens/{id}', [TokenController::class, 'destroy']);
+    Route::post('/tokens/{id}/revoke', [TokenController::class, 'revoke']);
+    Route::post('/tokens/{id}/activate', [TokenController::class, 'activate']);
 
     // Export
     Route::get('/export/clicks', [AnalyticsController::class, 'exportClicks']);

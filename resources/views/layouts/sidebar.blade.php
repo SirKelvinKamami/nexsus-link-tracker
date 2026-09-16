@@ -267,6 +267,16 @@ $usrhandl = Auth::user()->littlelink_name;
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(2) == 'api-tokens' ? 'active' : ''}}" href="{{ url('/studio/api-tokens') }}">
+                            <i class="icon">
+                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18c-4.418 0-8-3.582-8-8s3.582-8 8-8 8 3.582 8 8-3.582 8-8 8zm-1-13v6l5 3-.5.866-5.5-3.3V7h1z" fill="currentColor"/>
+                                </svg>
+                            </i>
+                            <span class="item-name">API Tokens</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::segment(2) == 'page' ? 'active' : ''}}" href="{{ url('/studio/page') }}">
                             <i class="icon">
                                  <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

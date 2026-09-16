@@ -11,6 +11,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PublicLandingPageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\ApiTokenController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -152,6 +153,13 @@ Route::put('/studio/webhooks/{id}', [WebhookController::class, 'update'])->name(
 Route::delete('/studio/webhooks/{id}', [WebhookController::class, 'destroy'])->name('webhooks.destroy');
 Route::post('/studio/webhooks/{id}/test', [WebhookController::class, 'test'])->name('webhooks.test');
 Route::post('/studio/webhooks/{id}/redeliver/{deliveryId}', [WebhookController::class, 'redeliver'])->name('webhooks.redeliver');
+
+Route::get('/studio/api-tokens', [ApiTokenController::class, 'index'])->name('api-tokens.index');
+Route::get('/studio/api-tokens/create', [ApiTokenController::class, 'create'])->name('api-tokens.create');
+Route::post('/studio/api-tokens', [ApiTokenController::class, 'store'])->name('api-tokens.store');
+Route::delete('/studio/api-tokens/{id}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
+Route::post('/studio/api-tokens/{id}/revoke', [ApiTokenController::class, 'revoke'])->name('api-tokens.revoke');
+Route::post('/studio/api-tokens/{id}/activate', [ApiTokenController::class, 'activate'])->name('api-tokens.activate');
 Route::get('/studio/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
 Route::post('/studio/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
 Route::get('/studio/landing-pages/{id}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');

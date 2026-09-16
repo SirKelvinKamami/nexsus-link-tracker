@@ -53,6 +53,9 @@ class BaseController extends Controller
         if ($request->user()) {
             return $request->user()->id;
         }
+        if ($request->input('_api_user_id')) {
+            return (int) $request->input('_api_user_id');
+        }
         return \App\Models\User::where('role', 'admin')->value('id');
     }
 }

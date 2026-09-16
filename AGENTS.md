@@ -3,7 +3,7 @@
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
 **Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 6 Complete — Integrations & Export
+**Status:** Phase 7 Complete — OAuth2 API Tokens
 
 ---
 
@@ -143,6 +143,17 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] API endpoints for webhooks
 - [x] Sidebar navigation link
 
+### Phase 7 — OAuth2 API Tokens ✅
+- [x] `api_tokens` table (name, token hash, prefix, scopes, expiration)
+- [x] Token CRUD in studio + API
+- [x] Token scopes (read, write, admin)
+- [x] Token expiration support
+- [x] Token usage tracking (last used, count, IP)
+- [x] HMAC-SHA256 token hashing
+- [x] Backward compatibility with env API_TOKEN
+- [x] API endpoints for token management
+- [x] Sidebar navigation link
+
 ---
 
 ## API Endpoints (Phase 1)
@@ -154,10 +165,11 @@ All API requests require a Bearer token:
 ```
 Authorization: Bearer {API_TOKEN}
 ```
-Set `API_TOKEN` in `.env`. Generate with:
-```bash
-php artisan tinker --execute="echo bin2hex(random_bytes(32));"
-```
+Set `API_TOKEN` in `.env` for the default token. Or create tokens via:
+- Studio: `/studio/api-tokens`
+- API: `POST /api/v1/tokens`
+
+Tokens support scopes (read, write, admin) and optional expiration.
 
 ### Endpoints
 
@@ -184,6 +196,11 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 | PUT | `/api/v1/webhooks/{id}` | Update a webhook |
 | DELETE | `/api/v1/webhooks/{id}` | Delete a webhook |
 | POST | `/api/v1/webhooks/{id}/test` | Test a webhook |
+| GET | `/api/v1/tokens` | List all API tokens |
+| POST | `/api/v1/tokens` | Create a token |
+| DELETE | `/api/v1/tokens/{id}` | Delete a token |
+| POST | `/api/v1/tokens/{id}/revoke` | Revoke a token |
+| POST | `/api/v1/tokens/{id}/activate` | Activate a token |
 | GET | `/api/v1/export/clicks` | Export clicks as CSV |
 | GET | `/api/v1/export/links` | Export links as CSV |
 | GET | `/api/v1/export/forms` | Export form responses as CSV |
@@ -301,4 +318,5 @@ const daily = await trackerService.getDailyClicks();
 **Phase 4 Status:** Complete (landing pages + API endpoints)
 **Phase 5 Status:** Complete (projects/workspaces + API endpoints)
 **Phase 6 Status:** Complete (webhooks + CSV export + API endpoints)
-**Next:** Phase 7 (OAuth2 API tokens — optional)
+**Phase 7 Status:** Complete (OAuth2 API tokens + scopes)
+**Next:** Phase 8 (Future enhancements — Docker deploy, etc.)
