@@ -57,9 +57,10 @@ php artisan db:seed --force || true
 # (safe: no route/view caching here)
 php artisan config:cache || php artisan config:clear
 
-# Bind nginx to the platform-provided port (Render sets PORT); default 8080
+# Bind nginx to the platform-provided port (Render sets PORT; default 8080).
+# Matches whichever numeric listen the build baked in (80/10000/8080).
 LISTEN_PORT="${PORT:-8080}"
-sed -i "s/^    listen 80;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
+sed -i "s/^    listen [0-9]*;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
 echo "nginx listening on port ${LISTEN_PORT}"
 
 echo "Entrypoint complete — starting services."

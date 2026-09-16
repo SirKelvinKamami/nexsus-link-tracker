@@ -4,6 +4,7 @@
 FROM php:8.2-fpm-alpine AS base
 
 RUN apk add --no-cache \
+        unzip \
         libpng-dev \
         libjpeg-turbo-dev \
         freetype-dev \
@@ -22,6 +23,7 @@ RUN apk add --no-cache \
         pcntl \
         bcmath \
         gd \
+        xml \
         zip \
         intl \
         opcache \
@@ -70,8 +72,8 @@ COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
     && chown -R www-data:www-data storage bootstrap/cache database \
     && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx \
-    && mkdir -p /run/nginx \
-    && chown -R www-data:www-data /run/nginx
+    && mkdir -p /run/nginx /var/log/supervisor \
+    && chown -R www-data:www-data /run/nginx /var/log/supervisor
 
 # Production opcache: timestamps disabled (immutable image), generous caches
 RUN { \
@@ -88,7 +90,9 @@ COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-# Run everything (entrypoint, php-fpm, nginx) as the unprivileged pool user
+# Run everything (entrypoint, php-fpm, nginx) as the unprivileged pool user.
+# The entrypoint binds nginx to the platform-provided port (Render sets PORT;
+# default 8080) regardless of which listen the build baked in.
 USER www-data
 
 EXPOSE 8080
