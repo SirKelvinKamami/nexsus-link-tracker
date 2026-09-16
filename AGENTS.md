@@ -21,6 +21,8 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   ├── PublicLandingPageController.php # Public LP renderer (Phase 4)
 │   │   ├── ProjectController.php     # Projects CRUD (Phase 5)
 │   │   ├── WebhookController.php     # Webhooks CRUD (Phase 6)
+│   │   ├── ApiTokenController.php    # API Tokens CRUD (Phase 7)
+│   │   ├── ShareLinkController.php   # Share Links CRUD (Branding)
 │   │   └── Api/                      # REST API controllers (Phase 1)
 │   ├── Models/
 │   │   ├── Link.php                  # Link model (random 9-digit IDs)
@@ -32,6 +34,8 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   ├── Project.php               # Project model (Phase 5)
 │   │   ├── Webhook.php               # Webhook model (Phase 6)
 │   │   ├── WebhookDelivery.php       # Webhook delivery log (Phase 6)
+│   │   ├── ApiToken.php              # API Token model (Phase 7)
+│   │   ├── ShareLink.php             # Share Link model (Branding)
 │   │   └── ...
 │   ├── Services/
 │   │   ├── ClickTracker.php          # Click recording service
@@ -57,7 +61,8 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 │   │   ├── documents.blade.php       # Document management view
 │   │   ├── forms/                    # Form builder views (Phase 3)
 │   │   ├── landing-pages/            # LP builder views (Phase 4)
-│   │   └── projects/                 # Project management views (Phase 5)
+│   │   ├── projects/                 # Project management views (Phase 5)
+│   │   └── share-links/              # Share links views (Branding)
 │   └── ...
 └── AGENTS.md                         # This file
 ```
@@ -171,6 +176,30 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] Production logging configuration
 - [x] Cache warming command (`php artisan cache:warm`)
 - [x] All API endpoints tested and verified
+
+### Branding Phase — Nexsus Identity ✅
+- [x] Custom Nexsus SVG logo with gradient (purple/blue/pink) — `public/assets/nexsus/images/logo.svg`
+- [x] Nexsus favicon SVG — `public/assets/nexsus/images/favicon.svg`
+- [x] Updated home page (`home.blade.php`) with Nexsus branding
+- [x] Updated guest layout (`guest.blade.php`) with Nexsus favicon
+- [x] Updated auth pages (login, register, forgot-password) with Nexsus logo
+- [x] Updated sidebar with Nexsus logo and navigation
+- [x] Subtle "Powered by LinkStack" attribution in footer only
+- [x] Color scheme: `#667eea → #764ba2 → #f093fb` gradient
+
+### Share Links Feature ✅
+- [x] `share_links` table (name, token, type, target_id, expires_at, password, max_uses, use_count, is_active)
+- [x] `ShareLink` model with scopes and helpers
+- [x] `ShareLinkController` (CRUD + public access at `/share/{token}`)
+- [x] Studio views: index, create
+- [x] Public share views: password, expired, limit-reached, dashboard, analytics, custom
+- [x] Sidebar navigation link: "Share Links"
+- [x] Link types: dashboard, analytics, form, landing_page, custom
+- [x] Optional password protection (bcrypt)
+- [x] Optional expiration (1 day to 1 year)
+- [x] Optional max uses limit
+- [x] Usage tracking (use_count)
+- [x] Routes: `/studio/share-links/*` (auth), `/share/{token}` (public)
 
 ---
 
@@ -387,4 +416,5 @@ const daily = await trackerService.getDailyClicks();
 **Phase 7 Status:** Complete (OAuth2 API tokens + scopes)
 **Phase 8 Status:** Complete (Docker deployment)
 **Phase 9 Status:** Complete (production hardening + monitoring)
+**Branding Phase:** Complete (Nexsus identity, logo, colors, permanent share links)
 **Next:** Production deployment ready

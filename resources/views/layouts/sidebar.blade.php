@@ -28,11 +28,8 @@ $usrhandl = Auth::user()->littlelink_name;
     @endphp
 
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-      <link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
-      @else
-      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
-      @endif
+      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/favicon.svg') }}">
+      <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/favicon.svg') }}">
       
       <!-- Library / Plugin Css Build -->
       <link rel="stylesheet" href="{{asset('assets/css/core/libs.min.css')}}" />
@@ -81,21 +78,12 @@ $usrhandl = Auth::user()->littlelink_name;
                 
                 <!--Logo start-->
                 <div class="logo-main">
-                @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
                 <div class="logo-normal">
-                  <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
-              </div>
-              <div class="logo-mini">
-                <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
-              </div>
-                @else
-                <div class="logo-normal">
-                  <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
-              </div>
-              <div class="logo-mini">
-                <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
-              </div>
-                @endif
+                  <img class="img logo" src="{{ asset('assets/nexsus/images/logo.svg') }}" style="width:auto;height:30px;">
+                </div>
+                <div class="logo-mini">
+                  <img class="img logo" src="{{ asset('assets/nexsus/images/logo.svg') }}" style="width:auto;height:30px;">
+                </div>
                 </div>
                 <!--logo End-->
                 
@@ -277,6 +265,16 @@ $usrhandl = Auth::user()->littlelink_name;
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ Request::segment(2) == 'share-links' ? 'active' : ''}}" href="{{ url('/studio/share-links') }}">
+                            <i class="icon">
+                                 <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81L7.12 14.29c-.05.21-.08.43-.08.65s.03.44.08.65l7.05 4.11c.52-.47 1.2-.77 1.96-.77 1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3z" fill="currentColor"/>
+                                </svg>
+                            </i>
+                            <span class="item-name">Share Links</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ Request::segment(2) == 'page' ? 'active' : ''}}" href="{{ url('/studio/page') }}">
                             <i class="icon">
                                  <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -309,21 +307,12 @@ $usrhandl = Auth::user()->littlelink_name;
                 
                 <!--Logo start-->
                 <div class="logo-main">
-                  @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
                   <div class="logo-normal">
-                    <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
-                </div>
-                <div class="logo-mini">
-                  <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
-                </div>
-                  @else
-                  <div class="logo-normal">
-                    <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
-                </div>
-                <div class="logo-mini">
-                  <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
-                </div>
-                  @endif
+                    <img class="img logo" src="{{ asset('assets/nexsus/images/logo.svg') }}" style="width:auto;height:30px;">
+                  </div>
+                  <div class="logo-mini">
+                    <img class="img logo" src="{{ asset('assets/nexsus/images/logo.svg') }}" style="width:auto;height:30px;">
+                  </div>
                   </div>
                 <!--logo End-->
                 

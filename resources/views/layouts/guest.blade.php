@@ -10,11 +10,8 @@
 
         <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
 
-		@if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-		<link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
-		@else
-		<link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
-		@endif
+		<link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/favicon.svg') }}">
+		<link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/favicon.svg') }}">
 
         <title>{{ config('app.name') }}</title>
 

@@ -12,6 +12,7 @@ use App\Http\Controllers\PublicLandingPageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\ApiTokenController;
+use App\Http\Controllers\ShareLinkController;
 use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\LinkTypeViewController;
 use App\Http\Controllers\PagesController;
@@ -160,6 +161,15 @@ Route::post('/studio/api-tokens', [ApiTokenController::class, 'store'])->name('a
 Route::delete('/studio/api-tokens/{id}', [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy');
 Route::post('/studio/api-tokens/{id}/revoke', [ApiTokenController::class, 'revoke'])->name('api-tokens.revoke');
 Route::post('/studio/api-tokens/{id}/activate', [ApiTokenController::class, 'activate'])->name('api-tokens.activate');
+
+Route::get('/studio/share-links', [ShareLinkController::class, 'index'])->name('share-links.index');
+Route::get('/studio/share-links/create', [ShareLinkController::class, 'create'])->name('share-links.create');
+Route::post('/studio/share-links', [ShareLinkController::class, 'store'])->name('share-links.store');
+Route::delete('/studio/share-links/{id}', [ShareLinkController::class, 'destroy'])->name('share-links.destroy');
+Route::post('/studio/share-links/{id}/toggle', [ShareLinkController::class, 'toggle'])->name('share-links.toggle');
+
+Route::get('/share/{token}', [ShareLinkController::class, 'access'])->name('share.access');
+Route::post('/share/{token}', [ShareLinkController::class, 'access'])->name('share.access.post');
 Route::get('/studio/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
 Route::post('/studio/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
 Route::get('/studio/landing-pages/{id}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
