@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build-and-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP 8.2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, gd, exif, pdo_sqlite, sqlite3, intl, zip, bcmath, pcntl
+          coverage: none
+
+      - name: Setup Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Cache Composer packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer
+          key: composer-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-${{ runner.os }}-
+
+      - name: Create environment file
+        run: |
+          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\n' "$GITHUB_WORKSPACE" > .env
+
+      - name: Install PHP dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
+
+      - name: Lint PHP files
+        run: |
+          find app routes config database/seeders database/migrations -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Install Node dependencies and build assets
+        run: |
+          npm ci --no-audit --no-fund
+          npm run production
+
+      - name: Prepare SQLite database
+        run: |
+          touch database/ci.sqlite
+          php artisan key:generate --force --no-interaction
+          php artisan migrate --force
+          php artisan db:seed --force
+          php artisan config:cache
+
+      - name: Verify baseline data and driver tables
+        run: |
+          php artisan tinker --execute="
+            if (\App\Models\Page::count() < 1) { fwrite(STDERR, 'FAIL: no pages row'.PHP_EOL); exit(1); }
+            if (\App\Models\User::count() < 1) { fwrite(STDERR, 'FAIL: no users row'.PHP_EOL); exit(1); }
+            foreach (['sessions', 'cache', 'jobs', 'failed_jobs'] as \$t) {
+              if (!Schema::hasTable(\$t)) { fwrite(STDERR, \"FAIL: missing table \$t\".PHP_EOL); exit(1); }
+            }
+            echo 'baseline OK'.PHP_EOL;
+          "
+
+      - name: Start server
+        run: |
+          php -S 127.0.0.1:8000 index.php > server.log 2>&1 &
+          echo $! > server.pid
+          for i in $(seq 1 15); do
+            if curl -sf -o /dev/null "http://127.0.0.1:8000/api/v1/health/live"; then break; fi
+            sleep 1
+          done
+
+      - name: Smoke tests
+        run: |
+          base="http://127.0.0.1:8000"
+          for path in "/" "/login" "/register" "/api/v1/health/live"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "$base$path")
+            echo "GET $path -> $code"
+            if [ "$code" != "200" ]; then
+              echo "FAIL: $path returned $code"
+              exit 1
+            fi
+          done
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: laravel-logs
+          path: |
+            storage/logs/*.log
+            server.log
+          if-no-files-found: ignore
