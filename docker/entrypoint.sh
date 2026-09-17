@@ -17,24 +17,39 @@ if [ -z "$APP_KEY" ]; then
 fi
 
 # Wait for the database to accept connections (skip for sqlite)
+# Wait (bounded) for the database — but NEVER block the web port from opening.
 if [ "$DB_CONNECTION" != "sqlite" ] && [ -n "$DB_HOST" ]; then
-    echo "Waiting for database at $DB_HOST:$DB_PORT..."
-    until php -r '
-        try {
-            new PDO(
-                sprintf("%s:host=%s;port=%s;dbname=%s", getenv("DB_CONNECTION"), getenv("DB_HOST"), getenv("DB_PORT"), getenv("DB_DATABASE")),
-                getenv("DB_USERNAME"),
-                getenv("DB_PASSWORD"),
-                [PDO::ATTR_TIMEOUT => 3]
-            );
-            exit(0);
-        } catch (Throwable $e) {
-            exit(1);
-        }
-    '; do
+    echo "Waiting for database at $DB_HOST:$DB_PORT (max 15 attempts)..."
+    db_ok=0
+    try=1
+    while [ $try -le 15 ]; do
+        if php -r '
+            try {
+                new PDO(
+                    sprintf("%s:host=%s;port=%s;dbname=%s", getenv("DB_CONNECTION"), getenv("DB_HOST"), getenv("DB_PORT"), getenv("DB_DATABASE")),
+                    getenv("DB_USERNAME"),
+                    getenv("DB_PASSWORD"),
+                    [PDO::ATTR_TIMEOUT => 3]
+                );
+                exit(0);
+            } catch (Throwable $e) {
+                fwrite(STDERR, "PDO attempt $try failed: ".$e->getMessage()."\n");
+                exit(1);
+            }
+        '; then
+            db_ok=1
+            echo "Database is up (attempt $try)."
+            break
+        fi
+        echo "  database not ready (attempt $try/15), retrying in 2s..."
+        try=$((try + 1))
         sleep 2
     done
-    echo "Database is up."
+    if [ "$db_ok" != "1" ]; then
+        echo "WARNING: database unreachable after 15 attempts - starting web server anyway."
+    fi
+else
+    db_ok=1
 fi
 
 # Create the SQLite database file when using sqlite
@@ -49,9 +64,14 @@ mkdir -p storage/framework/cache/data storage/framework/sessions storage/framewo
 chown -R www-data:www-data storage bootstrap/cache database 2>/dev/null || true
 chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
 
-# Run pending migrations on every deploy (seeders are idempotent)
-php artisan migrate --force || true
-php artisan db:seed --force || true
+# Run pending migrations on every deploy (seeders are idempotent) —
+# but only when the database answered; never block the web server on it.
+if [ "${db_ok:-0}" = "1" ]; then
+    php artisan migrate --force || true
+    php artisan db:seed --force || true
+else
+    echo "Skipping migrations: database unreachable."
+fi
 
 # Ensure no stale config cache can short-circuit env() feature flags —
 # this app reads env() directly in routes/middleware, which returns null
