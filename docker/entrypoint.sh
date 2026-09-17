@@ -53,9 +53,10 @@ chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
 php artisan migrate --force || true
 php artisan db:seed --force || true
 
-# Cache config for production speed — but never fail the boot on it
-# (safe: no route/view caching here)
-php artisan config:cache || php artisan config:clear
+# Ensure no stale config cache can short-circuit env() feature flags —
+# this app reads env() directly in routes/middleware, which returns null
+# once config is cached (upstream LinkStack design).
+php artisan config:clear 2>/dev/null || true
 
 # Bind nginx to the platform-provided port (Render sets PORT; default 8080).
 # Matches whichever numeric listen the build baked in (80/10000/8080).

@@ -61,7 +61,8 @@ jobs:
           php artisan key:generate --force --no-interaction
           php artisan migrate --force
           php artisan db:seed --force
-          php artisan config:cache
+          # Never config:cache this app: routes/middleware read env() directly,
+          # which returns null once config is cached (upstream LinkStack design).
 
       - name: Verify baseline data and driver tables
         run: |

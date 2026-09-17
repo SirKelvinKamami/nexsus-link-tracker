@@ -88,12 +88,9 @@ if [ -f /var/www/html/storage/logs/laravel.log ]; then
   tail -n 100 /var/www/html/storage/logs/laravel.log 2>/dev/null || true
 fi
 
-# Cache for performance (ignore failures) — use APP_DEBUG=true to see errors
-if [ "$APP_DEBUG" = "false" ]; then
-  php artisan config:cache 2>&1 || true
-  php artisan route:cache 2>&1 || true
-  php artisan view:cache 2>&1 || true
-fi
+# NOTE: never config:cache this app — routes/middleware read env()
+# directly, which returns null once config is cached (upstream design).
+php artisan config:clear 2>&1 || true
 
 # Test nginx config
 nginx -t
