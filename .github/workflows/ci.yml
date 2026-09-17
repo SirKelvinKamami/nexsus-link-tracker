@@ -40,6 +40,9 @@ jobs:
       - name: Create environment file
         run: |
           printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\n' "$GITHUB_WORKSPACE" > .env
+          # The sqlite file must exist BEFORE composer install: the
+          # post-autoload-dump hook boots artisan, which opens the DB connection.
+          touch database/ci.sqlite
 
       - name: Install PHP dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
@@ -55,7 +58,6 @@ jobs:
 
       - name: Prepare SQLite database
         run: |
-          touch database/ci.sqlite
           php artisan key:generate --force --no-interaction
           php artisan migrate --force
           php artisan db:seed --force
