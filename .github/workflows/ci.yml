@@ -39,7 +39,7 @@ jobs:
 
       - name: Create environment file
         run: |
-          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\n' "$GITHUB_WORKSPACE" > .env
+          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\nALLOW_REGISTRATION=true\n' "$GITHUB_WORKSPACE" > .env
           # The sqlite file must exist BEFORE composer install: the
           # post-autoload-dump hook boots artisan, which opens the DB connection.
           touch database/ci.sqlite
