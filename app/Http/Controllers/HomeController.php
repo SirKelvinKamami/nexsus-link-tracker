@@ -19,7 +19,10 @@ class HomeController extends Controller
 
         $countButton = Button::count();
 
-        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.littlelink_name', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id')->orderBy('created_at', 'desc')->take(4)->get();
+        // Postgres requires every selected column to be grouped or aggregated
+        // (MySQL-only behavior upstream). Grouping by the selected user columns
+        // is semantically identical: user_id determines them via the PK join.
+        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.littlelink_name', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.littlelink_name', 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
 
         return view('home', ['message' => $message, 'countButton' => $countButton, 'updatedPages' => $updatedPages]);
     }
@@ -31,7 +34,8 @@ class HomeController extends Controller
 
         $countButton = Button::count();
 
-        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.littlelink_name', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id')->orderBy('created_at', 'desc')->take(4)->get();
+        // Same Postgres GROUP BY fix as home()
+        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.littlelink_name', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.littlelink_name', 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
 
         return view('demo', ['message' => $message, 'countButton' => $countButton, 'updatedPages' => $updatedPages]);
     }
