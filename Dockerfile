@@ -71,6 +71,7 @@ COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
 # port from $PORT at boot; /var/lib/nginx so nginx can run unprivileged.
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
     && mkdir -p assets/favicon/icons \
+    && chown -R www-data:www-data assets/favicon/icons \
     && chown -R www-data:www-data storage bootstrap/cache database \
     && mkdir -p /var/lib/nginx/logs /var/log/nginx /run/nginx /var/log/supervisor \
     && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx /var/log/nginx /run/nginx /var/log/supervisor \
