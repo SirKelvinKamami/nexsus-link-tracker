@@ -12,8 +12,11 @@ services:
         value: production
       - key: APP_DEBUG
         value: false
+      # generateValue produces a raw string WITHOUT Laravel's "base64:"
+      # prefix -> "Unsupported cipher" 500s on every page. The key is managed
+      # in the dashboard (set via API) and left untouched by blueprint syncs.
       - key: APP_KEY
-        generateValue: true
+        sync: false
       # fromService property: host resolved to the bare service name, not the
       # FQDN — pin the public URL explicitly instead.
       - key: APP_URL
