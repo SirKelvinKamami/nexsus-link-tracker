@@ -4,7 +4,7 @@ $ga4Id = env('GA4_ID');
 @endphp
 
 @if($gtmId || $ga4Id)
-@push('linkstack-head')
+@push('nexsus-head')
 <!-- Nexsus Analytics -->
 <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);}</script>
 @if($gtmId)
@@ -20,7 +20,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 @endif
 @endpush
 
-@push('linkstack-body-start')
+@push('nexsus-body-start')
 @if($gtmId)
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>

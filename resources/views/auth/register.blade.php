@@ -46,10 +46,10 @@ foreach($pages as $page)
                     </div>
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label for="littlelink_name" class="form-label">{{__('messages.Page URL')}}</label>
+                        <label for="handle" class="form-label">{{__('messages.Page URL')}}</label>
                         <div class="input-group mb-3 has-validation">
                           <span class="input-group-text" id="basic-addon3">{{str_replace(['http://', 'https://'], '', url(''))}}/@</span>
-                          <input type="littlelink_name" class="form-control" id="littlelink_name" name="littlelink_name" aria-describedby="littlelink_name" placeholder=" " :value="old('littlelink_name')" required autofocus >
+                          <input type="text" class="form-control" id="handle" name="handle" aria-describedby="handle" placeholder=" " :value="old('handle')" required autofocus >
                         </div>
                       </div>
                     </div>

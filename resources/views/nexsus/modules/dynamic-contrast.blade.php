@@ -1,6 +1,6 @@
 @if($customBackgroundExists == true)
   @if(($info->theme == '' || $info->theme == 'default') || theme('enable_dynamic_contrast') == 'true')
-    @push('linkstack-body-end')
+    @push('nexsus-body-end')
       <script>
           BackgroundCheck.init({
           targets: '.dynamic-contrast',
@@ -15,7 +15,7 @@
       </script>
     @endpush
 
-    @push('linkstack-head-end')
+    @push('nexsus-head-end')
       <style>
       .background--light {
         color: black !important;

@@ -31,7 +31,7 @@
         @if ((auth()->user()->role == 'admin' && $Vgit > $Vlocal) || $isBeta)
             @if (empty($_SERVER['QUERY_STRING']))
                 <div class="logo-container fadein">
-                    <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+                    <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
                 </div>
                 <h1>{{ __('messages.Updater') }}</h1>
                 @if ($isBeta)
@@ -63,7 +63,7 @@
 
             @if ($_SERVER['QUERY_STRING'] === 'updating')
                 <div class="logo-container fadein">
-                    <img class="logo-img" src="{{ asset('assets/linkstack/images/logo-loading.svg') }}" alt="Logo">
+                    <img class="logo-img" src="{{ asset('assets/nexsus/images/logo-loading.svg') }}" alt="Logo">
                 </div>
                 <h1 class="loadingtxt">{{ __('messages.Updating') }}</h1>
                 @php
@@ -123,7 +123,7 @@
                     <meta http-equiv="refresh" content="2; URL={{ url()->current() }}/?backups" />
                 @endpush
                 <div class="logo-container fadein">
-                    <img class="logo-img" src="{{ asset('assets/linkstack/images/logo-loading.svg') }}" alt="Logo">
+                    <img class="logo-img" src="{{ asset('assets/nexsus/images/logo-loading.svg') }}" alt="Logo">
                 </div>
                 <h1 class="loadingtxt">{{ __('messages.Creating backup') }}</h1>
             @endif
@@ -165,7 +165,7 @@
 
             @if ($_SERVER['QUERY_STRING'] === 'preparing')
                 <div class="logo-container fadein">
-                    <img class="logo-img" src="{{ asset('assets/linkstack/images/logo-loading.svg') }}" alt="Logo">
+                    <img class="logo-img" src="{{ asset('assets/nexsus/images/logo-loading.svg') }}" alt="Logo">
                 </div>
                 <h1 class="loadingtxt">{{ __('messages.Preparing update') }}</h1>
                 @php
@@ -196,7 +196,7 @@
 
         @elseif(empty($_SERVER['QUERY_STRING']))
             <div class="logo-container fadein">
-                <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+                <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
             </div>
             <h1>{{ __('messages.No new version') }}</h1>
             <h4>{{ __('messages.There is no new version available') }}</h4>
@@ -226,7 +226,7 @@
                 }
             @endphp
             <div class="logo-container fadein">
-                <img class="logo-img" src="{{ asset('assets/linkstack/images/logo-loading.svg') }}" alt="Logo">
+                <img class="logo-img" src="{{ asset('assets/nexsus/images/logo-loading.svg') }}" alt="Logo">
             </div>
             <h1 class="loadingtxt">{{ __('messages.Finishing up') }}</h1>
             @include('components.finishing')
@@ -258,7 +258,7 @@
 
         @if ($_SERVER['QUERY_STRING'] === 'success')
             <div class="logo-container fadein">
-                <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+                <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
             </div>
             <h1>{{ __('messages.Success!') }}</h1>
             @if ($isBeta)
@@ -293,7 +293,7 @@
             <?php EnvEditor::editKey('MAINTENANCE_MODE', false); ?>
 
             <div class="logo-container fadein">
-                <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+                <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
             </div>
             <h1>{{ __('messages.Error') }}</h1>
             <h4>{{ __('messages.Something went wrong with the update') }} :(</h4>

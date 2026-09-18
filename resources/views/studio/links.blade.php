@@ -94,7 +94,7 @@ if (isset($_COOKIE['LinkCount'])) {
                                                     <div class='col-12 p-2' style="max-width:300px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;" title="{{ $link->title }}">
                                                         <span class='h6'>
                                                             @if($button->name == "custom_website")
-                                                            <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><img style="margin-bottom:3px;margin-left:4px;margin-right:4px;max-width:15px;max-height:15px;" alt="button-icon" class="icon hvr-icon" src="@if(file_exists(base_path("assets/favicon/icons/").localIcon($link->id))){{url('assets/favicon/icons/'.localIcon($link->id))}}@else{{getFavIcon($link->id)}}@endif" onerror="this.onerror=null; this.src='{{asset('assets/linkstack/icons/website.svg')}}';"></span>
+                                                            <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><img style="margin-bottom:3px;margin-left:4px;margin-right:4px;max-width:15px;max-height:15px;" alt="button-icon" class="icon hvr-icon" src="@if(file_exists(base_path("assets/favicon/icons/").localIcon($link->id))){{url('assets/favicon/icons/'.localIcon($link->id))}}@else{{getFavIcon($link->id)}}@endif" onerror="this.onerror=null; this.src='{{asset('assets/nexsus/icons/website.svg')}}';"></span>
                                                             @elseif($button->name == "space")
                                                             <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><i style="margin-left:2.83px;margin-right:-1px;color:#fff;" class='bi bi-distribute-vertical'>&nbsp;</i></span>
                                                             @elseif($button->name == "heading")
@@ -104,7 +104,7 @@ if (isset($_COOKIE['LinkCount'])) {
                                                             @elseif($link->custom_icon && $link->type && $link->type !== 'predefined')
                                                             <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><i style="width:20px;margin:1px;color:#fff;" class='fa {{$link->custom_icon}}'>&nbsp;</i></span>
                                                             @else
-                                                            <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><img style="max-width:15px !important;" alt="button-icon" height="15" class="m-1 " src="{{ asset('\/assets/linkstack/icons\/') . $buttonName }}.svg "></span>
+                                                            <span class="bg-soft-secondary" style="border: 1px solid #d0d4d7 !important;border-radius:5px;width:25px!important;height:25px!important;"><img style="max-width:15px !important;" alt="button-icon" height="15" class="m-1 " src="{{ asset('\/assets/nexsus/icons\/') . $buttonName }}.svg "></span>
                                                             @endif
                             
                                                             {{strip_tags($link->title,'')}}</span>
@@ -205,7 +205,7 @@ if (isset($_COOKIE['LinkCount'])) {
                             <section class='pre-right text-gray-400 pre-side'>
                                 <h3 class="card-header"><i class="bi bi-window-fullscreen" style="font-style:normal!important;"> {{__('messages.Preview')}}</i></h3>
                                     <div class='card-body p-0 p-md-3'>
-                                            <center><iframe allowtransparency="true" id="frPreview1" style=" border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; max-width:500px !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
+                                             <center><iframe allowtransparency="true" id="frPreview1" style=" border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; max-width:500px !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->handle ?>">{{__('messages.No compatible browser')}}</iframe></center>
                                      </div>
                             </section>
                             </div>
@@ -214,7 +214,7 @@ if (isset($_COOKIE['LinkCount'])) {
                             <section style="margin-left:-15px;margin-right:-15px;" style="width:100%!important;" class='pre-bottom text-gray-400 pre-side'>
                                 <h3 class="card-header"><i class="bi bi-window-fullscreen" style="font-style:normal!important;">{{__('messages.Preview')}}</i></h3>
                                     <div class='card-body p-0 p-md-3'>
-                                            <center><iframe allowtransparency="true" id="frPreview2" style=" border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; width:100% !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe></center>
+                                             <center><iframe allowtransparency="true" id="frPreview2" style=" border-radius:0.25rem !important; background: #FFFFFF; min-height:600px; height:100%; width:100% !important;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->handle ?>">{{__('messages.No compatible browser')}}</iframe></center>
                                      </div>
                             </section><br>
                             

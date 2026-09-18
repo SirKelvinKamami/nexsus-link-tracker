@@ -1298,14 +1298,14 @@ button.button-scribd{
   filter: brightness(90%);
 }
 
-/* LinkStack */
-.button.button-linkstack {
+/* Nexsus Tracker */
+.button.button-nexsus {
   color: #FFFFFF;
   background: #300948;
   background: radial-gradient(circle, #300948 0%, #07051c 80%);
 }
-.button.button-linkstack:hover,
-.button.button-linkstack:focus {
+.button.button-nexsus:hover,
+.button.button-nexsus:focus {
   filter: brightness(90%);
 }
 /* Xbox */

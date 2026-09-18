@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $userId = Auth::user()->id;
 
-        $littlelink_name = Auth::user()->littlelink_name;
+        $handle = Auth::user()->handle;
         $userinfo = User::find($userId);
 
         $links = Link::where('user_id', $userId)->select('link')->count();
@@ -68,15 +68,15 @@ class UserController extends Controller
 
         $pageStats = [
             'visitors' => [
-                'all' => visits('App\Models\User', $littlelink_name)->count(),
-                'day' => visits('App\Models\User', $littlelink_name)->period('day')->count(),
-                'week' => visits('App\Models\User', $littlelink_name)->period('week')->count(),
-                'month' => visits('App\Models\User', $littlelink_name)->period('month')->count(),
-                'year' => visits('App\Models\User', $littlelink_name)->period('year')->count(),
+                'all' => visits('App\Models\User', $handle)->count(),
+                'day' => visits('App\Models\User', $handle)->period('day')->count(),
+                'week' => visits('App\Models\User', $handle)->period('week')->count(),
+                'month' => visits('App\Models\User', $handle)->period('month')->count(),
+                'year' => visits('App\Models\User', $handle)->period('year')->count(),
             ],
-            'os' => visits('App\Models\User', $littlelink_name)->operatingSystems(),
-            'referers' => visits('App\Models\User', $littlelink_name)->refs(),
-            'countries' => visits('App\Models\User', $littlelink_name)->countries(),
+            'os' => visits('App\Models\User', $handle)->operatingSystems(),
+            'referers' => visits('App\Models\User', $handle)->refs(),
+            'countries' => visits('App\Models\User', $handle)->countries(),
         ];
 
 
@@ -87,7 +87,7 @@ class UserController extends Controller
     public function analytics()
     {
         $userId = Auth::user()->id;
-        $littlelink_name = Auth::user()->littlelink_name;
+        $handle = Auth::user()->handle;
         $clicks = LinkClick::where('user_id', $userId);
 
         $totalClicks = (clone $clicks)->count();
@@ -189,11 +189,11 @@ class UserController extends Controller
             ->get();
 
         $pageViews = [
-            'all' => visits('App\Models\User', $littlelink_name)->count(),
-            'day' => visits('App\Models\User', $littlelink_name)->period('day')->count(),
-            'week' => visits('App\Models\User', $littlelink_name)->period('week')->count(),
-            'month' => visits('App\Models\User', $littlelink_name)->period('month')->count(),
-            'year' => visits('App\Models\User', $littlelink_name)->period('year')->count(),
+            'all' => visits('App\Models\User', $handle)->count(),
+            'day' => visits('App\Models\User', $handle)->period('day')->count(),
+            'week' => visits('App\Models\User', $handle)->period('week')->count(),
+            'month' => visits('App\Models\User', $handle)->period('month')->count(),
+            'year' => visits('App\Models\User', $handle)->period('year')->count(),
         ];
 
         return view('studio.analytics', compact(
@@ -220,26 +220,26 @@ class UserController extends Controller
     public function littlelink(request $request)
     {
         if(isset($request->useif)){
-            $littlelink_name = User::select('littlelink_name')->where('id', $request->littlelink)->value('littlelink_name');
+            $handle = User::select('handle')->where('id', $request->littlelink)->value('handle');
             $id = $request->littlelink;
         } else {
-            $littlelink_name = $request->littlelink;
-            $id = User::select('id')->where('littlelink_name', $littlelink_name)->value('id');
+            $handle = $request->littlelink;
+            $id = User::select('id')->where('handle', $handle)->value('id');
         }
 
         if (empty($id)) {
             return abort(404);
         }
      
-        $userinfo = User::select('id', 'name', 'littlelink_name', 'littlelink_description', 'theme', 'role', 'block')->where('id', $id)->first();
-        $information = User::select('name', 'littlelink_name', 'littlelink_description', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('id', 'name', 'handle', 'bio', 'theme', 'role', 'block')->where('id', $id)->first();
+        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
         
         if ($userinfo->block == 'yes') {
             return abort(404);
         }
         
         try {
-            visits("App\Models\User", $littlelink_name)->increment();
+            visits("App\Models\User", $handle)->increment();
         } catch (\Throwable $e) {
             report($e);
         }
@@ -266,27 +266,27 @@ class UserController extends Controller
             }
         }
 
-        return view('linkstack.linkstack', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'littlelink_name' => $littlelink_name]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'handle' => $handle]);
     }
 
     //Show littlelink page as home page if set in config
     public function littlelinkhome(request $request)
     {
-        $littlelink_name = env('HOME_URL');
-        $id = User::select('id')->where('littlelink_name', $littlelink_name)->value('id');
+        $handle = env('HOME_URL');
+        $id = User::select('id')->where('handle', $handle)->value('id');
 
 if (empty($id)) {
             return abort(404);
         }
       
         try {
-            visits("App\Models\User", $littlelink_name)->increment();
+            visits("App\Models\User", $handle)->increment();
         } catch (\Throwable $e) {
             report($e);
         }
 
-        $userinfo = User::select('id', 'name', 'littlelink_name', 'littlelink_description', 'theme', 'role', 'block')->where('id', $id)->first();
-        $information = User::select('name', 'littlelink_name', 'littlelink_description', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('id', 'name', 'handle', 'bio', 'theme', 'role', 'block')->where('id', $id)->first();
+        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
         
         $links = DB::table('links')
         ->join('buttons', 'buttons.id', '=', 'links.button_id')
@@ -310,14 +310,14 @@ if (empty($id)) {
             }
         }
 
-        return view('linkstack.linkstack', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'littlelink_name' => $littlelink_name]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'handle' => $handle]);
     }
 
     //Redirect to user page
     public function userRedirect(request $request)
     {
         $id = $request->id;
-        $user = User::select('littlelink_name')->where('id', $id)->value('littlelink_name');
+        $user = User::select('handle')->where('id', $id)->value('handle');
 
         if (empty($id)) {
             return abort(404);
@@ -778,7 +778,7 @@ if (empty($id)) {
     {
         $userId = Auth::user()->id;
 
-        $data['pages'] = User::where('id', $userId)->select('littlelink_name', 'littlelink_description', 'image', 'name')->get();
+        $data['pages'] = User::where('id', $userId)->select('handle', 'bio', 'image', 'name')->get();
 
         return view('/studio/page', $data);
     }
@@ -787,10 +787,10 @@ if (empty($id)) {
     public function editPage(Request $request)
     {
         $userId = Auth::user()->id;
-        $littlelink_name = Auth::user()->littlelink_name;
+        $handle = Auth::user()->handle;
     
         $validator = Validator::make($request->all(), [
-            'littlelink_name' => [
+            'handle' => [
                 'sometimes',
                 'max:255',
                 'string',
@@ -799,7 +799,7 @@ if (empty($id)) {
             'name' => 'sometimes|max:255|string',
             'image' => 'sometimes|image|mimes:jpeg,jpg,png,webp|max:2048', // Max file size: 2MB
         ], [
-            'littlelink_name.unique' => __('messages.That handle has already been taken'),
+            'handle.unique' => __('messages.That handle has already been taken'),
             'image.image' => __('messages.The selected file must be an image'),
             'image.mimes' => __('messages.The image must be') . ' JPEG, JPG, PNG, webP.',
             'image.max' => __('messages.The image size should not exceed 2MB'),
@@ -810,7 +810,7 @@ if (empty($id)) {
         }
     
         $profilePhoto = $request->file('image');
-        $pageName = $request->littlelink_name;
+        $pageName = $request->handle;
         $pageDescription = strip_tags($request->pageDescription, '<a><p><strong><i><ul><ol><li><blockquote><h2><h3><h4>');
         $pageDescription = preg_replace('/\bon\w+\s*=\s*(["\']).*?\1/i', '', $pageDescription);
         $pageDescription = preg_replace('/\bon\w+\s*=\s*[^\s>]*/i', '', $pageDescription);
@@ -821,13 +821,13 @@ if (empty($id)) {
         $sharebtn = $request->sharebtn;
         $tablinks = $request->tablinks;
 
-        if(env('HOME_URL') !== '' && $pageName != $littlelink_name && $littlelink_name == env('HOME_URL')){
+        if(env('HOME_URL') !== '' && $pageName != $handle && $handle == env('HOME_URL')){
             EnvEditor::editKey('HOME_URL', $pageName);
         }
     
         User::where('id', $userId)->update([
-            'littlelink_name' => $pageName,
-            'littlelink_description' => $pageDescription,
+            'handle' => $pageName,
+            'bio' => $pageDescription,
             'name' => $name
         ]);
     
@@ -868,7 +868,7 @@ if (empty($id)) {
     public function themeBackground(Request $request)
     {
         $userId = Auth::user()->id;
-        $littlelink_name = Auth::user()->littlelink_name;
+        $handle = Auth::user()->handle;
     
         $request->validate([
             'image' => 'required|image|mimes:jpeg,jpg,png,webp,gif|max:2048', // Max file size: 2MB
@@ -933,7 +933,7 @@ if (empty($id)) {
     {
         $userId = Auth::user()->id;
 
-        $data['pages'] = User::where('id', $userId)->select('littlelink_name', 'theme')->get();
+        $data['pages'] = User::where('id', $userId)->select('handle', 'theme')->get();
 
         return view('/studio/theme', $data);
     }
@@ -1069,19 +1069,19 @@ if (empty($id)) {
     //Show user theme credit page
     public function theme(request $request)
     {
-        $littlelink_name = $request->littlelink;
-        $id = User::select('id')->where('littlelink_name', $littlelink_name)->value('id');
+        $handle = $request->littlelink;
+        $id = User::select('id')->where('handle', $handle)->value('id');
 
         if (empty($id)) {
             return abort(404);
         }
 
-        $userinfo = User::select('name', 'littlelink_name', 'littlelink_description', 'theme')->where('id', $id)->first();
-        $information = User::select('name', 'littlelink_name', 'littlelink_description', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->first();
+        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
 
         $links = DB::table('links')->join('buttons', 'buttons.id', '=', 'links.button_id')->select('links.link', 'links.id', 'links.button_id', 'links.title', 'links.custom_css', 'links.custom_icon', 'buttons.name')->where('user_id', $id)->orderBy('up_link', 'asc')->orderBy('order', 'asc')->get();
 
-        return view('components/theme', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'littlelink_name' => $littlelink_name]);
+        return view('components/theme', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'handle' => $handle]);
     }
 
     //Delete existing user
@@ -1200,12 +1200,12 @@ if (empty($id)) {
                 $user->name = $userData['name'];
             }
 
-            if (isset($userData['littlelink_description'])) {
-                $sanitizedText = $userData['littlelink_description'];
+            if (isset($userData['bio'])) {
+                $sanitizedText = $userData['bio'];
                 $sanitizedText = strip_tags($sanitizedText, '<a><p><strong><i><ul><ol><li><blockquote><h2><h3><h4>');
                 $sanitizedText = preg_replace("/<a([^>]*)>/i", "<a $1 rel=\"noopener noreferrer nofollow\">", $sanitizedText);
                 $sanitizedText = strip_tags_except_allowed_protocols($sanitizedText);
-                $user->littlelink_description = $sanitizedText;
+                $user->bio = $sanitizedText;
             }
 
             if (isset($userData['image_data'])) {

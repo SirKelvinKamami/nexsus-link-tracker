@@ -15,7 +15,7 @@
 @if(env('CUSTOM_META_TAGS') == 'true')
   @include('layouts.meta')
 @else
-  <meta name="description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+  <meta name="description" content="{{ strip_tags($userinfo->bio) }}">
   <meta name="author" content="{{ $userinfo->name }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 @endif
@@ -24,36 +24,36 @@
   <!-- This shows a preview for title, description and avatar image of users profiles if shared on social media sites -->
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
+    <meta property="og:url" content="{{ url('') }}/{{ "@" . $handle }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $userinfo->name }}">
-    <meta property="og:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+    <meta property="og:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta property="og:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta property="og:image" content="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}">
+     @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+     <meta property="og:image" content="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}">
     @else
-    <meta property="og:image" content="{{ asset('assets/linkstack/images/logo.svg') }}">
+     <meta property="og:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
-    <meta property="twitter:url" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
-    <meta name="twitter:title" content="{{ $userinfo->littlelink_name }}">
-    <meta name="twitter:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+    <meta property="twitter:domain" content="{{ url('') }}/{{ "@" . $handle }}">
+    <meta property="twitter:url" content="{{ url('') }}/{{ "@" . $handle }}">
+    <meta name="twitter:title" content="{{ $userinfo->handle }}">
+    <meta name="twitter:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta name="twitter:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta name="twitter:image" content="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}">
+     @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+     <meta name="twitter:image" content="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}">
     @else
-    <meta name="twitter:image" content="{{ asset('assets/linkstack/images/logo.svg') }}">
+     <meta name="twitter:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
 
 <!--#### END Meta Tags social media preview images  ####-->
 
-@if(config('advanced-config.linkstack_title') != '' and env('HOME_URL') === '')
-<title>{{ $userinfo->name }} {{ config('advanced-config.linkstack_title') }}</title>
+@if(config('advanced-config.nexsus_title') != '' and env('HOME_URL') === '')
+<title>{{ $userinfo->name }} {{ config('advanced-config.nexsus_title') }}</title>
 @elseif(env('CUSTOM_META_TAGS') == 'true' and config('advanced-config.title') != '')
 <title>{{ config('advanced-config.title') }}</title>
 @elseif(env('HOME_URL') != '')
@@ -65,10 +65,10 @@
 @include('components.favicon')
 @include('components.favicon-extension')
 
-@if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-<link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
+@if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+<link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
 @else
-<link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
 @endif
 
 @include('layouts.analytics')

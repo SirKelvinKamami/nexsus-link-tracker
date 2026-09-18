@@ -54,7 +54,7 @@
                     }
                     </style>
 
-                  @if(!config('linkstack.single_user_mode'))
+                  @if(!config('nexsus.single_user_mode'))
                   <div class="tab-pane fade show active" role="tabpanel" style="scroll-margin-top: 1000px;" aria-labelledby="home-tab" id="1">
                     <section class="text-gray-400">
                       <div class="card-body p-0 p-md-3 d-flex flex-column">
@@ -180,7 +180,7 @@
                   <!-- Back to top button -->
                   <a id="button-top"></a>
                   
-                  @elseif($_SERVER['QUERY_STRING'] == 'alternative-config' && !config('linkstack.single_user_mode'))
+                  @elseif($_SERVER['QUERY_STRING'] == 'alternative-config' && !config('nexsus.single_user_mode'))
                   @include('components.config.alternative-config')
                   @include('components.config.back-button')
                   @endif

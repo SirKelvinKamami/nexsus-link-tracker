@@ -18,7 +18,7 @@ class MaxUsers
     public function handle($request, Closure $next)
     {
         $userCount = User::count(); // get the number of users
-        $userCap = config('linkstack.user_cap'); // get the user cap from the config file
+        $userCap = config('nexsus.user_cap'); // get the user cap from the config file
     
         if (!empty($userCap)) {
             if ($userCount >= $userCap) {

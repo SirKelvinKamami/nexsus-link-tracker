@@ -73,8 +73,8 @@ if(Auth::user()->id == $userinfo->id){
                        <li><a class="ab-item" href="{{route('blockUser', ['block' => 'no', 'id' => $userinfo->id])}}">{{__('messages.Block User')}}</a></li>
                        <li><a class="ab-item" href="{{ route('editUser', $userinfo->id ) }}">{{__('messages.Edit User')}}</a></li>
                        @endif
-                       @if($info->theme != '' and $info->theme != 'default')<li><a class="ab-item" href="{{url('/theme').'/@'.$userinfo->littlelink_name}}">{{__('messages.Users Theme')}}</a></li>@endif
-                       <li><a class="ab-item" href="{{url('admin/users')."?table[search]=".$userinfo->littlelink_name}}">{{__('messages.Search User')}}</a></li>
+                        @if($info->theme != '' and $info->theme != 'default')<li><a class="ab-item" href="{{url('/theme').'/@'.$userinfo->handle}}">{{__('messages.Users Theme')}}</a></li>@endif
+                        <li><a class="ab-item" href="{{url('admin/users')."?table[search]=".$userinfo->handle}}">{{__('messages.Search User')}}</a></li>
                        @if(!$userinfo->adminUser && !$isUser && $userinfo->block !== 'yes' && ($userinfo->email_verified_at != '' || env('REGISTER_AUTH') == 'auth'))<li><a class="ab-item"  href="{{ route('authAsID', $userinfo->id ) }}" >Impersonate</a></li>@endif
                     </ul>
                  </div>
@@ -99,10 +99,10 @@ if(Auth::user()->id == $userinfo->id){
                  <a class="ab-item" aria-haspopup="true" href="#"><span class="display-name">{{Auth::user()->name}}</span>
                   @if(file_exists(base_path(findAvatar(Auth::user()->id))))
                   <img src="{{ url(findAvatar(Auth::user()->id)) }}" class="avatar avatar-26 photo" height="26" width="26" style="object-fit:cover;">
-                  @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-                  <img src="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}" class="avatar avatar-26 photo" height="26" width="26" style="width:auto;height:30px;">
+                   @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+                   <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" class="avatar avatar-26 photo" height="26" width="26" style="width:auto;height:30px;">
                   @else
-                  <img src="{{ asset('assets/linkstack/images/logo.svg') }}" class="avatar avatar-26 photo avatar-rounded" height="26" width="26" height="64" width="64">
+                   <img src="{{ asset('assets/nexsus/images/logo.svg') }}" class="avatar avatar-26 photo avatar-rounded" height="26" width="26" height="64" width="64">
                   @endif
                 </a>
                  <div class="ab-sub-wrapper">
@@ -110,10 +110,10 @@ if(Auth::user()->id == $userinfo->id){
                        <li id="linkstack-admin-bar-user-info"><a class="ab-item" tabindex="-1" href="{{ url('/studio/page') }}">
                         @if(file_exists(base_path(findAvatar(Auth::user()->id))))
                         <img src="{{ url(findAvatar(Auth::user()->id)) }}" class="avatar avatar-64 photo" height="64" width="64" style="object-fit:cover;">
-                        @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-                        <img src="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}" class="avatar avatar-64 photo" height="64" width="64" style="width:auto;height:30px;">
+                         @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+                         <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" class="avatar avatar-64 photo" height="64" width="64" style="width:auto;height:30px;">
                         @else
-                        <img src="{{ asset('assets/linkstack/images/logo.svg') }}" class="avatar avatar-64 photo avatar-rounded" height="64" width="64">
+                         <img src="{{ asset('assets/nexsus/images/logo.svg') }}" class="avatar avatar-64 photo avatar-rounded" height="64" width="64">
                         @endif
                         <span class="display-name">{{Auth::user()->name}}</span></a></li>
                        <li><a class="ab-item" href="{{ url('/studio/page') }}">{{__('messages.Edit my profile')}}</a></li>

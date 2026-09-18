@@ -45,10 +45,10 @@
                                 </div>
                               </div>
                               <div class="card-body">
-                                @if(env('USE_THEME_PREVIEW_IFRAME') === false or $page->littlelink_name == '')
-                                <center><img style="width:95%;max-width:700px;argin-left:1rem!important;" src="@if(file_exists(base_path() . '/themes/' . $page->theme . '/preview.png')){{url('/themes/' . $page->theme . '/preview.png')}}@elseif($page->theme === 'default' or empty($page->theme)){{url('/assets/linkstack/images/themes/default.png')}}@else{{url('/assets/linkstack/images/themes/no-preview.png')}}@endif"></img></center>
+                                @if(env('USE_THEME_PREVIEW_IFRAME') === false or $page->handle == '')
+                                <center><img style="width:95%;max-width:700px;argin-left:1rem!important;" src="@if(file_exists(base_path() . '/themes/' . $page->theme . '/preview.png')){{url('/themes/' . $page->theme . '/preview.png')}}@elseif($page->theme === 'default' or empty($page->theme)){{url('/assets/nexsus/images/themes/default.png')}}@else{{url('/assets/nexsus/images/themes/no-preview.png')}}@endif"></img></center>
                                  @else
-                                <iframe frameborder="0" allowtransparency="true" id="frPreview" style="background: #FFFFFF;height:400px;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe>
+                                <iframe frameborder="0" allowtransparency="true" id="frPreview" style="background: #FFFFFF;height:400px;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->handle ?>">{{__('messages.No compatible browser')}}</iframe>
                                 @endif
                               </div>
                             </div>
@@ -80,7 +80,7 @@
                         <div class="form-group col-lg-8">
                             <figure style="max-width:1000px;max-height:562.5px;" class="figure">
                             @if(!file_exists(base_path('assets/img/background-img/'.findBackground(Auth::user()->id))))<p><i>{{__('messages.No image selected')}}</i></p>@endif
-                            <img class="bd-placeholder-img figure-img img-fluid rounded" src="@if(file_exists(base_path('assets/img/background-img/'.findBackground(Auth::user()->id)))){{url('assets//img/background-img/'.findBackground(Auth::user()->id))}}@else{{url('/assets/linkstack/images/themes/no-preview.png')}}@endif"><br>
+                            <img class="bd-placeholder-img figure-img img-fluid rounded" src="@if(file_exists(base_path('assets/img/background-img/'.findBackground(Auth::user()->id)))){{url('assets//img/background-img/'.findBackground(Auth::user()->id))}}@else{{url('/assets/nexsus/images/themes/no-preview.png')}}@endif"><br>
                             @if(file_exists(base_path('assets/img/background-img/'.findBackground(Auth::user()->id))))<button class="mt-3 ml-3 btn btn-primary" style="background-color:tomato!important;border-color:tomato!important;transform: scale(.9);" title="Delete background image"><a href="{{ url('/studio/rem-background') }}" style="color:#FFFFFF;"><i class="bi bi-trash-fill"></i>{{__('messages.Remove background')}}</a></button><br>@endif
                             {{-- <figcaption class="figure-caption">A caption for the above image.</figcaption> --}}
                         </figure>
@@ -192,7 +192,7 @@ $(window).on('load', function() {
 
                 <form action="{{ route('editTheme') }}" enctype="multipart/form-data" method="post">
                 @csrf
-                <select id="theme-select" style="display:none;" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>"><option value="default" selected></option></select>
+                                <select id="theme-select" style="display:none;" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->handle ?>"><option value="default" selected></option></select>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="card shadow-lg @if($page->theme == "" or $page->theme == "default") bg-primary @else bg-soft-primary @endif">
@@ -200,7 +200,7 @@ $(window).on('load', function() {
                             <a style="cursor:pointer;" onclick="setTheme('default')">
                               <div class="d-flex justify-content-between">
                                  <div>
-                                    <img draggable="false" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('assets/linkstack/images/themes/default.png')}}">
+                                    <img draggable="false" class="bd-placeholder-img bd-placeholder-img-lg img-fluid" src="{{url('assets/nexsus/images/themes/default.png')}}">
                                  </div>
                               </div>
                               <div class="text-center">

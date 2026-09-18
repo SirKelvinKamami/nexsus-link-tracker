@@ -14,10 +14,10 @@
       @endif
 
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-      <link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
+      @if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+      <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
       @else
-      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
+      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
       @endif
       
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
@@ -60,7 +60,7 @@ if ($_SERVER['QUERY_STRING'] != '') {
 
     $id = $_SERVER['QUERY_STRING'];
     $user = \App\Models\User::where('id', $id)->first();
-    $name = $user->littlelink_name;
+    $name = $user->handle;
     if ($name != null)$url = url('') . '/@' . $name;
 
     } catch (\Exception $e) {}

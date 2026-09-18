@@ -45,18 +45,18 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @endif
 @endif
 
-@push('linkstack-head-end')
+@push('nexsus-head-end')
 @if(theme('enable_custom_code') == "true" and theme('enable_custom_head') == "true" and env('ALLOW_CUSTOM_CODE_IN_THEMES') == 'true')@include($GLOBALS['themeName'] . '.extra.custom-head')@endif
 @if($info->theme != '' and $info->theme != 'default')
 
   <!-- Nexsus Tracker Theme: "{{$info->theme}}" -->
 
   <!-- Theme details: -->
-  <meta name="designer" href="{{ url('') . "/theme/@" . $littlelink_name}}" content="{{ url('') . "/theme/@" . $littlelink_name}}">
+   <meta name="designer" href="{{ url('') . "/theme/@" . $handle}}" content="{{ url('') . "/theme/@" . $handle}}">
 
   <link rel="stylesheet" href="themes/{{$info->theme}}/share.button.css">
   @if(theme('use_default_buttons') == "true")
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/brands.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/brands.css') }}">
   @else
   <link rel="stylesheet" href="themes/{{$info->theme}}/brands.css">
   @endif
@@ -64,19 +64,19 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @if(file_exists(base_path('themes/' . $info->theme . '/animations.css')))
   <link rel="stylesheet" href="<?php echo asset('themes/' . $info->theme . '/animations.css') ?>">
 @else
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/animations.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animations.css') }}">
 @endif
 
 @else
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/share.button.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/animations.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/brands.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/skeleton-auto.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/share.button.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animations.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/brands.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-auto.css') }}">
 @endif
 <style>.container{word-break: break-word;}</style>
 @endpush
 
-@push('linkstack-body-start')
+@push('nexsus-body-start')
 @if(theme('enable_custom_code') == "true" and theme('enable_custom_body') == "true" and env('ALLOW_CUSTOM_CODE_IN_THEMES') == 'true')@include($GLOBALS['themeName'] . '.extra.custom-body')@endif
 
 @if($info->theme != '' and $info->theme != 'default')
@@ -101,7 +101,7 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @endif
 @endpush
 
-@push('linkstack-body-end')
+@push('nexsus-body-end')
 @if(theme('enable_custom_code') == "true" and theme('enable_custom_body_end') == "true" and env('ALLOW_CUSTOM_CODE_IN_THEMES') == 'true')@include($GLOBALS['themeName'] . '.extra.custom-body-end')@endif
 @endpush
-@include('linkstack.modules.dynamic-contrast')
+@include('nexsus.modules.dynamic-contrast')

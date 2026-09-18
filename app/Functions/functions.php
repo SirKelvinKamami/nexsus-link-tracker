@@ -67,7 +67,7 @@ if (!function_exists('preloadDirectoryFiles')) {
 
 function findFile($name)
 {
-    $directory = base_path("/assets/linkstack/images/");
+    $directory = base_path("/assets/nexsus/images/");
     $files = preloadDirectoryFiles($directory, 'linkstack_images_files');
 
     $pattern = '/^' . preg_quote($name, '/') . '(_\w+)?\.\w+$/i';

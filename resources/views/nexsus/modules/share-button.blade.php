@@ -6,7 +6,7 @@
     if ($ShowShrBtn === 'false') {
         $ShowShrBtn = 'false';
     } elseif ($ShowShrBtn === 'user') {
-        $ShowShrBtn = Auth::user()->littlelink_name ? 'true' : 'false';
+        $ShowShrBtn = Auth::user()->handle ? 'true' : 'false';
     } elseif (UserData::getData($userinfo->id, 'disable-sharebtn') == "true") {
         $ShowShrBtn = 'false';
     } else {

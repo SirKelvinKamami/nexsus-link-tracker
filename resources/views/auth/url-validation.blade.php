@@ -3,37 +3,37 @@
     $(document).ready(function () {
       var submitBtn = $('#submit-btn');
       
-      $('#littlelink_name').on('keyup', function () {
-        var littlelinkName = $(this).val();
+      $('#handle').on('keyup', function () {
+        var handle = $(this).val();
   
-        if (littlelinkName.trim() !== '') {
+        if (handle.trim() !== '') {
           $.ajax({
             type: 'POST',
             url: '{{url("/validate-handle")}}',
             data: {
               '_token': '{{ csrf_token() }}',
-              'littlelink_name': littlelinkName
+              'handle': handle
             },
             success: function (data) {
-              $('#littlelink_name').removeClass('is-valid is-invalid');
+              $('#handle').removeClass('is-valid is-invalid');
               $('#username-error').remove();
   
-              if (typeof exceptionvar !== 'undefined' && littlelinkName.trim() === exceptionvar) {
+              if (typeof exceptionvar !== 'undefined' && handle.trim() === exceptionvar) {
                 submitBtn.prop('disabled', false);
               } else {
                 if (data.valid) {
-                  $('#littlelink_name').addClass('is-valid');
+                  $('#handle').addClass('is-valid');
                   submitBtn.prop('disabled', false);
                 } else {
-                  $('#littlelink_name').addClass('is-invalid');
-                  $('<div id="username-error" class="invalid-feedback">That username is already taken</div>').insertAfter('#littlelink_name');
+                  $('#handle').addClass('is-invalid');
+                  $('<div id="username-error" class="invalid-feedback">That username is already taken</div>').insertAfter('#handle');
                   submitBtn.prop('disabled', true);
                 }
               }
             }
           });
         } else {
-          $('#littlelink_name').removeClass('is-valid is-invalid');
+          $('#handle').removeClass('is-valid is-invalid');
           $('#username-error').remove();
           submitBtn.prop('disabled', true);
         }

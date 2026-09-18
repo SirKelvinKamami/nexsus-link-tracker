@@ -7,10 +7,10 @@
 @include('layouts.analytics')
 
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-      <link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
+      @if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+      <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
       @else
-      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
+      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
       @endif
       
       <!-- Library / Plugin Css Build -->
@@ -50,11 +50,11 @@
     <div class="row">
 
       <div class="column" style="margin-top: 10%">
-        @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-        <img alt="avatar" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" width="auto" height="128px">
+        @if(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+        <img alt="avatar" src="{{ asset('assets/nexsus/images/'.findFile('avatar')) }}" width="auto" height="128px">
         @else
         <div class="logo-container fadein">
-          <img src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo" style="width:150px; height:150px;">
+          <img src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo" style="width:150px; height:150px;">
         </div>
         @endif
 

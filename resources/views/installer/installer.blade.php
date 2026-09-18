@@ -14,7 +14,7 @@
     @endphp
 @else
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">
@@ -76,7 +76,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup failed')}}</h1>
         <p class="inst-txt">{{__('messages.An error has occured. Please try again')}}</p>
@@ -90,7 +90,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Dependency check')}}</h1>
         <p class="inst-txt">{{__('messages.Required PHP modules:')}}</p>
@@ -128,7 +128,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Select a database type')}}</p>
@@ -154,7 +154,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">MySQL</p>
@@ -186,7 +186,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Create an admin account')}}</p>
@@ -216,7 +216,7 @@
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Configure your page')}}</p>

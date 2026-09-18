@@ -60,7 +60,7 @@ return [
     // Example: "admin 🔗 Nexsus Tracker"
     //                 ⤌----------⤍
     //                 ⬑ What you can change with this setting.
-    'linkstack_title' => '',
+    'nexsus_title' => '',
 
 
     // Either "true", "false" or "auth". 

@@ -28,7 +28,8 @@ if(config('advanced-config.forgot_password_url') != '') {
     $forgot_password = "/forgot-password";
 }
 
-Route::post('/validate-handle', [RegisteredUserController::class, 'validateHandle']);
+Route::post('/validate-handle', [RegisteredUserController::class, 'validateHandle'])
+    ->middleware('throttle:30,1');
     if(env('ALLOW_REGISTRATION') or $register !== '/register') {
         Route::get($register, [RegisteredUserController::class, 'create'])
             ->middleware('guest')
@@ -37,7 +38,8 @@ Route::post('/validate-handle', [RegisteredUserController::class, 'validateHandl
 
         Route::post($register, [RegisteredUserController::class, 'store'])
             ->middleware('guest')
-            ->middleware('max.users');
+            ->middleware('max.users')
+            ->middleware('throttle:5,1');
     } else {
         Route::get($register, function () {
             abort(404);
@@ -53,23 +55,23 @@ Route::get($login, [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
 Route::post($login, [AuthenticatedSessionController::class, 'store'])
-                ->middleware('guest');
+                 ->middleware(['guest', 'throttle:10,1']);
 
 Route::get( $forgot_password, [PasswordResetLinkController::class, 'create'])
                 ->middleware('guest')
                 ->name('password.request');
 
 Route::post( $forgot_password, [PasswordResetLinkController::class, 'store'])
-                ->middleware('guest')
-                ->name('password.email');
+                 ->middleware(['guest', 'throttle:5,1'])
+                 ->name('password.email');
 
 Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
                 ->middleware('guest')
                 ->name('password.reset');
 
 Route::post('/reset-password', [NewPasswordController::class, 'store'])
-                ->middleware('guest')
-                ->name('password.update');
+                 ->middleware(['guest', 'throttle:5,1'])
+                 ->name('password.update');
 
 Route::get('/verify-email', [EmailVerificationPromptController::class, '__invoke'])
                 ->middleware('auth')
@@ -102,4 +104,3 @@ Route::get('/blocked', function () {
                         return redirect(url('dashboard'));
                     }
                 })->name('blocked');
-                

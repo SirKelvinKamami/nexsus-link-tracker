@@ -194,6 +194,7 @@ Route::get('/studio/no_page_name', [UserController::class, 'showPage'])->name('s
 Route::post('/studio/page', [UserController::class, 'editPage'])->name('editPage');
 Route::post('/studio/background', [UserController::class, 'themeBackground'])->name('themeBackground');
 Route::get('/studio/rem-background', [UserController::class, 'removeBackground'])->name('removeBackground');
+Route::get('/studio/tasks', fn() => view('studio.tasks'))->name('studio.tasks');
 Route::get('/studio/profile', [UserController::class, 'showProfile'])->name('showProfile');
 Route::post('/studio/profile', [UserController::class, 'editProfile'])->name('editProfile');
 Route::get('/studio/privacy', [UserController::class, 'showPrivacy'])->name('showPrivacy');

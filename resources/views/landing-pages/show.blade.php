@@ -104,8 +104,8 @@
         }
         {{ $settings['custom_css'] ?? '' }}
     </style>
-    @if($settings['custom_head'])
-    {!! $settings['custom_head'] !!}
+    @if(!empty($settings['custom_head']))
+    {{ $settings['custom_head'] }}
     @endif
 </head>
 <body>
@@ -121,7 +121,7 @@
 
             @elseif($block['type'] === 'text')
             <div class="block-text align-{{ $block['data']['alignment'] ?? 'center' }}">
-                {!! $block['data']['content'] ?? '' !!}
+                {!! nl2br(e($block['data']['content'] ?? '')) !!}
             </div>
 
             @elseif($block['type'] === 'image')

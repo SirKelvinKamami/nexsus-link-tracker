@@ -43,7 +43,7 @@
                               @if(file_exists(base_path(findAvatar($user->id))))
                               <img src="{{ url(findAvatar($user->id)) }}" class="bd-placeholder-img img-thumbnail" width="100" height="100" draggable="false">
                               @else
-                              <img src="{{ asset('assets/linkstack/images/logo.svg') }}" class="bd-placeholder-img img-thumbnail" width="100" height="100" draggable="false">
+                              <img src="{{ asset('assets/nexsus/images/logo.svg') }}" class="bd-placeholder-img img-thumbnail" width="100" height="100" draggable="false">
                               @endif
                               @if(file_exists(base_path(findAvatar($user->id))))<br><a title="Remove icon" class="hvr-grow p-1 text-danger" style="padding-left:5px;" href="?delete"><i class="bi bi-trash-fill"></i> {{__('messages.Delete')}}</a>@endif
                               @if($_SERVER['QUERY_STRING'] === 'delete' and File::exists(base_path(findAvatar($user->id))))@php File::delete(base_path(findAvatar($user->id))); header("Location: ".url()->current()); die(); @endphp @endif
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group col-lg-8">
                                 @if(!file_exists(base_path('assets/img/background-img/'.findBackground($user->id))))<p><i>{{__('messages.No image selected')}}</i></p>@endif
-                                <img style="width:95%;max-width:400px;argin-left:1rem!important;border-radius:5px;" src="@if(file_exists(base_path('assets/img/background-img/'.findBackground($user->id)))){{url('assets/img/background-img/'.findBackground($user->id))}}@else{{url('/assets/linkstack/images/themes/no-preview.png')}}@endif">
+                                <img style="width:95%;max-width:400px;argin-left:1rem!important;border-radius:5px;" src="@if(file_exists(base_path('assets/img/background-img/'.findBackground($user->id)))){{url('assets/img/background-img/'.findBackground($user->id))}}@else{{url('/assets/nexsus/images/themes/no-preview.png')}}@endif">
                                 @if(file_exists(base_path('assets/img/background-img/'.findBackground($user->id))))<br><a title="Remove icon" class="hvr-grow p-1 text-danger" style="padding-left:5px;" href="?deleteB"><i class="bi bi-trash-fill"></i> {{__('messages.Delete')}}</a>@endif
                                 @if($_SERVER['QUERY_STRING'] === 'deleteB' and File::exists(base_path('assets/img/background-img/'.findBackground($user->id))))@php File::delete(base_path('assets/img/background-img/'.findBackground($user->id))); header("Location: ".url()->current()); die(); @endphp @endif
                                 <br>
@@ -65,7 +65,7 @@
 
                             <label>{{__('messages.Select theme')}}</label>
                               <div class="form-group col-lg-8">
-                                  <select id="theme-select" style="margin-bottom: 40px;" class="form-control" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">
+                                   <select id="theme-select" style="margin-bottom: 40px;" class="form-control" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->handle ?>">
                                       <?php
                                           if ($handle = opendir('themes')) {
                                               while (false !== ($entry = readdir($handle))) {
@@ -110,13 +110,13 @@
                             <div class="input-group-prepend">
                             <div class="input-group-text">{{ url('') }}/@</div>
                             </div>
-                            <input type="text" class="form-control" name="littlelink_name" value="{{ $user->littlelink_name }}">
+                                   <input type="text" class="form-control" name="handle" value="{{ $user->handle }}">
                           </div>
                         </div>
                             
                             <div class="form-group col-lg-8">
                               <label> {{__('messages.Page description')}}</label>
-                              <textarea class="form-control" name="littlelink_description" rows="3">{{ $user->littlelink_description }}</textarea>
+                              <textarea class="form-control" name="bio" rows="3">{{ $user->bio }}</textarea>
                             </div>
                             <div class="form-group col-lg-8">
                               <label for="exampleFormControlSelect1">{{__('messages.Role')}}</label>

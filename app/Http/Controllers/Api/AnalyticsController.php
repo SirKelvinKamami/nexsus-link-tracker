@@ -187,21 +187,21 @@ class AnalyticsController extends BaseController
     public function pageViews(Request $request): JsonResponse
     {
         $userId = $this->getUserId($request);
-        $littlelink_name = $userId
-            ? \App\Models\User::where('id', $userId)->value('littlelink_name')
+        $handle = $userId
+            ? \App\Models\User::where('id', $userId)->value('handle')
             : null;
 
-        if (!$littlelink_name) {
+        if (!$handle) {
             return $this->success(['all' => 0, 'day' => 0, 'week' => 0, 'month' => 0, 'year' => 0]);
         }
 
         try {
             $data = [
-                'all' => visits('App\Models\User', $littlelink_name)->count(),
-                'day' => visits('App\Models\User', $littlelink_name)->period('day')->count(),
-                'week' => visits('App\Models\User', $littlelink_name)->period('week')->count(),
-                'month' => visits('App\Models\User', $littlelink_name)->period('month')->count(),
-                'year' => visits('App\Models\User', $littlelink_name)->period('year')->count(),
+                'all' => visits('App\Models\User', $handle)->count(),
+                'day' => visits('App\Models\User', $handle)->period('day')->count(),
+                'week' => visits('App\Models\User', $handle)->period('week')->count(),
+                'month' => visits('App\Models\User', $handle)->period('month')->count(),
+                'year' => visits('App\Models\User', $handle)->period('year')->count(),
             ];
         } catch (\Throwable $e) {
             $data = ['all' => 0, 'day' => 0, 'week' => 0, 'month' => 0, 'year' => 0];

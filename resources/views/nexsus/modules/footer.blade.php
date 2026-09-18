@@ -12,7 +12,7 @@
 	{{-- Removed class spacing --}}
 	<a style="text-decoration: none;" class="" href="https://nexsus-link-tracker.onrender.com" target="_blank" title="{{__('messages.Learn more about Nexsus Tracker')}}">
 		<div style="vertical-align: middle;display: inline-block;padding-bottom:50px;" class="credit-hover hvr-grow fadein">
-			<img style="width:200px" class="" src="{{ asset('assets/linkstack/images/powered-by-linkstack.svg') }}" alt="Nexsus Tracker">
+			<img style="width:200px" class="" src="{{ asset('assets/nexsus/images/powered-by-linkstack.svg') }}" alt="Nexsus Tracker">
 		</div>
 	</a>
 	@endif

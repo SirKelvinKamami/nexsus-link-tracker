@@ -17,6 +17,7 @@ class Reminder extends Model
         'sent',
         'sent_at',
         'user_response',
+        'responded_at',
     ];
 
     protected $casts = [

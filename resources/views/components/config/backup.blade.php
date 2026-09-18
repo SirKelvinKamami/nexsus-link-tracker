@@ -96,7 +96,7 @@
   <?php //landing page ?>
           
   <div class="logo-container fadein">
-    <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
+    <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
   </div>
   <h1 class="text-center">{{__('messages.Backup')}}</h1>
   <h4 class="text-center">{{__('messages.You can back up your entire instance:')}}</h4>
@@ -119,7 +119,4 @@
       </div>
     </div>
   </div>
-  
-  
   </div>
-  

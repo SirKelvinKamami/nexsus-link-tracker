@@ -1,7 +1,7 @@
 @php
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\User;
-$usrhandl = Auth::user()->littlelink_name;
+$usrhandl = Auth::user()->handle;
 @endphp
 <!doctype html>
 @include('layouts.lang')
@@ -59,8 +59,8 @@ $usrhandl = Auth::user()->littlelink_name;
       <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css')}}" />
       
 	  <meta name="csrf-token" content="{{ csrf_token() }}">
-	  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/hover-min.css') }}">
-	  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/animate.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/hover-min.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animate.css') }}">
 	  <link rel="stylesheet" href="{{ asset('assets/external-dependencies/bootstrap-icons.css') }}">
 
   </head>
@@ -346,7 +346,7 @@ $usrhandl = Auth::user()->littlelink_name;
               <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                 <li class="me-0 me-xl-2">
                   <div class="dropdown d-flex flex-row align-items-center">
-                    <a target="_blank" href="{{url('/@'.Auth::user()->littlelink_name)}}">
+                    <a target="_blank" href="{{url('/@'.Auth::user()->handle)}}">
                       <button style="border-bottom-right-radius:0;border-top-right-radius:0;" type="button" class="btn btn-primary btn-sm pe-2">{{__('messages.View Page')}}</button>
                     </a>
                     <button style="border-bottom-left-radius:0;border-top-left-radius:0;" class="btn btn-primary btn-sm dropdown-toggle ms-auto px-1" type="button" id="dropdownMenuButtonSM" data-bs-toggle="dropdown" aria-expanded="false">
@@ -358,13 +358,13 @@ $usrhandl = Auth::user()->littlelink_name;
                       @php $sDomains = str_replace(' ', '', env('SUPPORTED_DOMAINS')); $sDomains = explode(',', $sDomains); @endphp
                         @foreach ($sDomains as $myvar)
                             <li>
-                                <a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{'https://'.$myvar.'/@'.Auth::user()->littlelink_name}}">
+                                <a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{'https://'.$myvar.'/@'.Auth::user()->handle}}">
                                     <i class="bi bi-files"></i> {{ $myvar }}
                                 </a>
                             </li>
                         @endforeach         
                       @else
-                      <li><a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{url('').'/@'.Auth::user()->littlelink_name}}"><i class="bi bi-files"></i> {{ str_replace(['http://', 'https://'], '', url('')) }}                      </a></li>
+                      <li><a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{url('').'/@'.Auth::user()->handle}}"><i class="bi bi-files"></i> {{ str_replace(['http://', 'https://'], '', url('')) }}                      </a></li>
                       @endif
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" data-bs-toggle="modal" style="cursor:pointer!important;" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan"></i> {{__('messages.QR Code')}}</a></li>
@@ -487,10 +487,10 @@ $usrhandl = Auth::user()->littlelink_name;
                   <a class="py-0 nav-link d-flex align-items-center dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#navbarDropdownIcon">
 					@if(file_exists(base_path(findAvatar(Auth::user()->id))))
 					<img src="{{ url(findAvatar(Auth::user()->id)) }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded" style="object-fit:cover;">
-          @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-          <img src="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
+          @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+          <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
 					@else
-					<img src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
+					<img src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
 					@endif
                     <div class="caption ms-3 d-none d-md-block ">
                         <h6 class="mb-0 caption-title">{{Auth::user()->name}}</h6>
@@ -759,7 +759,7 @@ $usrhandl = Auth::user()->littlelink_name;
                 }
 
               } catch(exception $e) {
-                $imgSrc = url('/assets/linkstack/images/themes/no-preview.png');
+                $imgSrc = url('/assets/nexsus/images/themes/no-preview.png');
                 $imgType = NULL;
               }
               @endphp
