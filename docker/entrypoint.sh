@@ -7,6 +7,13 @@ cd /var/www/html
 # in case the image copied in a stale one
 php artisan package:discover --ansi || true
 
+# Upstream components (geo-sot/laravel-env-editor, used by the finishing
+# blade component) read AND write a physical .env file and fatal if it is
+# missing - the case on Render, where config comes from real env vars and
+# .env is gitignored. An empty file is a no-op for dotenv (existing
+# environment variables are never overridden), but EnvEditor needs it.
+touch .env
+
 # Generate APP_KEY on first boot if none was provided
 if [ -z "$APP_KEY" ]; then
     echo "APP_KEY not set — generating one..."
