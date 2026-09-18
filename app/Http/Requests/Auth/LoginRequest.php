@@ -28,31 +28,8 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (RateLimiter::attempts($this->throttleKey()) >= 3) {
-            $expected = $this->session()->get('login_captcha_answer');
-            if ($expected === null) {
-                $a = random_int(1, 9);
-                $b = random_int(1, 9);
-                $this->session()->put('login_captcha_answer', $a + $b);
-                $this->session()->put('login_captcha_question', "$a + $b = ?");
-                throw ValidationException::withMessages([
-                    'captcha' => __('Please solve the CAPTCHA: ') . $this->session()->get('login_captcha_question'),
-                ]);
-            }
-            if (!$this->filled('captcha') || (string) $this->input('captcha') !== (string) $expected) {
-                RateLimiter::hit($this->throttleKey());
-                throw ValidationException::withMessages([
-                    'captcha' => __('Please solve the CAPTCHA correctly.'),
-                ]);
-            }
-        }
-
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password, 'block' => 'no'] , $this->filled('remember'))) {
             RateLimiter::hit($this->throttleKey());
-            $a = random_int(1, 9);
-            $b = random_int(1, 9);
-            $this->session()->put('login_captcha_answer', $a + $b);
-            $this->session()->put('login_captcha_question', "$a + $b = ?");
 
             throw ValidationException::withMessages([
                 'email' => __('messages.failed'),
@@ -60,7 +37,6 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
-        $this->session()->forget(['login_captcha_answer', 'login_captcha_question']);
     }
 
     public function ensureIsNotRateLimited()
