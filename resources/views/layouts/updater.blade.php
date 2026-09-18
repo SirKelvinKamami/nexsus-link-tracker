@@ -10,7 +10,7 @@
 
 @stack('updater-head')
 
-  <title>{{__('messages.Update LinkStack')}}</title>
+  <title>{{__('messages.Update Nexsus Tracker')}}</title>
   @include('layouts.fonts') 
   <link rel="stylesheet" href="{{ asset('assets/linkstack/css/normalize.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/linkstack/css/brands.css') }}">

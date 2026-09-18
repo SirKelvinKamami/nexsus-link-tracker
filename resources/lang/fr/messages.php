@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array (
   'by' => 'par',
 
   'HOME.MESSAGE' => '
-  <p>Contrôlez votre présence en ligne avec&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+  <p>Contrôlez votre présence en ligne avec&nbsp;<a href="https://nexsus-link-tracker.onrender.com/"><strong>Nexsus Tracker</strong></a>,
    la plateforme de gestion de liens <strong>open-source</strong> axée sur la confidentialité. Créez une page de profil personnalisable pour gérer <strong>
    tous vos liens importants au même endroit</strong> et offrez à votre public une expérience de navigation transparente.</p>
   ',
@@ -611,7 +611,7 @@ return array (
   'The server will never store more that two backups at a time' => 'Le serveur ne stockera jamais plus de deux sauvegardes à la fois.',
     
   'SMTP.title' => 'Utiliser le serveur SMTP intégré',
-  'SMTP.description' => 'Utilise le serveur SMTP fourni par LinkStack. Peut-être pas fiable à 100 %. Doit être désactivé pour pouvoir utiliser un serveur SMTP personnalisé.',
+  'SMTP.description' => 'Utilise le serveur SMTP fourni par Nexsus. Peut-être pas fiable à 100 %. Doit être désactivé pour pouvoir utiliser un serveur SMTP personnalisé.',
   'SMTP.description.alt' => '(Enregistrer les modifications avec "Appliquer les modifications" ci-dessous)',
   'Enable' => 'Activer',
   'Custom SMTP server:' => 'Serveur SMTP personnalisé :',
@@ -680,7 +680,7 @@ return array (
   'MAIL_FROM_ADDRESS.title' => 'MAIL_FROM_ADDRESS',
   'MAIL_FROM_ADDRESS.description' => 'MAIL_FROM_ADDRESS',
   'JOIN_BETA.title' => 'Rejoignez le programme bêta',
-  'JOIN_BETA.description' => 'Permet l\'utilisation des versions bêta lors de la mise à jour. En savoir plus à ce sujet <a target=\'_blank\' href=\'https://linkstack.org/b\'>ici</a>.',
+  'JOIN_BETA.description' => 'Permet l\'utilisation des versions bêta lors de la mise à jour. En savoir plus à ce sujet <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/b\'>ici</a>.',
   'SKIP_UPDATE_BACKUP.title' => 'Ignorer les sauvegardes de mise à jour',
   'SKIP_UPDATE_BACKUP.description' => 'Ignore les sauvegardes lors de la mise à jour. Il est recommandé de conserver cette option, mais elle peut entraîner des erreurs dans certaines configurations.',
   'CUSTOM_META_TAGS.title' => 'Activer les balises méta personnalisées',
@@ -694,7 +694,7 @@ return array (
   'ENABLE_THEME_UPDATER.title' => 'Activer le programme de mise à jour du thème',
   'ENABLE_THEME_UPDATER.description' => 'Détermine si le programme de mise à jour du thème doit être actif.',
   'ENABLE_SOCIAL_LOGIN.title' => 'Activer la connexion via les réseaux sociaux',
-  'ENABLE_SOCIAL_LOGIN.description' => 'Active la connexion via les réseaux sociaux. Cette option nécessite une configuration supplémentaire. En savoir plus à ce sujet <a target=\'_blank\' href=\'https://linkstack.org/social-login\'>ici</a>.',
+  'ENABLE_SOCIAL_LOGIN.description' => 'Active la connexion via les réseaux sociaux. Cette option nécessite une configuration supplémentaire. En savoir plus à ce sujet <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/social-login\'>ici</a>.',
   'USE_THEME_PREVIEW_IFRAME.title' => 'Utiliser iframe comme aperçu du thème',
   'USE_THEME_PREVIEW_IFRAME.description' => 'Détermine si un iframe interne doit être utilisé comme aperçu pour leur page de thème.',
   'FORCE_ROUTE_HTTPS.title' => 'Rediriger toutes les pages vers HTTPS',
@@ -741,10 +741,10 @@ return array (
     */
 
     # Title Tag
-  'LinkStack setup' => 'Configuration de LinkStack',
+  'LinkStack setup' => 'Configuration de Nexsus',
     
-  'Setup LinkStack' => 'Installation de LinkStack',
-  'Welcome to the setup for LinkStack!' => 'Bienvenue dans la configuration de LinkStack !',
+  'Setup LinkStack' => 'Installation de Nexsus',
+  'Welcome to the setup for LinkStack!' => 'Bienvenue dans la configuration de Nexsus !',
   'This setup will:' => 'Cette installation va :',
   'Check the server dependencies' => '1. Vérifier les dépendances du serveur',
   'Setup the database' => '2. Configurer la base de données',
@@ -800,7 +800,7 @@ return array (
     */
 
     # Title Tag
-  'Update LinkStack' => 'Mettre à jour LinkStack',
+  'Update LinkStack' => 'Mettre à jour Nexsus',
     
   'Latest beta version' => 'Dernière version bêta',
   'Installed beta version' => 'Version bêta installée',
@@ -963,7 +963,7 @@ return array (
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | Nexsus Tracker (Links) Page
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -990,7 +990,7 @@ return array (
     |
     */
     
-  'Learn more about LinkStack' => 'En savoir plus sur LinkStack',
+  'Learn more about LinkStack' => 'En savoir plus sur Nexsus',
   'Learn more' => 'Plus d\'info',
 
     /*
@@ -1016,14 +1016,14 @@ return array (
     # Help Us Out Notification
   'Hide this notification' => 'Masquer cette notification',
   'Help Us Out' => 'Aidez-nous',
-  'Enjoying Linkstack?' => 'Vous aimez Linkstack ?',
-  'Support Linkstack' => 'Support LinkStack',
-  'support.msg1' => 'Si vous aimez utiliser Linkstack, nous apprécierions grandement si vous pouviez prendre un moment pour',
+  'Enjoying Linkstack?' => 'Vous aimez Nexsus ?',
+  'Support Linkstack' => 'Support Nexsus',
+  'support.msg1' => 'Si vous aimez utiliser Nexsus, nous apprécierions grandement si vous pouviez prendre un moment pour',
   'support.msg2' => 'donner une étoile à notre projet sur GitHub',
   'support.msg3' => 'Votre soutien nous aidera à atteindre un public plus large et à améliorer la qualité de notre projet.',
   'support.msg4' => 'Si vous êtes capable ',
-  'support.msg5' => 'd\'apporter une contribution financière</a>, même un petit montant nous aiderait à couvrir les coûts de maintenance et d\'amélioration de Linkstack.',
-  'support.msg6' => 'Merci pour votre soutien et de faire partie de la communauté LinkStack !',
+  'support.msg5' => 'd\'apporter une contribution financière</a>, même un petit montant nous aiderait à couvrir les coûts de maintenance et d\'amélioration de Nexsus.',
+  'support.msg6' => 'Merci pour votre soutien et de faire partie de la communauté Nexsus !',
 
 
     /*

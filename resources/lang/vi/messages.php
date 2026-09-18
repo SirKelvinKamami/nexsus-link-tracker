@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
 
@@ -20,7 +20,7 @@ return [
     'by' => 'bởi',
 
     'HOME.MESSAGE' => '
-    <p>Kiếm soát sự hiện diện của bạn với&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>
+    <p>Kiếm soát sự hiện diện của bạn với&nbsp;<a href="https://nexsus-link-tracker.onrender.com/"><strong>Nexsus Tracker</strong></a>
      Nền tảng <strong>quản lý liên kết</strong> miễn phí và tôn trọng quyền riêng tự của bạn. Tạo một trang cá nhân để quản lý <strong>
      tất cả những liên kết quan trọng</strong> và giúp người dùng dễ dàng tìm kiếm bạn.</p>
      ',
@@ -617,7 +617,7 @@ return [
     'The server will never store more that two backups at a time' => 'Máy chủ sẽ không bao giờ lưu trữ thêm hai bản sao lưu cùng một lúc.',
 
     'SMTP.title' => 'Sử dụng tích hợp trong máy chủ SMTP',
-    'SMTP.description' => 'Sử dụng máy chủ SMTP được cung cấp bởi LinkStack.Có thể không đáng tin cậy 100%.Phải bị vô hiệu hóa để người dùng máy chủ SMTP tùy chỉnh. ',
+    'SMTP.description' => 'Sử dụng máy chủ SMTP được cung cấp bởi Nexsus.Có thể không đáng tin cậy 100%.Phải bị vô hiệu hóa để người dùng máy chủ SMTP tùy chỉnh. ',
     'SMTP.description.alt' => '(Lưu các thay đổi với "Áp dụng thay đổi" bên dưới)',
     'Enable' => 'Bật',
     'Custom SMTP server:' => 'Máy chủ SMTP tùy chỉnh:',
@@ -686,7 +686,7 @@ return [
     'MAIL_FROM_ADDRESS.title' => 'Mail_from_address',
     'MAIL_FROM_ADDRESS.description' => 'Mail_from_address',
     'JOIN_BETA.title' => 'Tham gia chương trình Beta',
-    'JOIN_BETA.description' => 'Cho phép sử dụng các phiên bản beta khi cập nhật. Đọc thêm về điều này <a target=\'_blank\' href=\'https://linkstack.org/b\'>tại đây</a>.',
+    'JOIN_BETA.description' => 'Cho phép sử dụng các phiên bản beta khi cập nhật. Đọc thêm về điều này <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/b\'>tại đây</a>.',
     'SKIP_UPDATE_BACKUP.title' => 'Bỏ qua bản sao lưu cập nhật',
     'SKIP_UPDATE_BACKUP.description' => 'Bỏ qua bản sao lưu khi cập nhật.Tùy chọn này được khuyến nghị bị vô hiệu hóa mọi lúc, <br> nhưng nó có thể gây ra lỗi trong một số cấu hình. ',
     'CUSTOM_META_TAGS.title' => 'Bật thẻ meta tùy chỉnh',
@@ -698,7 +698,7 @@ return [
     'ENABLE_THEME_UPDATER.title' => 'Kích hoạt trình cập nhật chủ đề',
     'ENABLE_THEME_UPDATER.description' => 'Xác định xem công cụ cập nhật chủ đề có hoạt động không.',
     'ENABLE_SOCIAL_LOGIN.title' => 'Bật đăng nhập xã hội',
-    'ENABLE_SOCIAL_LOGIN.description' => 'Cho phép đăng nhập xã hội. Tùy chọn này yêu cầu thiết lập thêm. Đọc thêm về điều này <a target=\'_blank\' href=\'https://linkstack.org/social-login\'>here</a>.',
+    'ENABLE_SOCIAL_LOGIN.description' => 'Cho phép đăng nhập xã hội. Tùy chọn này yêu cầu thiết lập thêm. Đọc thêm về điều này <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/social-login\'>here</a>.',
     'USE_THEME_PREVIEW_IFRAME.title' => 'Sử dụng iframe làm bản xem trước chủ đề',
     'USE_THEME_PREVIEW_IFRAME.description' => 'Xác định xem một iframe nội bộ có nên được sử dụng làm bản xem trước cho trang chủ đề của họ không.',
     'FORCE_ROUTE_HTTPS.title' => 'Chuyển hướng tất cả các trang sang https',
@@ -745,10 +745,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'LinkStack Setup',
+    'LinkStack setup' => 'Nexsus Setup',
 
-    'Setup LinkStack' => 'setupLinkStack',
-    'Welcome to the setup for LinkStack!' => 'Chào mừng bạn đến với thiết lập cho LinkStack!',
+    'Setup LinkStack' => 'setupNexsus',
+    'Welcome to the setup for LinkStack!' => 'Chào mừng bạn đến với thiết lập cho Nexsus!',
     'This setup will:' => 'Thiết lập này sẽ:',
     'Check the server dependencies' => '1.Kiểm tra các phụ thuộc của máy chủ ',
     'Setup the database' => '2.Thiết lập cơ sở dữ liệu ',
@@ -804,7 +804,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'Cập nhật linkStack',
+    'Update LinkStack' => 'Cập nhật Nexsus',
 
     'Latest beta version' => 'Phiên bản beta mới nhất',
     'Installed beta version' => 'Đã cài đặt phiên bản beta',
@@ -967,7 +967,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | Nexsus Tracker (Links) Page
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -990,7 +990,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Tìm hiểu thêm về LinkStack',
+    'Learn more about LinkStack' => 'Tìm hiểu thêm về Nexsus',
     'Learn more' => 'Tìm hiểu thêm',
 
     /*
@@ -1016,14 +1016,14 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'Ẩn thông báo này',
     'Help Us Out' => 'Giúp chúng tôi ra',
-    'Enjoying Linkstack?' => 'Thưởng thức LinkStack?',
-    'Support Linkstack' => 'LinkStack hỗ trợ',
-    'support.msg1' => 'Nếu bạn \'re enjoying using Linkstack, we would greatly appreciate it if you could take a moment to',
+    'Enjoying Linkstack?' => 'Thưởng thức Nexsus?',
+    'Support Linkstack' => 'Nexsus hỗ trợ',
+    'support.msg1' => 'Nếu bạn \'re enjoying using Nexsus, we would greatly appreciate it if you could take a moment to',
     'support.msg2' => 'Cung cấp cho dự án của chúng tôi một ngôi sao trên GitHub',
     'support.msg3' => 'Hỗ trợ của bạn sẽ giúp chúng tôi tiếp cận đối tượng rộng hơn và cải thiện chất lượng dự án của chúng tôi.',
     'support.msg4' => 'Nếu bạn \'re able to',
-    'support.msg5' => 'Đóng góp tài chính </a>, thậm chí một số tiền nhỏ sẽ giúp chúng tôi trang trải chi phí duy trì và cải thiện Linkstack.',
-    'support.msg6' => 'Cảm ơn bạn đã hỗ trợ và là một phần của cộng đồng Linkstack!',
+    'support.msg5' => 'Đóng góp tài chính </a>, thậm chí một số tiền nhỏ sẽ giúp chúng tôi trang trải chi phí duy trì và cải thiện Nexsus.',
+    'support.msg6' => 'Cảm ơn bạn đã hỗ trợ và là một phần của cộng đồng Nexsus!',
 
 
     /*

@@ -16,10 +16,10 @@
         <div class="logo-container fadein">
            <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
         </div>
-        <h1>{{__('messages.Setup LinkStack')}}</h1>
+        <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">
         <div class="left-txt glass-container">
-         {{__('messages.Welcome to the setup for LinkStack!')}}<br><br>
+         {{__('messages.Welcome to the setup for Nexsus Tracker!')}}<br><br>
         <b>{{__('messages.This setup will:')}}</b><br>
         {{__('messages.Check the server dependencies')}}<br>
         {{__('messages.Setup the database')}}<br>
@@ -130,7 +130,7 @@
         <div class="logo-container fadein">
            <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
         </div>
-        <h1>{{__('messages.Setup LinkStack')}}</h1>
+        <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Select a database type')}}</p>
 <p>{{__('messages.Under most circumstances, we recommend using SQLite')}}
    <br>
@@ -156,7 +156,7 @@
         <div class="logo-container fadein">
            <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
         </div>
-        <h1>{{__('messages.Setup LinkStack')}}</h1>
+        <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">MySQL</p>
 
 <form id="home-url-form" action="{{route('mysql')}}" enctype="multipart/form-data" method="post">
@@ -188,7 +188,7 @@
         <div class="logo-container fadein">
            <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
         </div>
-        <h1>{{__('messages.Setup LinkStack')}}</h1>
+        <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Create an admin account')}}</p>
 
 <form id="home-url-form" action="{{route('createAdmin')}}" enctype="multipart/form-data" method="post">
@@ -218,7 +218,7 @@
         <div class="logo-container fadein">
            <img class="logo-img" src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="Logo">
         </div>
-        <h1>{{__('messages.Setup LinkStack')}}</h1>
+        <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Configure your page')}}</p>
 <form id="home-url-form" action="{{route('options')}}" enctype="multipart/form-data" method="post">
 <div class="form-group col-lg-8">
@@ -261,7 +261,7 @@ $("#select").change(function(){
 </script>
 
 <label>{{__('messages.App Name:')}}</label>
-<input style="max-width:275px;" class="form-control" value="LinkStack" name="app" type="text" required>
+<input style="max-width:275px;" class="form-control" value="Nexsus Tracker" name="app" type="text" required>
 
 </div></div><br>
 <input type="hidden" name="_token" value="{{csrf_token()}}">

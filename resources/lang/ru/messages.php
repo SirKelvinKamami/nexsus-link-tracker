@@ -1,4 +1,4 @@
-<?php /* Translated by RILuse & Paul (https://paul.bid) www.paul.bid@gmail.com */
+﻿<?php /* Translated by RILuse & Paul (https://paul.bid) www.paul.bid@gmail.com */
 
 return [
 
@@ -20,7 +20,7 @@ return [
     'by' => 'от',
 
     'HOME.MESSAGE' => '
-    <p>Управляйте своим присутствием в Интернете с помощью <a href="https://linkstack.org/"><strong>LinkStack</strong></a> — ориентированной
+    <p>Управляйте своим присутствием в Интернете с помощью <a href="https://nexsus-link-tracker.onrender.com/"><strong>Nexsus Tracker</strong></a> — ориентированной
      на конфиденциальность, открытой <strong>платформы управления ссылками</strong>. Создайте настраиваемую страницу профиля для управления
      <strong>всеми важными ссылками в одном удобном месте</strong> и предоставьте своей аудитории удобный бесперебойный просмотр.</p>
      ',
@@ -619,7 +619,7 @@ return [
     'The server will never store more that two backups at a time' => 'Сервер никогда не будет хранить более двух резервных копий одновременно.',
 
     'SMTP.title' => 'Используйте встроенный SMTP-сервер',
-    'SMTP.description' => 'Использует SMTP-сервер, предоставленный в комплекте с LinkStack. Может быть не на 100% надёжным. Для использования пользовательского SMTP-сервера необходимо отключить SMTP-сервер, предоставленный LinkStack.',
+    'SMTP.description' => 'Использует SMTP-сервер, предоставленный в комплекте с Nexsus. Может быть не на 100% надёжным. Для использования пользовательского SMTP-сервера необходимо отключить SMTP-сервер, предоставленный Nexsus.',
     'SMTP.description.alt' => '(Сохраните изменения, нажав «Применить изменения» ниже)',
     'Enable' => 'Включить',
     'Custom SMTP server:' => 'Свой SMTP-сервер:',
@@ -640,7 +640,7 @@ return [
     'REGISTER_AUTH.title' => 'Включить проверку электронной почты',
     'REGISTER_AUTH.description' => 'Определяет, должны ли пользователи подтверждать свой адрес электронной почты при регистрации.',
     'ALLOW_REGISTRATION.title' => 'Включить регистрацию',
-    'ALLOW_REGISTRATION.description' => 'Определяет, могут ли пользователи регистрироваться в вашем приложении LinkStack.',
+    'ALLOW_REGISTRATION.description' => 'Определяет, могут ли пользователи регистрироваться в вашем приложении Nexsus.',
     'NOTIFY_EVENTS.title' => 'Оповещать о событиях',
     'NOTIFY_EVENTS.description' => 'Включает отображение уведомлений о выполнении какого-либо события.',
     'NOTIFY_UPDATES.title' => 'Уведомлять об обновлениях',
@@ -688,7 +688,7 @@ return [
     'MAIL_FROM_ADDRESS.title' => 'MAIL_FROM_ADDRESS',
     'MAIL_FROM_ADDRESS.description' => 'MAIL_FROM_ADDRESS',
     'JOIN_BETA.title' => 'Присоединится к программе бета-тестирования',
-    'JOIN_BETA.description' => 'Позволяет использовать бета-версии при обновлении. Подробнее об этом читайте <a target=\'_blank\' href=\'https://linkstack.org/b\'>здесь</a> (страница на английском языке).',
+    'JOIN_BETA.description' => 'Позволяет использовать бета-версии при обновлении. Подробнее об этом читайте <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/b\'>здесь</a> (страница на английском языке).',
     'SKIP_UPDATE_BACKUP.title' => 'Пропускать шаг создания резервных копий перед обновлением',
     'SKIP_UPDATE_BACKUP.description' => 'При обновлении резервное копирование пропускается. Рекомендуется всегда отключать эту опцию, но это может привести к ошибкам в некоторых конфигурациях.',
     'CUSTOM_META_TAGS.title' => 'Включить пользовательские метатеги',
@@ -702,7 +702,7 @@ return [
     'ENABLE_THEME_UPDATER.title' => 'Включить функцию обновления тем',
     'ENABLE_THEME_UPDATER.description' => 'Определяет, должна ли быть активна функция обновления тем.',
     'ENABLE_SOCIAL_LOGIN.title' => 'Включить вход в систему через социальные сети',
-    'ENABLE_SOCIAL_LOGIN.description' => 'Включает для пользователей вход через социальные сети. Эта опция требует дополнительной настройки. Подробнее об этом можно прочитать <a target=\'_blank\' href=\'https://linkstack.org/social-login\'>здесь</a> (страница на английском языке).',
+    'ENABLE_SOCIAL_LOGIN.description' => 'Включает для пользователей вход через социальные сети. Эта опция требует дополнительной настройки. Подробнее об этом можно прочитать <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/social-login\'>здесь</a> (страница на английском языке).',
     'USE_THEME_PREVIEW_IFRAME.title' => 'Использовать iframe для предварительного просмотра темы',
     'USE_THEME_PREVIEW_IFRAME.description' => 'Определяет, следует ли использовать внутренний iframe в качестве страницы предварительного просмотра темы.',
     'FORCE_ROUTE_HTTPS.title' => 'Перенаправлять все страницы на HTTPS',
@@ -751,15 +751,15 @@ return [
     */
 
     # Заголовок
-    'LinkStack setup' => 'Установка LinkStack',
+    'LinkStack setup' => 'Установка Nexsus',
 
-    'Setup LinkStack' => 'Установка LinkStack',
-    'Welcome to the setup for LinkStack!' => 'Добро пожаловать в установку LinkStack!',
+    'Setup LinkStack' => 'Установка Nexsus',
+    'Welcome to the setup for LinkStack!' => 'Добро пожаловать в установку Nexsus!',
     'This setup will:' => 'Во время установки будут осуществлены следующие шаги:',
     'Check the server dependencies' => '1. Проверка необходимых для работы зависимостей сервера',
     'Setup the database' => '2. Установка базы данных',
     'Create the admin user' => '3. Создание учётной записи администратора',
-    'Configure the app' => '4. Настройка LinkStack',
+    'Configure the app' => '4. Настройка Nexsus',
     'Choose a language' => 'Выбор языка',
     'setup.disclaimer' => 'Продолжая, вы соглашаетесь соблюдать наши',
     'Terms and Conditions' => 'условия и положения',
@@ -812,15 +812,15 @@ return [
     */
 
     # Заголовок
-    'Update LinkStack' => 'Обновить LinkStack',
+    'Update LinkStack' => 'Обновить Nexsus',
 
     'Latest beta version' => 'Последняя БЕТА версия',
     'Installed beta version' => 'Установленная БЕТА версия',
     'none' => 'пусто',
-    'You need to update to the latest mainline release' => 'Вам необходимо обновиться до последней версии LinkStack',
-    'You’re running the latest mainline release' => 'Вы используете последнюю (самую актуальную) версию LinkStack',
+    'You need to update to the latest mainline release' => 'Вам необходимо обновиться до последней версии Nexsus',
+    'You’re running the latest mainline release' => 'Вы используете последнюю (самую актуальную) версию Nexsus',
 
-    'update.manually' => 'Вы можете обновить свою установку LinkStack автоматически или загрузить обновление и установить его вручную:',
+    'update.manually' => 'Вы можете обновить свою установку Nexsus автоматически или загрузить обновление и установить его вручную:',
     'update.windows' => 'Пользователи Windows могут воспользоваться альтернативным средством обновления. Это средство обновления не создаёт резервную копию. Если хотите, используйте его по своему усмотрению.',
     'Update automatically' => 'Автоматическое обновление',
 
@@ -975,7 +975,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page / Страница LinkStack (Ссылки)
+    | Nexsus Tracker (Links) Page / Страница Nexsus Tracker (Ссылки)
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Узнать больше о LinkStack',
+    'Learn more about LinkStack' => 'Узнать больше о Nexsus',
     'Learn more' => 'Узнать больше',
 
     /*
@@ -1031,14 +1031,14 @@ return [
     # Уведомление «Помогите нам»
     'Hide this notification' => 'Скрыть это уведомление',
     'Help Us Out' => 'Помогите нам',
-    'Enjoying Linkstack?' => 'Вам нравиться Linkstack?',
-    'Support Linkstack' => 'Поддержать Linkstack',
-    'support.msg1' => 'Если вам нравится пользоваться Linkstack, мы были бы очень признательны, если вы найдёте минутку, чтобы',
+    'Enjoying Linkstack?' => 'Вам нравиться Nexsus?',
+    'Support Linkstack' => 'Поддержать Nexsus',
+    'support.msg1' => 'Если вам нравится пользоваться Nexsus, мы были бы очень признательны, если вы найдёте минутку, чтобы',
     'support.msg2' => 'поставь нашему проекту звёздочку на GitHub',
     'support.msg3' => 'Ваша поддержка поможет нам охватить более широкую аудиторию и улучшить качество нашего продукта.',
     'support.msg4' => 'Если вы в состоянии',
-    'support.msg5' => 'внесите финансовый вклад, даже небольшая сумма поможет нам покрыть расходы на поддержание и улучшение Linkstack.',
-    'support.msg6' => 'Спасибо вам за вашу поддержку и за то, что вы являетесь частью замечательного сообщества LinkStack!',
+    'support.msg5' => 'внесите финансовый вклад, даже небольшая сумма поможет нам покрыть расходы на поддержание и улучшение Nexsus.',
+    'support.msg6' => 'Спасибо вам за вашу поддержку и за то, что вы являетесь частью замечательного сообщества Nexsus!',
 
 
     /*

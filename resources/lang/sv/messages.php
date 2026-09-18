@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
 
@@ -20,7 +20,7 @@ return [
     'by' => 'av',
 
     'HOME.MESSAGE' => '
-    <p>Få grepp om din onlineprofil med&nbsp;<a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+    <p>Få grepp om din onlineprofil med&nbsp;<a href="https://nexsus-link-tracker.onrender.com/"><strong>Nexsus Tracker</strong></a>,
      en <strong>länkplattform</strong> med integritet och öppen källkod. Skapa en anpassningsbar profil för att hantera <strong>
      dina viktigaste länkar på ett och samma ställe</strong> och ge din omgivning en sömlös surfupplevelse.</p>
      ',
@@ -616,7 +616,7 @@ return [
     'The server will never store more that two backups at a time' => 'Servern lagrar aldrig fler än två backups åt gången.',
 
     'SMTP.title' => 'Använd inbyggd SMTP-server',
-    'SMTP.description' => 'Använder LinkStacks egna SMTP-server. Är ej nödvändigtvis 100% pålitlig. Måste inaktiveras för att använda en egen SMTP-server.',
+    'SMTP.description' => 'Använder Nexsuss egna SMTP-server. Är ej nödvändigtvis 100% pålitlig. Måste inaktiveras för att använda en egen SMTP-server.',
     'SMTP.description.alt' => '(Spara ändringar med "Verkställ ändringar" nedan)',
     'Enable' => 'Aktivera',
     'Custom SMTP server:' => 'Egen SMTP-server:',
@@ -685,7 +685,7 @@ return [
     'MAIL_FROM_ADDRESS.title' => 'MAIL_FROM_ADDRESS',
     'MAIL_FROM_ADDRESS.description' => 'MAIL_FROM_ADDRESS',
     'JOIN_BETA.title' => 'Gå med i beta-programmet',
-    'JOIN_BETA.description' => 'Aktiverar betaversioner vid uppdatering. Läs mer om detta <a target=\'_blank\' href=\'https://linkstack.org/b\'>här</a>.',
+    'JOIN_BETA.description' => 'Aktiverar betaversioner vid uppdatering. Läs mer om detta <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/b\'>här</a>.',
     'SKIP_UPDATE_BACKUP.title' => 'Skippa backup vid uppdatering',
     'SKIP_UPDATE_BACKUP.description' => 'Skippar backups vid uppdatering. Detta alternativ rekommenderas att alltid vara inaktiverat, <br>men kan i vissa konfigurationer skapa problem.',
     'CUSTOM_META_TAGS.title' => 'Aktivera egna meta-taggar',
@@ -699,7 +699,7 @@ return [
     'ENABLE_ADMIN_BAR_USERS.title' => 'Aktivera administrationsfält för alla användare',
     'ENABLE_ADMIN_BAR_USERS.description' => 'Om det här alternativet är aktivt kommer alla inloggade användare att ha ett administrationsfält tillgängligt på deras länksidor.',
     'ENABLE_SOCIAL_LOGIN.title' => 'Aktivera social inloggning',
-    'ENABLE_SOCIAL_LOGIN.description' => 'Aktiverar inloggning via sociala medier. Det här alternativer kräver vidare konfiguration. Läs mer om detta <a target=\'_blank\' href=\'https://linkstack.org/social-login\'>här</a>.',
+    'ENABLE_SOCIAL_LOGIN.description' => 'Aktiverar inloggning via sociala medier. Det här alternativer kräver vidare konfiguration. Läs mer om detta <a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/social-login\'>här</a>.',
     'USE_THEME_PREVIEW_IFRAME.title' => 'Använd iframe som temaförhandsvisning',
     'USE_THEME_PREVIEW_IFRAME.description' => 'Avgör om en intern iframe skall användas som förhandsvisning för teman på temasidan.',
     'FORCE_ROUTE_HTTPS.title' => 'Omdirigera alla sidor till HTTPS',
@@ -748,10 +748,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Installation av LinkStack',
+    'LinkStack setup' => 'Installation av Nexsus',
 
-    'Setup LinkStack' => 'Installera LinkStack',
-    'Welcome to the setup for LinkStack!' => 'Välkommen till installationsguiden för LinkStack!',
+    'Setup LinkStack' => 'Installera Nexsus',
+    'Welcome to the setup for LinkStack!' => 'Välkommen till installationsguiden för Nexsus!',
     'This setup will:' => 'Den här installationsguiden kommer att:',
     'Check the server dependencies' => '1. Kontrollera serverkrav',
     'Setup the database' => '2. Installera databasen',
@@ -807,7 +807,7 @@ return [
     */
 
     # Titel-tagg
-    'Update LinkStack' => 'Uppdatera LinkStack',
+    'Update LinkStack' => 'Uppdatera Nexsus',
 
     'Latest beta version' => 'Senaste betaversion',
     'Installed beta version' => 'Installerad betaversion',
@@ -970,7 +970,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Länk-sida)
+    | Nexsus Tracker (Länk-sida)
     |--------------------------------------------------------------------------
     |
     | resources/views/littlelink.blade.php
@@ -1001,7 +1001,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Lär dig mer om LinkStack',
+    'Learn more about LinkStack' => 'Lär dig mer om Nexsus',
     'Learn more' => 'Lär dig mer',
 
     /*
@@ -1027,14 +1027,14 @@ return [
     # "Hjälp oss"-notis
     'Hide this notification' => 'Dölj den här notisen',
     'Help Us Out' => 'Hjälp Oss',
-    'Enjoying Linkstack?' => 'Gillar du LinkStack?',
-    'Support Linkstack' => 'Stöd LinkStack',
-    'support.msg1' => 'Om du har fått nöje av att använda LinkStack, så skulle vi verkligen uppskatta om du kunde',
+    'Enjoying Linkstack?' => 'Gillar du Nexsus?',
+    'Support Linkstack' => 'Stöd Nexsus',
+    'support.msg1' => 'Om du har fått nöje av att använda Nexsus, så skulle vi verkligen uppskatta om du kunde',
     'support.msg2' => 'stjärnmarkera projektet på GitHub',
     'support.msg3' => 'Ditt stöd hjälper oss nå en bredare publik och förbättrar kvalitén på vårt projekt.',
     'support.msg4' => 'Om du har möjlighet att',
-    'support.msg5' => 'stödja oss finansiellt</a>, så skulle även en liten summa hjälpa oss att täcka kostnaderna för underhåll och förbättring av LinkStack.',
-    'support.msg6' => 'Tack för ditt stöd och för att du är en del av LinkStacks gemenskap!',
+    'support.msg5' => 'stödja oss finansiellt</a>, så skulle även en liten summa hjälpa oss att täcka kostnaderna för underhåll och förbättring av Nexsus.',
+    'support.msg6' => 'Tack för ditt stöd och för att du är en del av Nexsuss gemenskap!',
 
 
     /*

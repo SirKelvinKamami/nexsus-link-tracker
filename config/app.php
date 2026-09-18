@@ -36,7 +36,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'LinkStack'),
+    'name' => env('APP_NAME', 'Nexsus Tracker'),
 
     /*
     |--------------------------------------------------------------------------

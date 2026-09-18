@@ -61,10 +61,10 @@ return [
     | Built in SMTP server
     |--------------------------------------------------------------------------
     |
-    | LinkStack now includes an open and free to use SMTP server. 
+    | Nexsus Tracker now includes an open and free to use SMTP server.
     | Mails from this service may only be used for
     | password recovery and registration purposes involving
-    | users personal LinkStack or LittleLink Admin pages.
+    | users personal Nexsus Tracker Admin pages.
     | Users of this service must abide by our Terms and Conditions
     | found at https://linkstack.org/mail.
     |

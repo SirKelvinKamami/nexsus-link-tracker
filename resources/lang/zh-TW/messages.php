@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 return [
 
@@ -20,7 +20,7 @@ return [
     'by' => '由',
 
     'HOME.MESSAGE' => '
-    <p>使用<strong><a href="https://linkstack.org/">LinkStack</strong></a>，這款以隱私為重點的開源<strong>鏈接管理平台</strong>，來掌控您的在線形象。建立一個可自訂的個人資料頁面，將您<strong>所有重要的連結集中管理在一個方便的地方</strong>，讓您的觀眾享有無縫的瀏覽體驗。</p>
+    <p>使用<strong><a href="https://nexsus-link-tracker.onrender.com/">Nexsus Tracker</strong></a>，這款以隱私為重點的開源<strong>鏈接管理平台</strong>，來掌控您的在線形象。建立一個可自訂的個人資料頁面，將您<strong>所有重要的連結集中管理在一個方便的地方</strong>，讓您的觀眾享有無縫的瀏覽體驗。</p>
     ',
 
 
@@ -617,7 +617,7 @@ return [
     'The server will never store more that two backups at a time' => '伺服器一次最多只會存儲兩個備份。',
 
     'SMTP.title' => '使用內建SMTP伺服器',
-    'SMTP.description' => '使用由LinkStack提供的SMTP伺服器。可能不是100%可靠。必須禁用它才能使用自定義SMTP伺服器。',
+    'SMTP.description' => '使用由Nexsus提供的SMTP伺服器。可能不是100%可靠。必須禁用它才能使用自定義SMTP伺服器。',
     'SMTP.description.alt' => '（在下方用“應用更改”保存更改）',
     'Enable' => '啟用',
     'Custom SMTP server:' => '自定義SMTP伺服器：',
@@ -686,7 +686,7 @@ return [
     'MAIL_FROM_ADDRESS.title' => 'MAIL_FROM_ADDRESS',
     'MAIL_FROM_ADDRESS.description' => 'MAIL_FROM_ADDRESS',
     'JOIN_BETA.title' => '加入測試版計畫',
-    'JOIN_BETA.description' => '在更新時啟用測試版的使用。在<a target=\'_blank\' href=\'https://linkstack.org/b\'>這裡</a>了解更多。',
+    'JOIN_BETA.description' => '在更新時啟用測試版的使用。在<a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/b\'>這裡</a>了解更多。',
     'SKIP_UPDATE_BACKUP.title' => '略過更新備份',
     'SKIP_UPDATE_BACKUP.description' => '在更新時略過備份。建議始終停用此選項，<br>但在某些配置中可能會導致錯誤。',
     'CUSTOM_META_TAGS.title' => '啟用自訂元標籤',
@@ -700,7 +700,7 @@ return [
     'ENABLE_THEME_UPDATER.title' => '啟用佈景主題更新器',
     'ENABLE_THEME_UPDATER.description' => '決定佈景主題更新器是否應處於活動狀態。',
     'ENABLE_SOCIAL_LOGIN.title' => '啟用社交登入',
-    'ENABLE_SOCIAL_LOGIN.description' => '啟用社交登入。此選項需要進一步設定。在<a target=\'_blank\' href=\'https://linkstack.org/social-login\'>這裡</a>了解更多。',
+    'ENABLE_SOCIAL_LOGIN.description' => '啟用社交登入。此選項需要進一步設定。在<a target=\'_blank\' href=\'https://nexsus-link-tracker.onrender.com/social-login\'>這裡</a>了解更多。',
     'USE_THEME_PREVIEW_IFRAME.title' => '使用 iframe 作為佈景主題預覽',
     'USE_THEME_PREVIEW_IFRAME.description' => '決定是否應使用內部 iframe 作為佈景主題頁面的預覽。',
     'FORCE_ROUTE_HTTPS.title' => '將所有頁面重定向到 HTTPS',
@@ -749,10 +749,10 @@ return [
     */
 
     # 標題標籤
-    'LinkStack setup' => 'LinkStack 設置',
+    'LinkStack setup' => 'Nexsus 設置',
 
-    'Setup LinkStack' => '設置 LinkStack',
-    'Welcome to the setup for LinkStack!' => '歡迎使用 LinkStack 設置！',
+    'Setup LinkStack' => '設置 Nexsus',
+    'Welcome to the setup for LinkStack!' => '歡迎使用 Nexsus 設置！',
     'This setup will:' => '本設置將：',
     'Check the server dependencies' => '1. 檢查伺服器相依性',
     'Setup the database' => '2. 設置資料庫',
@@ -810,7 +810,7 @@ return [
     */
 
     # 標題標籤
-    'Update LinkStack' => '更新 LinkStack',
+    'Update LinkStack' => '更新 Nexsus',
 
     'Latest beta version' => '最新測試版',
     'Installed beta version' => '已安裝測試版',
@@ -973,7 +973,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) 頁面
+    | Nexsus Tracker (Links) 頁面
     |--------------------------------------------------------------------------
     |
     | resources/views/linkstack/linkstack.blade.php
@@ -1003,7 +1003,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => '了解更多關於 LinkStack',
+    'Learn more about LinkStack' => '了解更多關於 Nexsus',
     'Learn more' => '了解更多',
 
     /*
@@ -1029,14 +1029,14 @@ return [
     # 帮助我們通知
     'Hide this notification' => '隱藏此通知',
     'Help Us Out' => '幫助我們',
-    'Enjoying Linkstack?' => '喜歡使用 Linkstack 嗎？',
-    'Support Linkstack' => '支持 Linkstack',
-    'support.msg1' => '如果您喜歡使用 Linkstack，我們將非常感激您如果您能花一點時間',
+    'Enjoying Linkstack?' => '喜歡使用 Nexsus 嗎？',
+    'Support Linkstack' => '支持 Nexsus',
+    'support.msg1' => '如果您喜歡使用 Nexsus，我們將非常感激您如果您能花一點時間',
     'support.msg2' => '在 GitHub 上給我們的專案一個星',
     'support.msg3' => '您的支持將幫助我們吸引更廣泛的受眾，提高我們專案的品質。',
     'support.msg4' => '如果您能',
-    'support.msg5' => '提供財政支持</a>，哪怕是一點點，也將有助於我們支付維護和改進 Linkstack 的成本。',
-    'support.msg6' => '感謝您的支持，以及您是 LinkStack 社群的一部分！',
+    'support.msg5' => '提供財政支持</a>，哪怕是一點點，也將有助於我們支付維護和改進 Nexsus 的成本。',
+    'support.msg6' => '感謝您的支持，以及您是 Nexsus 社群的一部分！',
 
 
     /*

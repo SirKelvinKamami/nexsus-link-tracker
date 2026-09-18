@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ return array(
 	'by' => 'por',
 
 	'HOME.MESSAGE' => '
-     <p>Tome o controle de sua presença online com <a href="https://linkstack.org/"><strong>LinkStack</strong></a>,
+     <p>Tome o controle de sua presença online com <a href="https://nexsus-link-tracker.onrender.com/"><strong>Nexsus Tracker</strong></a>,
      uma <strong>plataforma de gerenciamento de links</strong> de código aberto e voltada para a privacidade. Crie uma página de perfil personalizável para gerenciar <strong>
      todos os seus links importantes em um local conveniente</strong> e ofereça ao seu público uma experiência de navegação perfeita.</p>
   ',
@@ -588,7 +588,7 @@ return array(
 	'The server will never store more that two backups at a time' => 'O servidor nunca armazenará mais de dois backups por vez.',
 
 	'SMTP.title' => 'Usar o servidor SMTP integrado',
-	'SMTP.description' => 'Usa o servidor SMTP fornecido pelo LinkStack. Pode não ser 100% confiável. Deve ser desativado para que se possa usar um servidor SMTP personalizado.',
+	'SMTP.description' => 'Usa o servidor SMTP fornecido pelo Nexsus. Pode não ser 100% confiável. Deve ser desativado para que se possa usar um servidor SMTP personalizado.',
 	'SMTP.description.alt' => '(Salve as alterações com "Aplicar alterações" abaixo)',
 	'Enable' => 'Ativar',
 	'Custom SMTP server:' => 'Servidor SMTP personalizado:',
@@ -657,7 +657,7 @@ return array(
 	'MAIL_FROM_ADDRESS.title' => 'MAIL_FROM_ADDRESS',
 	'MAIL_FROM_ADDRESS.description' => 'MAIL_FROM_ADDRESS',
 	'JOIN_BETA.title' => 'Participe do programa beta',
-	'JOIN_BETA.description' => 'Permite o uso de versões beta durante a atualização. Leia mais sobre isso <a target="_blank" href="https://linkstack.org/b">aqui</a>.',
+	'JOIN_BETA.description' => 'Permite o uso de versões beta durante a atualização. Leia mais sobre isso <a target="_blank" href="https://nexsus-link-tracker.onrender.com/b">aqui</a>.',
 	'SKIP_UPDATE_BACKUP.title' => 'Ignorar backups de atualização',
 	'SKIP_UPDATE_BACKUP.description' => 'Ignora backups ao atualizar. Recomenda-se que essa opção esteja sempre desativada, mas ela pode causar erros em algumas configurações.',
 	'CUSTOM_META_TAGS.title' => 'Ativar meta tags personalizadas',
@@ -669,7 +669,7 @@ return array(
 	'ENABLE_THEME_UPDATER.title' => 'Ativar o atualizador de temas',
 	'ENABLE_THEME_UPDATER.description' => 'Determina se o atualizador de temas deve estar ativo.',
 	'ENABLE_SOCIAL_LOGIN.title' => 'Ativar o login social',
-	'ENABLE_SOCIAL_LOGIN.description' => 'Habilita o login social. Essa opção requer configuração adicional. Leia mais sobre isso <a target="_blank" href="https://linkstack.org/social-login">aqui</a>.',
+	'ENABLE_SOCIAL_LOGIN.description' => 'Habilita o login social. Essa opção requer configuração adicional. Leia mais sobre isso <a target="_blank" href="https://nexsus-link-tracker.onrender.com/social-login">aqui</a>.',
 	'USE_THEME_PREVIEW_IFRAME.title' => 'Usar iframe como visualização do tema',
 	'USE_THEME_PREVIEW_IFRAME.description' => 'Determina se um iframe interno deve ser usado como visualização da página do tema.',
 	'FORCE_ROUTE_HTTPS.title' => 'Redirecionar todas as páginas para HTTPS',
@@ -714,10 +714,10 @@ return array(
  */
 
 # Title Tag
-	'LinkStack setup' => 'Configuração do LinkStack',
+	'LinkStack setup' => 'Configuração do Nexsus',
 
-	'Setup LinkStack' => 'Configuração do LinkStack',
-	'Welcome to the setup for LinkStack!' => 'Vamos à configuração do LinkStack!',
+	'Setup LinkStack' => 'Configuração do Nexsus',
+	'Welcome to the setup for LinkStack!' => 'Vamos à configuração do Nexsus!',
 	'This setup will:' => 'Essa configuração irá:',
 	'Check the server dependencies' => 'Verificar as dependências do servidor',
 	'Setup the database' => 'Configurar o banco de dados',
@@ -772,7 +772,7 @@ return array(
  */
 
 # Title Tag
-	'Update LinkStack' => 'Atualizar o LinkStack',
+	'Update LinkStack' => 'Atualizar o Nexsus',
 
 	'Latest beta version' => 'Versão beta mais recente',
 	'Installed beta version' => 'Versão beta instalada',
@@ -929,7 +929,7 @@ return array(
 
 /*
 |--------------------------------------------------------------------------
-| LinkStack (Links) Page
+| Nexsus Tracker (Links) Page
 |--------------------------------------------------------------------------
 |
 | resources/views/littlelink.blade.php
@@ -951,7 +951,7 @@ return array(
 |
  */
 
-	'Learn more about LinkStack' => 'Saiba mais sobre o LinkStack',
+	'Learn more about LinkStack' => 'Saiba mais sobre o Nexsus',
 	'Learn more' => 'Saiba mais',
 
 /*
@@ -977,14 +977,14 @@ return array(
 # Help Us Out Notification
 	'Hide this notification' => 'Ocultar essa notificação',
 	'Help Us Out' => 'Ajude-nos',
-	'Enjoying Linkstack?' => 'Está gostando do Linkstack?',
-	'Support Linkstack' => 'Suporte ao Linkstack',
-	'support.msg1' => 'Se você estiver gostando de usar o Linkstack, ficaríamos muito gratos se você pudesse reservar um momento para',
+	'Enjoying Linkstack?' => 'Está gostando do Nexsus?',
+	'Support Linkstack' => 'Suporte ao Nexsus',
+	'support.msg1' => 'Se você estiver gostando de usar o Nexsus, ficaríamos muito gratos se você pudesse reservar um momento para',
 	'support.msg2' => 'dar uma estrela ao nosso projeto no GitHub',
 	'support.msg3' => 'Seu apoio nos ajudará a atingir um público mais amplo e a melhorar a qualidade do nosso projeto.',
 	'support.msg4' => 'Se você for capaz de',
-	'support.msg5' => 'faça uma contribuição financeira</a>, mesmo que seja uma pequena quantia que nos ajude a cobrir os custos de manutenção e aprimoramento do Linkstack.',
-	'support.msg6' => 'Obrigado por seu apoio e por fazer parte da comunidade do LinkStack!',
+	'support.msg5' => 'faça uma contribuição financeira</a>, mesmo que seja uma pequena quantia que nos ajude a cobrir os custos de manutenção e aprimoramento do Nexsus.',
+	'support.msg6' => 'Obrigado por seu apoio e por fazer parte da comunidade do Nexsus!',
 
 /*
 |--------------------------------------------------------------------------
