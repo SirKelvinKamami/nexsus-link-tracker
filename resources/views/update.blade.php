@@ -55,7 +55,7 @@
                         <button><i class="fa-solid fa-user-gear btn"></i>
                             {{ __('messages.Update automatically') }}</button>
                     </a>
-                    <a class="btn" href="https://linkstack.org/update" target="_blank">
+                    <a class="btn" href="https://github.com/SirKelvinKamami/nexsus-link-tracker/releases" target="_blank">
                         <button><i class="fa-solid fa-download btn"></i> {{ __('messages.Update manually') }}</button>
                     </a>
                 </div>

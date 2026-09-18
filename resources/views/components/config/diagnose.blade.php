@@ -34,7 +34,7 @@ $url2 = getUrlSatusCode(url('database/database.sqlite'));
 ?>
 
         @if($url1 == '200' or $url2 == '200')
-        <a href="https://docs.linkstack.org/installation-requirements/" target="_blank"><h4 style="color:tomato;">{{__('messages.security.risk')}}</h4></a>
+        <a href="https://github.com/SirKelvinKamami/nexsus-link-tracker#readme" target="_blank"><h4 style="color:tomato;">{{__('messages.security.risk')}}</h4></a>
         @endif
 
         <h3 class="mb-4">{{__('messages.Security')}}</h3>

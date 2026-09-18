@@ -65,7 +65,7 @@
 </form>
 {{-- end language --}}
 
-<p style="margin:25px;max-width:350px;">{{__('messages.setup.disclaimer')}} <a href="https://linkstack.org/terms-and-conditions/" target="_blank">{{__('messages.Terms and Conditions')}}</a>.</p>
+<p style="margin:25px;max-width:350px;">{{__('messages.setup.disclaimer')}} <a href="{{ url('/pages/terms') }}" target="_blank">{{__('messages.Terms and Conditions')}}</a>.</p>
 
         &ensp;<a class="btn" href="{{url('?2')}}"><button>{{__('messages.Next')}}</button></a>&ensp;
 @endif
