@@ -1,0 +1,57 @@
+name: Uptime monitor
+
+# Cold starts (free tier spins down after ~15 min idle) and failed deploys
+# both manifest as the health endpoint not answering. GitHub emails repo
+# members on workflow failure, so a red run IS the alert.
+# Note: scheduled workflows run only from the default branch and are
+# auto-disabled after 60 days with no repo activity — re-enable from the
+# Actions tab if that happens.
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Health endpoint (must answer 200 with JSON)
+        run: |
+          # generous timeout: a cold start can take ~90s to bind the port
+          body=$(curl -s --max-time 150 -w '\n%{http_code}' https://nexsus-link-tracker.onrender.com/api/v1/health/live)
+          code=$(echo "$body" | tail -1)
+          payload=$(echo "$body" | head -1)
+          echo "health -> $code $payload"
+          if [ "$code" != "200" ]; then
+            echo "::error::health endpoint returned $code (site down, cold-starting, or bad deploy)"
+            exit 1
+          fi
+          if ! echo "$payload" | grep -q '"status":"alive"'; then
+            echo "::error::health endpoint answered but payload unexpected: $payload"
+            exit 1
+          fi
+
+      - name: Landing page and branding asset (catches 500s and missing assets)
+        run: |
+          for path in "/" "/assets/nexsus/images/logo.svg"; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 60 "https://nexsus-link-tracker.onrender.com$path")
+            echo "GET $path -> $code"
+            if [ "$code" != "200" ]; then
+              echo "::error::$path returned $code"
+              exit 1
+            fi
+          done
+
+      - name: Record probe history (last 5 runs visible in the summary)
+        if: always()
+        run: |
+          {
+            echo "| time (UTC) | result |"
+            echo "| --- | --- |"
+            echo "| $(date -u '+%Y-%m-%d %H:%M') | ${{ job.status }} |"
+          } >> "$GITHUB_STEP_SUMMARY"

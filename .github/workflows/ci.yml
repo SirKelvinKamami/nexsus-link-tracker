@@ -120,6 +120,30 @@ jobs:
           echo "GET /dashboard -> $code (expect 200)"
           if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
 
+          # Full user flow: create a link, then verify it renders on the
+          # share page. This is the exact chain that broke in production
+          # four times (FK on empty buttons table, missing gitignored
+          # favicon dir, EnvEditor .env requirement, root-owned dir).
+          curl -s -b "$jar" -c "$jar" -o addlink.html "$base/studio/add-link"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -b "$jar" "$base/studio/add-link")
+          echo "GET /studio/add-link -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: add-link page broken"; exit 1; fi
+          csrf2=$(grep -o 'name="_token" value="[^"]*"' addlink.html | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf2" ]; then echo "FAIL: no CSRF token on /studio/add-link"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/studio/edit-link" \
+            --data-urlencode "_token=$csrf2" \
+            --data-urlencode "typename=link" \
+            --data-urlencode "title=CI Link" \
+            --data-urlencode "link=https://example.com/ci-$rnd" \
+            --data-urlencode "GetSiteIcon=1")
+          echo "POST /studio/edit-link -> $code (expect 302)"
+          if [ "$code" != "302" ]; then echo "FAIL: link creation broken (FK/seeder class of bug)"; exit 1; fi
+          code=$(curl -s -b "$jar" -o share.html -w '%{http_code}' "$base/@ciuser$rnd")
+          echo "GET /@ciuser$rnd -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: share page broken (favicon/env-editor/permission class of bug)"; exit 1; fi
+          if ! grep -q "CI Link" share.html; then echo "FAIL: created link not visible on share page"; exit 1; fi
+          echo "full user flow OK: register -> dashboard -> create link -> share page"
+
       - name: Upload logs on failure
         if: failure()
         uses: actions/upload-artifact@v7
@@ -237,6 +261,30 @@ jobs:
           code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' "$base/dashboard")
           echo "GET /dashboard -> $code (expect 200)"
           if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
+
+          # Full user flow: create a link, then verify it renders on the
+          # share page. This is the exact chain that broke in production
+          # four times (FK on empty buttons table, missing gitignored
+          # favicon dir, EnvEditor .env requirement, root-owned dir).
+          curl -s -b "$jar" -c "$jar" -o addlink.html "$base/studio/add-link"
+          code=$(curl -s -o /dev/null -w '%{http_code}' -b "$jar" "$base/studio/add-link")
+          echo "GET /studio/add-link -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: add-link page broken"; exit 1; fi
+          csrf2=$(grep -o 'name="_token" value="[^"]*"' addlink.html | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf2" ]; then echo "FAIL: no CSRF token on /studio/add-link"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/studio/edit-link" \
+            --data-urlencode "_token=$csrf2" \
+            --data-urlencode "typename=link" \
+            --data-urlencode "title=CI Link" \
+            --data-urlencode "link=https://example.com/ci-$rnd" \
+            --data-urlencode "GetSiteIcon=1")
+          echo "POST /studio/edit-link -> $code (expect 302)"
+          if [ "$code" != "302" ]; then echo "FAIL: link creation broken (FK/seeder class of bug)"; exit 1; fi
+          code=$(curl -s -b "$jar" -o share.html -w '%{http_code}' "$base/@ciuser$rnd")
+          echo "GET /@ciuser$rnd -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: share page broken (favicon/env-editor/permission class of bug)"; exit 1; fi
+          if ! grep -q "CI Link" share.html; then echo "FAIL: created link not visible on share page"; exit 1; fi
+          echo "full user flow OK: register -> dashboard -> create link -> share page"
 
       - name: Upload logs on failure
         if: failure()
