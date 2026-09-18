@@ -49,7 +49,7 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @if(theme('enable_custom_code') == "true" and theme('enable_custom_head') == "true" and env('ALLOW_CUSTOM_CODE_IN_THEMES') == 'true')@include($GLOBALS['themeName'] . '.extra.custom-head')@endif
 @if($info->theme != '' and $info->theme != 'default')
 
-  <!-- LinkStack Theme: "{{$info->theme}}" -->
+  <!-- Nexsus Tracker Theme: "{{$info->theme}}" -->
 
   <!-- Theme details: -->
   <meta name="designer" href="{{ url('') . "/theme/@" . $littlelink_name}}" content="{{ url('') . "/theme/@" . $littlelink_name}}">

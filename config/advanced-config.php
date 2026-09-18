@@ -7,7 +7,7 @@ $analytics =
 | Analytics
 |--------------------------------------------------------------------------
 |
-| Add external analytics services to your LinkStack instance by adding them below.
+| Add external analytics services to your Nexsus Tracker instance by adding them below.
 | Everything you enter below will be added to the <head> tag of every page.
 | Formatting in plain HTML is expected.
 |
@@ -32,15 +32,15 @@ return [
     |--------------------------------------------------------------------------
     |
     | Will only be active if "CUSTOM_META_TAGS" is set to "true" in the config.
-    | These tags will only be applied to the home page or if a LinkStack page 
-    | is set as the homepage in the config (for example: HOME_URL="admin").
+| These tags will only be applied to the home page or if a Nexsus Tracker page
+| is set as the homepage in the config (for example: HOME_URL="admin").
     | 
     | Empty entries will be ignored.
     |
     */
 
-    'title'           => '', // Overrides the default meta page title. Leave empty to use your LinkStack page title as the title.
-    'description'     => '', // Overrides the default meta page description. Leave empty to use your LinkStack page description as the description.
+    'title'           => '', // Overrides the default meta page title. Leave empty to use your Nexsus Tracker page title as the title.
+    'description'     => '', // Overrides the default meta page description. Leave empty to use your Nexsus Tracker page description as the description.
     'robots'          => 'index,follow',
     'viewport'        => 'width=device-width, initial-scale=1',
     'canonical_url'   => '', // Tells search engines to index "https://example.com/" instead of "https://example.com/@admin", for example.
@@ -56,8 +56,8 @@ return [
     |
     */
 
-    // Overwrites default page title after the LinkStack name on LinkStack pages.
-    // Example: "admin 🔗 LinkStack"
+    // Overwrites default page title after the Nexsus Tracker name on Nexsus Tracker pages.
+    // Example: "admin 🔗 Nexsus Tracker"
     //                 ⤌----------⤍
     //                 ⬑ What you can change with this setting.
     'linkstack_title' => '',
@@ -87,7 +87,7 @@ return [
 
     'custom_home_url' => '/home', // Only applies if you set a "HOME_URL" in the config.
 
-    // The URL prefix is the symbol that comes before a LinkStack URL.
+    // The URL prefix is the symbol that comes before a Nexsus Tracker URL.
     // For example the '@' in 'example.com/@admin'.
     // If empty no prefix is required.
     'custom_url_prefix' => '+',
@@ -144,24 +144,17 @@ return [
     'buttons' => array(
       array(
         'button' => 'github',
-        'link' => 'https://github.com/linkstackorg/linkstack',
+        'link' => 'https://github.com/SirKelvinKamami/nexsus-link-tracker',
         'title' => 'GitHub',
         'icon' => '',
         'custom_css' => ''
       ),
       array(
-        'button' => 'linkstack',
-        'link' => 'https://linkstack.org',
-        'title' => 'Project Website',
+        'button' => 'custom',
+        'link' => 'https://nexsus-link-tracker.onrender.com',
+        'title' => 'Nexsus Tracker',
         'icon' => '',
         'custom_css' => ''
-      ),
-      array(
-        'button' => 'custom',
-        'link' => 'https://linkstack.org/donate',
-        'title' => 'Help us out',
-        'icon' => 'fa-hand-holding-heart',
-        'custom_css' => 'color:#ffffff; background-image:radial-gradient(circle, #4b1977 0%, #2b0081 95%);'
       ),
     ),
 
