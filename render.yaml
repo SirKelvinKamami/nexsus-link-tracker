@@ -54,10 +54,16 @@ services:
         value: database
       - key: LOG_CHANNEL
         value: stderr
-      - key: DATABASE_URL
-        fromDatabase:
-          name: nexsus-db
-          property: connectionString
+      # DANGER: Laravel's pgsql/sqlite connections let DATABASE_URL override
+      # DB_HOST/DB_PORT/DB_DATABASE entirely. fromDatabase:connectionString
+      # resolves to the INTERNAL hostname (dpg-...-a), which does not resolve
+      # on the free Postgres plan -> boot migrations fatal and the deploy
+      # fails. The DB_* vars above (external FQDN) are the single source of
+      # truth; DATABASE_URL must NOT be set.
+      # - key: DATABASE_URL
+      #   fromDatabase:
+      #     name: nexsus-db
+      #     property: connectionString
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST
