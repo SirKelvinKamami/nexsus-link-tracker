@@ -82,7 +82,7 @@ fi
 
 # Ensure no stale config cache can short-circuit env() feature flags —
 # this app reads env() directly in routes/middleware, which returns null
-# once config is cached (upstream LinkStack design).
+# once config is cached (upstream Nexsus Tracker design).
 php artisan config:clear 2>/dev/null || true
 
 # Bind nginx to the platform-provided port (Render sets PORT; default 8080).

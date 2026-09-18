@@ -21,8 +21,8 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{env('APP_NAME')}}">
     <meta property="og:description" content='@if($message->home_message == "default"){!!strip_tags(__('messages.HOME.MESSAGE'))!!}@else{!!$message->home_message!!}@endif'>
-    @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta property="og:image" content="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}">
+    @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+    <meta property="og:image" content="{{ asset('assets/Nexsus Tracker/images/'.findFile('avatar')) }}">
     @else
     <meta property="og:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
@@ -33,8 +33,8 @@
     <meta property="twitter:url" content="{{ url('') }}">
     <meta name="twitter:title" content="{{env('APP_NAME')}}">
     <meta name="twitter:description" content='@if($message->home_message == "default"){!!strip_tags(__('messages.HOME.MESSAGE'))!!}@else{!!$message->home_message!!}@endif'>
-    @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta name="twitter:image" content="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}">
+    @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+    <meta name="twitter:image" content="{{ asset('assets/Nexsus Tracker/images/'.findFile('avatar')) }}">
     @else
     <meta name="twitter:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
@@ -127,7 +127,7 @@
                 </li>
                 @endif
             
-                @if ((env('ALLOW_REGISTRATION')) and !config('linkstack.single_user_mode'))
+                @if ((env('ALLOW_REGISTRATION')) and !config('Nexsus Tracker.single_user_mode'))
                 <li class="me-0 me-xl-2">
                   <a class="btn btn-secondary btn-sm d-flex gap-2 align-items-center" aria-current="page" href="{{ route('register') }}">
                     {{__('messages.Register')}}
@@ -156,11 +156,11 @@
             <div class="card card-transparent auth-card shadow-none d-flex mb-0">
               <div class="card-body justify-content-center text-center">
     
-                @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-                <img alt="avatar" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" width="auto" height="128px">
+                @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+                <img alt="avatar" src="{{ asset('assets/Nexsus Tracker/images/'.findFile('avatar')) }}" width="auto" height="128px">
                 @else
                 <div class="logo-container fadein">
-                  <img src="{{ asset('assets/linkstack/images/logo-animated.svg') }}" alt="Logo" style="width:150px; height:150px;">
+                  <img src="{{ asset('assets/Nexsus Tracker/images/logo-animated.svg') }}" alt="Logo" style="width:150px; height:150px;">
                 </div>
                 @endif
     
@@ -183,7 +183,7 @@
                   <a class="btn btn-primary me-3" href="{{ route('login') }}">{{__('messages.Log in')}}</a>
                   @endif
               
-                  @if ((env('ALLOW_REGISTRATION')) and !config('linkstack.single_user_mode'))
+                  @if ((env('ALLOW_REGISTRATION')) and !config('Nexsus Tracker.single_user_mode'))
                   <a class="btn btn-secondary me-3" href="{{ route('register') }}">{{__('messages.Register')}}</a>
                   @endif
               @endauth

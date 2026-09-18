@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Headers::class,
+        \App\Http\Middleware\SecurityHeadersMiddleware::class,
     ];
 
     /**
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'impersonate' => \App\Http\Middleware\Impersonate::class,
         'api.token' => \App\Http\Middleware\ApiTokenAuth::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'rate.limit' => \App\Http\Middleware\RateLimiterMiddleware::class,
     ];
 }

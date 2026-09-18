@@ -2,8 +2,10 @@
 
 **Project:** nexsus-link-tracker
 **Type:** API-first link analytics, bio pages, forms, and landing pages
-**Base:** LinkStack v4.8.6 (Laravel 9)
-**Status:** Phase 3 Complete — Forms Module | **Phase 4 Complete — Task Management & Reminders**
+**Framework:** Laravel 9 (PHP 8.2)
+**Hosting:** Render — `https://nexsus-link-tracker.onrender.com`
+**Database:** PostgreSQL on Render (SQLite for local development)
+**Status:** Phase 3 Complete — Forms Module | **Phase 4 Complete — Task Management & Reminders** | **Phase 4.0-4.5 All Complete**
 
 ---
 
@@ -85,7 +87,7 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 
 ### Phase 0 — Foundation ✅
 - [x] PHP 8.2.33 + Composer 2.10.3 installed
-- [x] LinkStack cloned and configured (SQLite, APP_KEY, seeds)
+- [x] Nexsus Tracker cloned and configured (SQLite, APP_KEY, seeds)
 - [x] npm install + Tailwind/Mix build
 - [x] Dev server running on 127.0.0.1:8000
 - [x] Admin user: `admin` / `12345678`, page `@admin`
@@ -336,6 +338,22 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 
 ---
 
+## Bug Fixes (API Testing Phase)
+
+### 2026-09-18: Critical bugs found via API testing and fixed
+
+| Bug | Root Cause | Fix |
+|-----|-----------|-----|
+| Task operations returned 401/500 | TaskController extended `Controller` instead of `BaseController` — `success()`/`error()` helpers missing | Changed to `extends BaseController` |
+| All task endpoints failed with null user_id | `auth()->id()` returned null under API token auth (middleware sets `_api_user_id` on request, not Laravel auth) | Added `getAuthUserId()` helper using `$this->getUserId(request())`; replaced all `auth()->id()` calls |
+| `/daily-digest` and `/schedule` returned 404 | Routes defined after `/{id}` parameter route, caught by parameterized route | Reordered: specific routes before `/{id}` |
+| Reminder creation returned 422 (NOT NULL user_id) | `Reminder.php` `$fillable` missing `'user_id'` | Added `'user_id'` to `$fillable` |
+| Daily digest 500 (SQLite) | `$now = now()->hour` assigned integer, then `$now->hour` on integer | Separated into `$hour` variable and `$greeting` variable |
+| Analytics 500 (SQLite) | `ProductivityTracker::detectPeakHours()` used MySQL `HOUR()` function | Added DB driver detection: `strftime('%H', ...)` for SQLite, `HOUR(...)` for MySQL |
+| Reminder creation 422 (CHECK constraint) | `reminder_logs.action` enum lacked `'created'` value | Updated existing migration enum + new migration `2026_09_16_000006` (raw SQL for SQLite compatibility) |
+
+---
+
 ## Das-Hub Integration
 
 The tracker API is consumed by the DAS Creative CRM (`das-hub` repo).
@@ -362,10 +380,9 @@ const daily = await trackerService.getDailyClicks();
 
 ---
 
-**Last Updated:** 2026-09-16
+**Last Updated:** 2026-09-18
 **Authority:** SirKelvin Kamami (Boss)
 **Phase 1-3 Status:** Complete
-**Phase 4.0-4.3 Status:** Complete (Task Management, NLP Parsing, Smart Scheduling, Reminders)
-**Phase 4.4 Status:** Complete (ProductivityTracker + analytics endpoints; frontend dashboard pending)
-**Phase 4.5 Status:** Backend complete (blocks, widgets, model accessors); React frontend pending
-**Next:** Phase 4.5 — React Frontend (Dashboard, AI Parser, Calendar, Reminders, Analytics pages from Figma prototype)
+**Phase 4.0-4.5 Status:** Complete (Task Management, NLP Parsing, Smart Scheduling, Reminders, Analytics, Bio Page Integration)
+**Phase 5 Status:** Complete (Production hardening, API token management)
+**Next:** Ongoing — monitor, optimize, expand

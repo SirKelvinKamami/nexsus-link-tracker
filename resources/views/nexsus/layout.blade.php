@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 @include('layouts.lang')
 <head>
-   @stack('linkstack-head')
-   @stack('linkstack-head-end')
+   @stack('Nexsus Tracker-head')
+   @stack('Nexsus Tracker-head-end')
 </head>
 <body>
-   @stack('linkstack-body-start')
+   @stack('Nexsus Tracker-body-start')
    <div class="container">
       <div class="row">
          <div class="column" style="margin-top: 5%">
-            @stack('linkstack-content')
+            @stack('Nexsus Tracker-content')
          </div>
       </div>
    </div>
-   @stack('linkstack-body-end')
+   @stack('Nexsus Tracker-body-end')
 </body>
 </html>

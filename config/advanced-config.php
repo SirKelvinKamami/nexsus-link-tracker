@@ -60,7 +60,7 @@ return [
     // Example: "admin 🔗 Nexsus Tracker"
     //                 ⤌----------⤍
     //                 ⬑ What you can change with this setting.
-    'linkstack_title' => '',
+    'Nexsus Tracker_title' => '',
 
 
     // Either "true", "false" or "auth". 
@@ -131,7 +131,7 @@ return [
     | In the 'title' field, changes the text on a button, such as 'custom' and 'custom_website'.
     | 
     | In the 'icon' field, uses the same syntax as the Button Editor on the Admin Panel. 
-    | This allows you to add your own icons to 'custom' buttons. You can find a list of available icons on linkstack.org/fa.
+    | This allows you to add your own icons to 'custom' buttons. You can find a list of available icons on nexsustracker.org/fa.
     | 
     | In the 'custom_css' field, here you can enter custom CSS to change the color of your button. 
     | If you don't feel comfortable working with CSS,
@@ -162,7 +162,7 @@ return [
     |---------------------------------------------------|
     | List of Available buttons:                        |
     |---------------------------------------------------|
-    | https://linkstackorg.github.io/buttons/           |
+    | https://NexsusTracker.github.io/buttons/           |
     |---------------------------------------------------|
     */
 

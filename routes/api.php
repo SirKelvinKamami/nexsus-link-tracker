@@ -102,15 +102,17 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
     Route::prefix('tasks')->group(function () {
         // Task CRUD (Phase 4.0)
         Route::get('/', [TaskController::class, 'index']);
-        Route::get('/{id}', [TaskController::class, 'show']);
         Route::post('/', [TaskController::class, 'store']);
-        Route::put('/{id}', [TaskController::class, 'update']);
-        Route::delete('/{id}', [TaskController::class, 'destroy']);
-        Route::post('/{id}/complete', [TaskController::class, 'complete']);
 
-        // AI Parse (Phase 4.1)
+        // AI Parse (Phase 4.1) — before /{id}
         Route::post('/parse', [TaskController::class, 'parse']);
+
+        // Smart Scheduling (Phase 4.2) — before /{id}
+        Route::get('/schedule', [TaskController::class, 'schedule']);
         Route::get('/daily-digest', [TaskController::class, 'dailyDigest']);
+        Route::post('/recalculate', [TaskController::class, 'recalculate']);
+        Route::get('/rules', [TaskController::class, 'getRules']);
+        Route::post('/rules', [TaskController::class, 'createRule']);
 
         // Task Analytics (Phase 4.4)
         Route::prefix('analytics')->group(function () {
@@ -121,11 +123,11 @@ Route::prefix('v1')->middleware('api.token')->group(function () {
             Route::get('/top-completed', [TaskController::class, 'topCompleted']);
         });
 
-        // Smart Scheduling (Phase 4.2)
-        Route::get('/schedule', [TaskController::class, 'schedule']);
+        // Task detail (must be last for GET to avoid catching /daily-digest, /schedule)
+        Route::get('/{id}', [TaskController::class, 'show']);
+        Route::put('/{id}', [TaskController::class, 'update']);
+        Route::delete('/{id}', [TaskController::class, 'destroy']);
+        Route::post('/{id}/complete', [TaskController::class, 'complete']);
         Route::post('/{id}/schedule', [TaskController::class, 'scheduleTask']);
-        Route::post('/recalculate', [TaskController::class, 'recalculate']);
-        Route::get('/rules', [TaskController::class, 'getRules']);
-        Route::post('/rules', [TaskController::class, 'createRule']);
     });
 });

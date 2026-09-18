@@ -7,6 +7,12 @@
 /storage/app/INSTALLING
 /vendor
 database/database.sqlite
+database/e2e.sqlite
+
+# Playwright E2E suite
+tests/e2e/node_modules
+tests/e2e/test-results
+tests/e2e/playwright-report
 .env
 .env.backup
 .phpunit.result.cache

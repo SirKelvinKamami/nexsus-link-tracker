@@ -748,10 +748,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Installation av Nexsus',
+    'Nexsus Tracker setup' => 'Installation av Nexsus',
 
-    'Setup LinkStack' => 'Installera Nexsus',
-    'Welcome to the setup for LinkStack!' => 'Välkommen till installationsguiden för Nexsus!',
+    'Setup Nexsus Tracker' => 'Installera Nexsus',
+    'Welcome to the setup for Nexsus Tracker!' => 'Välkommen till installationsguiden för Nexsus!',
     'This setup will:' => 'Den här installationsguiden kommer att:',
     'Check the server dependencies' => '1. Kontrollera serverkrav',
     'Setup the database' => '2. Installera databasen',
@@ -807,7 +807,7 @@ return [
     */
 
     # Titel-tagg
-    'Update LinkStack' => 'Uppdatera Nexsus',
+    'Update Nexsus Tracker' => 'Uppdatera Nexsus',
 
     'Latest beta version' => 'Senaste betaversion',
     'Installed beta version' => 'Installerad betaversion',
@@ -1001,7 +1001,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Lär dig mer om Nexsus',
+    'Learn more about Nexsus Tracker' => 'Lär dig mer om Nexsus',
     'Learn more' => 'Lär dig mer',
 
     /*
@@ -1027,8 +1027,8 @@ return [
     # "Hjälp oss"-notis
     'Hide this notification' => 'Dölj den här notisen',
     'Help Us Out' => 'Hjälp Oss',
-    'Enjoying Linkstack?' => 'Gillar du Nexsus?',
-    'Support Linkstack' => 'Stöd Nexsus',
+    'Enjoying Nexsus Tracker?' => 'Gillar du Nexsus?',
+    'Support Nexsus Tracker' => 'Stöd Nexsus',
     'support.msg1' => 'Om du har fått nöje av att använda Nexsus, så skulle vi verkligen uppskatta om du kunde',
     'support.msg2' => 'stjärnmarkera projektet på GitHub',
     'support.msg3' => 'Ditt stöd hjälper oss nå en bredare publik och förbättrar kvalitén på vårt projekt.',

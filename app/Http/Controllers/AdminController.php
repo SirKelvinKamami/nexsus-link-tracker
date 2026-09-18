@@ -457,7 +457,7 @@ class AdminController extends Controller
     if (!empty($logo)) {
       // Delete existing image
       $path = findFile("avatar");
-      $path = base_path("/assets/linkstack/images/" . $path);
+      $path = base_path("/assets/Nexsus Tracker/images/" . $path);
 
       // Delete existing image
       if (File::exists($path)) {
@@ -465,7 +465,7 @@ class AdminController extends Controller
       }
 
       $logo->move(
-        base_path("/assets/linkstack/images/"),
+        base_path("/assets/Nexsus Tracker/images/"),
         "avatar" . "_" . time() . "." . $request->file("image")->extension(),
       );
     }
@@ -473,7 +473,7 @@ class AdminController extends Controller
     if (!empty($icon)) {
       // Delete existing image
       $path = findFile("favicon");
-      $path = base_path("/assets/linkstack/images/" . $path);
+      $path = base_path("/assets/Nexsus Tracker/images/" . $path);
 
       // Delete existing image
       if (File::exists($path)) {
@@ -481,7 +481,7 @@ class AdminController extends Controller
       }
 
       $icon->move(
-        base_path("/assets/linkstack/images/"),
+        base_path("/assets/Nexsus Tracker/images/"),
         "favicon" . "_" . time() . "." . $request->file("icon")->extension(),
       );
     }
@@ -492,7 +492,7 @@ class AdminController extends Controller
   public function delAvatar()
   {
     $path = findFile("avatar");
-    $path = base_path("/assets/linkstack/images/" . $path);
+    $path = base_path("/assets/Nexsus Tracker/images/" . $path);
 
     // Delete existing image
     if (File::exists($path)) {
@@ -507,7 +507,7 @@ class AdminController extends Controller
   {
     // Delete existing image
     $path = findFile("favicon");
-    $path = base_path("/assets/linkstack/images/" . $path);
+    $path = base_path("/assets/Nexsus Tracker/images/" . $path);
 
     // Delete existing image
     if (File::exists($path)) {

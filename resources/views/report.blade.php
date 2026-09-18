@@ -14,10 +14,10 @@
       @endif
 
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-      <link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
+      @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
+      <link rel="icon" type="image/png" href="{{ asset('assets/Nexsus Tracker/images/'.findFile('favicon')) }}">
       @else
-      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
+      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
       @endif
       
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>

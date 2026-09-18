@@ -73,7 +73,7 @@
                 <div class="row">
                     <div class="col-sm-12">  
 
-@if(auth()->user()->role == 'admin' && !config('linkstack.single_user_mode'))
+@if(auth()->user()->role == 'admin' && !config('Nexsus Tracker.single_user_mode'))
         <!-- Section: Design Block -->
         <section class="mb-3 text-gray-800 text-center p-4 w-full">
             <div class='font-weight-bold text-left h3'>{{__('messages.Site statistics:')}}</div><br>

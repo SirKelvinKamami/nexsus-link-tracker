@@ -7,8 +7,8 @@ The security of this application is left to the user. This application is distri
 
 ## Reporting a Vulnerability
 
-If you believe you have found a security vulnerability in this project, please contact the developer at [`security@linkstack.org`](mailto:security@linkstack.org). Include as much detail as possible about the potential issue, including the version of the project you are using. Thank you for helping to keep LinkStack secure!
+If you believe you have found a security vulnerability in this project, please contact the developer at [`security@nexsustracker.org`](mailto:security@nexsustracker.org). Include as much detail as possible about the potential issue, including the version of the project you are using. Thank you for helping to keep Nexsus Tracker secure!
 
 <br>
 
-*For any questions regarding this please contact: [`security@linkstack.org`](mailto:security@linkstack.org)*
+*For any questions regarding this please contact: [`security@nexsustracker.org`](mailto:security@nexsustracker.org)*

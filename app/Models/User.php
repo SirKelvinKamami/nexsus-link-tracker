@@ -89,11 +89,11 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::creating(function ($user) {
-            if (config('linkstack.disable_random_user_ids') != 'true') {
+            if (config('Nexsus Tracker.disable_random_user_ids') != 'true') {
                 if (is_null(User::first())) {
                     $user->id = 1;
                 } else {
-                    $numberOfDigits = config('linkstack.user_id_length') ?? 6;
+                    $numberOfDigits = config('Nexsus Tracker.user_id_length') ?? 6;
     
                     $minIdValue = 10**($numberOfDigits - 1);
                     $maxIdValue = 10**$numberOfDigits - 1;

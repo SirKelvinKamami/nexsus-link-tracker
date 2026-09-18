@@ -14,7 +14,7 @@
       @endif
       
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
+      @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
       <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
       @else
       <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/favicon.svg') }}">
@@ -59,19 +59,19 @@
                   
                   <!--Logo start-->
                   <div class="logo-main">
-                    @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
+                    @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
                     <div class="logo-normal">
-                      <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
+                      <img class="img logo" src="{{ asset('assets/Nexsus Tracker/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
                   </div>
                   <div class="logo-mini">
-                    <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
+                    <img class="img logo" src="{{ asset('assets/Nexsus Tracker/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
                   </div>
                     @else
                     <div class="logo-normal">
-                      <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
+                      <img class="img logo" type="image/svg+xml" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" width="30px" height="30px">
                   </div>
                   <div class="logo-mini">
-                    <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
+                    <img class="img logo" type="image/svg+xml" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" width="30px" height="30px">
                   </div>
                     @endif
                     </div>
@@ -97,10 +97,10 @@
                             <div class="p-2 mb-3">
                                 @if(file_exists(base_path(findAvatar($id))))
                                     <img alt="avatar" class="rounded-avatar fadein" src="{{ url(findAvatar($id)) }}" height="128px" width="128px" style="object-fit: cover;">
-                                @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-                                    <img alt="avatar" class="fadein" src="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}" height="128px" width="128px" style="object-fit: cover;">
+                                @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+                                    <img alt="avatar" class="fadein" src="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}" height="128px" width="128px" style="object-fit: cover;">
                                 @else
-                                    <img alt="avatar" class="fadein" src="{{ asset('assets/linkstack/images/logo.svg') }}" height="128px" style="width:auto;min-width:128px;object-fit: cover;">
+                                    <img alt="avatar" class="fadein" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" height="128px" style="width:auto;min-width:128px;object-fit: cover;">
                                 @endif
                             </div>
                             <h5 class="card-title">{{$userData->name}}</h5>

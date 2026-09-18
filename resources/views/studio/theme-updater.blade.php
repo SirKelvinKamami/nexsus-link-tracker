@@ -70,7 +70,7 @@
                             if ($themeVe == "error") {
                             echo '<span class="badge bg-danger">'.__('messages.Error').'</span>';
                             } elseif ($hasSource == false) {
-                            echo '<a href="https://linkstack.org/themes.php" target="_blank"><span class="badge bg-danger">'.__('messages.Update manually').'</span></a>';
+                            echo '<a href="https://nexsustracker.org/themes.php" target="_blank"><span class="badge bg-danger">'.__('messages.Update manually').'</span></a>';
                             } elseif($updateAv == true) {
                             echo '<span class="badge bg-warning">'.__('messages.Update available').'</span>';
                             } else {

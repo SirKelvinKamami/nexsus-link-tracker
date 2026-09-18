@@ -1,13 +1,13 @@
-# A LinkStack Theme
-Find more themes: https://github.com/linkstackorg/linkstack-themes
-                                                                                                                                                                         
+# A Nexsus Tracker Theme
+Find more themes: https://github.com/NexsusTracker/nexsus-tracker-themes
+
 *	Theme Name: Galaxy
 *	Theme Version: 2.1
 *	Theme Date: 2022-06-09
-*	Theme Author: JulianPrieber & LinkStack Team
+*	Theme Author: JulianPrieber & Nexsus Tracker Team
 *	Theme Author URI: https://github.com/JulianPrieber
 *	Theme License: GPLv3
-*	Source code: https://github.com/linkstackorg/galaxy
+*	Source code: https://github.com/NexsusTracker/galaxy
 
 
 ### Used assets:

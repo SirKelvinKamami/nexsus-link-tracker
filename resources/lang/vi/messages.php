@@ -745,10 +745,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Nexsus Setup',
+    'Nexsus Tracker setup' => 'Nexsus Setup',
 
-    'Setup LinkStack' => 'setupNexsus',
-    'Welcome to the setup for LinkStack!' => 'Chào mừng bạn đến với thiết lập cho Nexsus!',
+    'Setup Nexsus Tracker' => 'setupNexsus',
+    'Welcome to the setup for Nexsus Tracker!' => 'Chào mừng bạn đến với thiết lập cho Nexsus!',
     'This setup will:' => 'Thiết lập này sẽ:',
     'Check the server dependencies' => '1.Kiểm tra các phụ thuộc của máy chủ ',
     'Setup the database' => '2.Thiết lập cơ sở dữ liệu ',
@@ -804,7 +804,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'Cập nhật Nexsus',
+    'Update Nexsus Tracker' => 'Cập nhật Nexsus',
 
     'Latest beta version' => 'Phiên bản beta mới nhất',
     'Installed beta version' => 'Đã cài đặt phiên bản beta',
@@ -990,7 +990,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Tìm hiểu thêm về Nexsus',
+    'Learn more about Nexsus Tracker' => 'Tìm hiểu thêm về Nexsus',
     'Learn more' => 'Tìm hiểu thêm',
 
     /*
@@ -1016,8 +1016,8 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'Ẩn thông báo này',
     'Help Us Out' => 'Giúp chúng tôi ra',
-    'Enjoying Linkstack?' => 'Thưởng thức Nexsus?',
-    'Support Linkstack' => 'Nexsus hỗ trợ',
+    'Enjoying Nexsus Tracker?' => 'Thưởng thức Nexsus?',
+    'Support Nexsus Tracker' => 'Nexsus hỗ trợ',
     'support.msg1' => 'Nếu bạn \'re enjoying using Nexsus, we would greatly appreciate it if you could take a moment to',
     'support.msg2' => 'Cung cấp cho dự án của chúng tôi một ngôi sao trên GitHub',
     'support.msg3' => 'Hỗ trợ của bạn sẽ giúp chúng tôi tiếp cận đối tượng rộng hơn và cải thiện chất lượng dự án của chúng tôi.',

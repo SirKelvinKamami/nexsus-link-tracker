@@ -66,7 +66,7 @@ return [
     | password recovery and registration purposes involving
     | users personal Nexsus Tracker Admin pages.
     | Users of this service must abide by our Terms and Conditions
-    | found at https://linkstack.org/mail.
+    | found at https://nexsustracker.org/mail.
     |
     */
 

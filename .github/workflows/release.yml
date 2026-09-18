@@ -38,24 +38,24 @@ jobs:
           # Composer already provided by setup-php
 
           cd /tmp
-          mkdir linkstack
-          cd linkstack
+          mkdir nexsus
+          cd nexsus
 
           TAG_VERSION="${GITHUB_REF##*/}"
           version=${TAG_VERSION#"v"}
 
           echo "$version" > version.json
 
-          git clone https://github.com/LinkStackOrg/LinkStack/
+          git clone https://github.com/NexsusTracker/NexsusTracker/
 
-          mkdir linkstack
-          mv LinkStack linkstack/linkstack
+          mkdir nexsus
+          mv NexsusTracker nexsus/nexsus
 
-          cd linkstack
+          cd nexsus
 
           curl -o README.md https://gist.githubusercontent.com/JulianPrieber/7a3f18a404c524d59c147a8d4f1ad33c/raw/3008f0893da2effaee56b99ee8b956fa533d9b07/README.md
 
-          cd linkstack
+          cd nexsus
 
           cp "../../version.json" "version.json"
           
@@ -71,19 +71,19 @@ jobs:
           rm README.md
           cd ../../
           
-          rsync -av linkstack/linkstack update
+          rsync -av nexsus/nexsus update
 
           cd update
           
-          mv linkstack/database/database.sqlite database.sqlite
+          mv nexsus/database/database.sqlite database.sqlite
 
           curl -o "HOW TO UPDATE.md" https://gist.githubusercontent.com/JulianPrieber/afc782666cf8c8f7a1a9cb9928498af5/raw/dbbbefb3c88ecd7703efbc866209629d9d130659/HOW%2520TO%2520UPDATE.md
 
-          rm linkstack/INSTALLING
+          rm nexsus/INSTALLING
 
           cd ..
 
-          rsync -av linkstack/linkstack/ "$version"
+          rsync -av nexsus/nexsus/ "$version"
           
           rm "$version/.env"
           rm "$version/INSTALLING"
@@ -91,18 +91,18 @@ jobs:
           cp version.json "$version/version.json"
           echo "v$version" > "$version/vbeta.json"
 
-          touch /tmp/linkstack/linkstack/linkstack/storage/app/ISINSTALLED
+          touch /tmp/nexsus/nexsus/nexsus/storage/app/ISINSTALLED
 
-          cd /tmp/linkstack
+          cd /tmp/nexsus
           
           cd "$version"
           zip -r "$version.zip" *
           mv "$version.zip" ../
           cd ..
 
-          cd linkstack
-          zip -r "linkstack.zip" *
-          mv linkstack.zip ../
+          cd nexsus
+          zip -r "nexsus-tracker.zip" *
+          mv nexsus-tracker.zip ../
           cd ..
 
           cd update
@@ -120,16 +120,16 @@ jobs:
             exit 1
           else
             echo "GitHub API key found."
-            cd /tmp/linkstack
+            cd /tmp/nexsus
 
             # Get the repository name in the format 'OWNER/REPO'
-            REPO_NAME="LinkStackOrg/LinkStack"
+            REPO_NAME="NexsusTracker/nexsus-tracker"
 
             # Upload 'update.zip'
             gh release upload "${GITHUB_REF##*/}" "update.zip" --clobber -R "$REPO_NAME"
 
-            # Upload 'linkstack.zip'
-            gh release upload "${GITHUB_REF##*/}" "linkstack.zip" --clobber -R "$REPO_NAME"
+            # Upload 'nexsus-tracker.zip'
+            gh release upload "${GITHUB_REF##*/}" "nexsus-tracker.zip" --clobber -R "$REPO_NAME"
 
             # Mark the release as the latest
             gh release edit "${GITHUB_REF##*/}" --title="${GITHUB_REF##*/}" -R "$REPO_NAME"
@@ -149,14 +149,14 @@ jobs:
             token="${{ secrets.MY_GITHUB_TOKEN }}"
 
             # The repository and file path
-            repo="LinkStackOrg/LinkStack"
+            repo="NexsusTracker/nexsus-tracker"
             file_path="version.json"
 
             # Fetch the latest commit's SHA for the file
             sha=$(curl -u "$username:$token" -s "https://api.github.com/repos/$repo/contents/$file_path" | grep -oP '(?<="sha": ")[^"]+')
 
             # Get version from version.json
-            cd /tmp/linkstack
+            cd /tmp/nexsus
             TAG_VERSION="${GITHUB_REF##*/}"
             version=${TAG_VERSION#"v"}
 
@@ -173,7 +173,7 @@ jobs:
       - name: Upload to Update Server
         if: ${{ github.event_name == 'push' }}
         run: |
-            cd /tmp/linkstack
+            cd /tmp/nexsus
             ls
             TAG_VERSION="${GITHUB_REF##*/}"
             version=${TAG_VERSION#"v"}

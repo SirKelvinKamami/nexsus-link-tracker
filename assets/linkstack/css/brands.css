@@ -125,7 +125,7 @@ button:hover,
   filter: brightness(90%);
 }
 
-/* LinkStack */
+/* Nexsus Tracker */
 .button.button-littlelink-custom {
   color: #FFFFFF;
   background-image: linear-gradient(
@@ -1298,14 +1298,14 @@ button.button-scribd{
   filter: brightness(90%);
 }
 
-/* LinkStack */
-.button.button-linkstack {
+/* Nexsus Tracker */
+.button.button-Nexsus Tracker {
   color: #FFFFFF;
   background: #300948;
   background: radial-gradient(circle, #300948 0%, #07051c 80%);
 }
-.button.button-linkstack:hover,
-.button.button-linkstack:focus {
+.button.button-Nexsus Tracker:hover,
+.button.button-Nexsus Tracker:focus {
   filter: brightness(90%);
 }
 /* Xbox */

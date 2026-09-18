@@ -751,10 +751,10 @@ return [
     */
 
     # Заголовок
-    'LinkStack setup' => 'Установка Nexsus',
+    'Nexsus Tracker setup' => 'Установка Nexsus',
 
-    'Setup LinkStack' => 'Установка Nexsus',
-    'Welcome to the setup for LinkStack!' => 'Добро пожаловать в установку Nexsus!',
+    'Setup Nexsus Tracker' => 'Установка Nexsus',
+    'Welcome to the setup for Nexsus Tracker!' => 'Добро пожаловать в установку Nexsus!',
     'This setup will:' => 'Во время установки будут осуществлены следующие шаги:',
     'Check the server dependencies' => '1. Проверка необходимых для работы зависимостей сервера',
     'Setup the database' => '2. Установка базы данных',
@@ -812,7 +812,7 @@ return [
     */
 
     # Заголовок
-    'Update LinkStack' => 'Обновить Nexsus',
+    'Update Nexsus Tracker' => 'Обновить Nexsus',
 
     'Latest beta version' => 'Последняя БЕТА версия',
     'Installed beta version' => 'Установленная БЕТА версия',
@@ -978,7 +978,7 @@ return [
     | Nexsus Tracker (Links) Page / Страница Nexsus Tracker (Ссылки)
     |--------------------------------------------------------------------------
     |
-    | resources/views/linkstack/linkstack.blade.php
+    | resources/views/Nexsus Tracker/Nexsus Tracker.blade.php
     |
     */
 
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Узнать больше о Nexsus',
+    'Learn more about Nexsus Tracker' => 'Узнать больше о Nexsus',
     'Learn more' => 'Узнать больше',
 
     /*
@@ -1031,8 +1031,8 @@ return [
     # Уведомление «Помогите нам»
     'Hide this notification' => 'Скрыть это уведомление',
     'Help Us Out' => 'Помогите нам',
-    'Enjoying Linkstack?' => 'Вам нравиться Nexsus?',
-    'Support Linkstack' => 'Поддержать Nexsus',
+    'Enjoying Nexsus Tracker?' => 'Вам нравиться Nexsus?',
+    'Support Nexsus Tracker' => 'Поддержать Nexsus',
     'support.msg1' => 'Если вам нравится пользоваться Nexsus, мы были бы очень признательны, если вы найдёте минутку, чтобы',
     'support.msg2' => 'поставь нашему проекту звёздочку на GitHub',
     'support.msg3' => 'Ваша поддержка поможет нам охватить более широкую аудиторию и улучшить качество нашего продукта.',

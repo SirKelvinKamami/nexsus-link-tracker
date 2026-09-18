@@ -28,7 +28,7 @@ class PageSeeder extends Seeder
 
 <p><strong><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAAFiS0dEAf8CLd4AAAAEZ0lGZwAAAAp8We1TAAAADGNtUFBKQ21wMDcxMgAAAAdPbbelAAAACklEQVQY02NgAAAAAgABmGNs1wAAAABJRU5ErkJggg==" style="height:1px; width:1px" /></strong><strong>2.&nbsp;INTELLECTUAL PROPERTY RIGHTS</strong></p>
 
-<p>Nexsus Tracker is licensed under the GNU Affero General Public License v3.0 and is built on the open source <a href="https://github.com/linkstackorg/linkstack" rel="noopener">LinkStack</a> project.</p>
+<p>Nexsus Tracker is licensed under the GNU Affero General Public License v3.0 and is built on the open source <a href="https://github.com/NexsusTracker/Nexsus Tracker" rel="noopener">Nexsus Tracker</a> project.</p>
 
 <p><strong><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEX///8AAABVwtN+AAAAAXRSTlMAQObYZgAAAAFiS0dEAf8CLd4AAAAEZ0lGZwAAAAp8We1TAAAADGNtUFBKQ21wMDcxMgAAAAdPbbelAAAACklEQVQY02NgAAAAAgABmGNs1wAAAABJRU5ErkJggg==" style="height:1px; width:1px" /></strong><strong>3.&nbsp;USER REPRESENTATIONS</strong></p>
 

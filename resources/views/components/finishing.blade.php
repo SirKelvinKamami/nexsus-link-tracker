@@ -369,7 +369,7 @@ try {
         $files = File::files(base_path('littlelink/images'));
         foreach ($files as $file) {
             $filename = $file->getFilename();
-            $destination = base_path('assets/linkstack/images/' . $filename);
+            $destination = base_path('assets/Nexsus Tracker/images/' . $filename);
             if (!File::exists($destination)) {
                 if (!$file->isDir()) {
                     File::move($file, $destination);
@@ -384,7 +384,7 @@ try {
         $files = File::files(base_path('littlelink/images'));
         foreach ($files as $file) {
             $filename = $file->getFilename();
-            $destination = base_path('assets/linkstack/images/' . $filename);
+            $destination = base_path('assets/Nexsus Tracker/images/' . $filename);
             if (!File::exists($destination)) {
                 if (!$file->isDir()) {
                     File::move($file, $destination);

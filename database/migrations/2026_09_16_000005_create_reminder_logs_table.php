@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('reminder_id');
             $table->foreign('reminder_id')->references('id')->on('reminders')->onDelete('cascade');
-            $table->enum('action', ['sent', 'delivered', 'clicked', 'dismissed', 'snoozed', 'completed', 'failed']);
+            $table->enum('action', ['sent', 'delivered', 'clicked', 'dismissed', 'snoozed', 'completed', 'failed', 'created']);
             $table->json('metadata')->nullable();
             $table->timestamps();
         });

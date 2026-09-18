@@ -59,8 +59,8 @@ $usrhandl = Auth::user()->littlelink_name;
       <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css')}}" />
       
 	  <meta name="csrf-token" content="{{ csrf_token() }}">
-	  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/hover-min.css') }}">
-	  <link rel="stylesheet" href="{{ asset('assets/linkstack/css/animate.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/hover-min.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/animate.css') }}">
 	  <link rel="stylesheet" href="{{ asset('assets/external-dependencies/bootstrap-icons.css') }}">
 
   </head>
@@ -404,7 +404,7 @@ $usrhandl = Auth::user()->littlelink_name;
                                 <?php // Requests newest version from server and sets it as variable
               
                                 try{
-                                $Vgit = external_file_get_contents("https://version.linkstack.org/"); 
+                                $Vgit = external_file_get_contents("https://version.nexsustracker.org/"); 
               
                              // Requests current version from the local version file and sets it as variable
                                 $Vlocal = file_get_contents(base_path("version.json"));
@@ -446,7 +446,7 @@ $usrhandl = Auth::user()->littlelink_name;
                                         <tbody>
                                           <tr>
                                             <td><center><span class="badge rounded-pill bg-primary"><?php  if(file_exists(base_path("vbeta.json"))) {echo file_get_contents(base_path("vbeta.json"));} else {echo "none";}  ?></span></center></td>
-                                            <td><center><span class="badge rounded-pill bg-primary"><?php echo external_file_get_contents("https://beta.linkstack.org/vbeta.json"); ?></span></center></td>
+                                            <td><center><span class="badge rounded-pill bg-primary"><?php echo external_file_get_contents("https://beta.nexsustracker.org/vbeta.json"); ?></span></center></td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -487,10 +487,10 @@ $usrhandl = Auth::user()->littlelink_name;
                   <a class="py-0 nav-link d-flex align-items-center dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#navbarDropdownIcon">
 					@if(file_exists(base_path(findAvatar(Auth::user()->id))))
 					<img src="{{ url(findAvatar(Auth::user()->id)) }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded" style="object-fit:cover;">
-          @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-          <img src="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
+          @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+          <img src="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
 					@else
-					<img src="{{ asset('assets/linkstack/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
+					<img src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
 					@endif
                     <div class="caption ms-3 d-none d-md-block ">
                         <h6 class="mb-0 caption-title">{{Auth::user()->name}}</h6>
@@ -759,7 +759,7 @@ $usrhandl = Auth::user()->littlelink_name;
                 }
 
               } catch(exception $e) {
-                $imgSrc = url('/assets/linkstack/images/themes/no-preview.png');
+                $imgSrc = url('/assets/Nexsus Tracker/images/themes/no-preview.png');
                 $imgType = NULL;
               }
               @endphp

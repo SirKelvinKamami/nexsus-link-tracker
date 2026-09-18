@@ -224,10 +224,15 @@ class ProductivityTracker
      */
     private function detectPeakHours($userId): ?string
     {
+        $driver = \DB::connection()->getDriverName();
+        $hourRaw = $driver === 'sqlite'
+            ? "strftime('%H', updated_at)"
+            : "HOUR(updated_at)";
+
         $hourCounts = Task::forUser($userId)
             ->where('status', 'completed')
             ->where('updated_at', '>=', now()->subDays(30))
-            ->selectRaw('HOUR(updated_at) as hour, COUNT(*) as count')
+            ->selectRaw("$hourRaw as hour, COUNT(*) as count")
             ->groupBy('hour')
             ->orderByDesc('count')
             ->limit(2)

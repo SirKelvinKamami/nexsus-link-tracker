@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Api\BaseController;
 use App\Models\Task;
 use App\Models\TaskItem;
 use App\Models\ScheduleRule;
+use App\Models\User;
 use App\Services\AiParser;
 use App\Services\ProductivityTracker;
 use App\Services\TaskScheduler;
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class TaskController extends BaseController
 {
     /**
      * List tasks.
@@ -19,7 +20,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $query = Task::forUser($userId);
 
             if ($request->has('status')) {
@@ -62,7 +63,7 @@ class TaskController extends Controller
     public function show($id)
     {
         try {
-            $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            $task = Task::where('id', $id)->where('user_id', $this->getAuthUserId())->firstOrFail();
             $task->load('items', 'parent', 'subtasks');
 
             return response()->json([
@@ -96,7 +97,7 @@ class TaskController extends Controller
                 'metadata' => 'nullable|array',
             ]);
 
-            $validated['user_id'] = auth()->id();
+            $validated['user_id'] = $this->getAuthUserId();
             $validated['status'] = $validated['status'] ?? 'pending';
 
             $task = Task::create($validated);
@@ -121,7 +122,7 @@ class TaskController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            $task = Task::where('id', $id)->where('user_id', $this->getAuthUserId())->firstOrFail();
 
             $validated = $request->validate([
                 'title' => 'sometimes|required|string|max:255',
@@ -157,7 +158,7 @@ class TaskController extends Controller
     public function destroy($id)
     {
         try {
-            $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            $task = Task::where('id', $id)->where('user_id', $this->getAuthUserId())->firstOrFail();
             $task->delete();
 
             return response()->json([
@@ -180,7 +181,7 @@ class TaskController extends Controller
     public function complete($id)
     {
         try {
-            $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+            $task = Task::where('id', $id)->where('user_id', $this->getAuthUserId())->firstOrFail();
             $task->update(['status' => 'completed']);
 
             // Auto-complete all subtasks
@@ -242,7 +243,7 @@ class TaskController extends Controller
     public function dailyDigest()
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $today = now()->startOfDay();
             $tomorrow = now()->addDay()->startOfDay();
             $yesterday = now()->copy()->subDay();
@@ -271,11 +272,14 @@ class TaskController extends Controller
 
             $productivity = $tracker->productivityScore($userId);
 
+            $hour = now()->hour;
+            $greeting = $hour < 12 ? 'morning' : ($hour < 18 ? 'afternoon' : 'evening');
+
             return response()->json([
                 'success' => true,
                 'data' => [
                     'date' => now()->toDateString(),
-                    'greeting' => 'Good ' . ($now = now()->hour < 12 ? 'morning' : ($now->hour < 18 ? 'afternoon' : 'evening')) . ', User',
+                    'greeting' => 'Good ' . $greeting . ', User',
                     'summary' => [
                         'total_active' => $dueToday->count(),
                         'high_priority' => Task::forUser($userId)->where('priority', '>=', 4)->whereNotIn('status', ['completed', 'cancelled'])->count(),
@@ -315,7 +319,7 @@ class TaskController extends Controller
     public function analyticsOverview(Request $request, ProductivityTracker $tracker)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $period = $request->input('period', '30d');
 
             return $this->success($tracker->overview($userId, $period));
@@ -331,7 +335,7 @@ class TaskController extends Controller
     public function completionTrend(Request $request, ProductivityTracker $tracker)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $days = (int) $request->input('days', 7);
 
             return $this->success($tracker->completionTrend($userId, min($days, 90)));
@@ -347,7 +351,7 @@ class TaskController extends Controller
     public function priorityDistribution(ProductivityTracker $tracker)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
 
             return $this->success($tracker->priorityDistribution($userId));
         } catch (\Throwable $e) {
@@ -362,7 +366,7 @@ class TaskController extends Controller
     public function productivityScore(ProductivityTracker $tracker)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $score = $tracker->productivityScore($userId);
             $score['focus_time_hours'] = $tracker->focusTime($userId);
 
@@ -379,7 +383,7 @@ class TaskController extends Controller
     public function topCompleted(ProductivityTracker $tracker)
     {
         try {
-            $userId = auth()->id();
+            $userId = $this->getAuthUserId();
             $limit = (int) request()->input('limit', 5);
 
             return $this->success($tracker->topCompletedTasks($userId, $limit));
@@ -390,13 +394,21 @@ class TaskController extends Controller
     }
 
     /**
+     * Get authenticated user ID from API token or session.
+     */
+    private function getAuthUserId(): int
+    {
+        return $this->getUserId(request());
+    }
+
+    /**
      * Get suggested time slots for a date.
      */
     public function schedule(Request $request, TaskScheduler $scheduler)
     {
         try {
             $date = $request->input('date', now()->toDateString());
-            $result = $scheduler->getSuggestedSlots(auth()->user(), $date);
+            $result = $scheduler->getSuggestedSlots(User::findOrFail($this->getAuthUserId()), $date);
 
             return response()->json([
                 'success' => true,
@@ -418,8 +430,8 @@ class TaskController extends Controller
     public function scheduleTask(Request $request, $id, TaskScheduler $scheduler)
     {
         try {
-            $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
-            $result = $scheduler->schedule($task, auth()->user());
+            $task = Task::where('id', $id)->where('user_id', $this->getAuthUserId())->firstOrFail();
+            $result = $scheduler->schedule($task, User::findOrFail($this->getAuthUserId()));
 
             if ($result['scheduled_for']) {
                 $task->update([
@@ -451,7 +463,7 @@ class TaskController extends Controller
     public function recalculate(Request $request, TaskScheduler $scheduler)
     {
         try {
-            $result = $scheduler->recalculateAll(auth()->user());
+            $result = $scheduler->recalculateAll(User::findOrFail($this->getAuthUserId()));
 
             return response()->json([
                 'success' => true,
@@ -473,7 +485,7 @@ class TaskController extends Controller
     public function getRules(Request $request)
     {
         try {
-            $rules = ScheduleRule::forUser(auth()->id());
+            $rules = ScheduleRule::forUser($this->getAuthUserId());
 
             return response()->json([
                 'success' => true,
@@ -502,7 +514,7 @@ class TaskController extends Controller
             ]);
 
             $rule = ScheduleRule::create([
-                'user_id' => auth()->id(),
+                'user_id' => $this->getAuthUserId(),
                 'name' => $validated['name'],
                 'rule_type' => $validated['rule_type'],
                 'rule_config' => $validated['rule_config'],

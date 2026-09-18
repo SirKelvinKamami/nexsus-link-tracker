@@ -66,7 +66,7 @@ jobs:
           php artisan migrate --force
           php artisan db:seed --force
           # Never config:cache this app: routes/middleware read env() directly,
-          # which returns null once config is cached (upstream LinkStack design).
+          # which returns null once config is cached (upstream Nexsus Tracker design).
 
       - name: Verify baseline data and driver tables
         run: |

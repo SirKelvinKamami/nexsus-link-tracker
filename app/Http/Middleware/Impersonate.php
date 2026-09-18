@@ -50,10 +50,10 @@ class Impersonate
                 if ($storageToken === $rememberToken) {
                     if (file_exists(base_path(findAvatar($impersonateUserId)))) {
                         $avatarUrl = url(findAvatar($impersonateUserId));
-                    } elseif (file_exists(base_path("assets/linkstack/images/") . findFile('avatar'))) {
-                        $avatarUrl = url("assets/linkstack/images/") . "/" . findFile('avatar');
+                    } elseif (file_exists(base_path("assets/Nexsus Tracker/images/") . findFile('avatar'))) {
+                        $avatarUrl = url("assets/Nexsus Tracker/images/") . "/" . findFile('avatar');
                     } else {
-                        $avatarUrl = asset('assets/linkstack/images/logo.svg');
+                        $avatarUrl = asset('assets/Nexsus Tracker/images/logo.svg');
                     }
 
                     $customHtml = <<<EOD

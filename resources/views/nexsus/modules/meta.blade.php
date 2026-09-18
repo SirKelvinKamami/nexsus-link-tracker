@@ -30,10 +30,10 @@
     <meta property="og:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta property="og:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta property="og:image" content="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}">
+    @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+    <meta property="og:image" content="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}">
     @else
-    <meta property="og:image" content="{{ asset('assets/linkstack/images/logo.svg') }}">
+    <meta property="og:image" content="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
     @endif
 
     <!-- Twitter Meta Tags -->
@@ -44,16 +44,16 @@
     <meta name="twitter:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta name="twitter:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
-    <meta name="twitter:image" content="{{ url("assets/linkstack/images/")."/".findFile('avatar') }}">
+    @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
+    <meta name="twitter:image" content="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}">
     @else
-    <meta name="twitter:image" content="{{ asset('assets/linkstack/images/logo.svg') }}">
+    <meta name="twitter:image" content="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
     @endif
 
 <!--#### END Meta Tags social media preview images  ####-->
 
-@if(config('advanced-config.linkstack_title') != '' and env('HOME_URL') === '')
-<title>{{ $userinfo->name }} {{ config('advanced-config.linkstack_title') }}</title>
+@if(config('advanced-config.Nexsus Tracker_title') != '' and env('HOME_URL') === '')
+<title>{{ $userinfo->name }} {{ config('advanced-config.Nexsus Tracker_title') }}</title>
 @elseif(env('CUSTOM_META_TAGS') == 'true' and config('advanced-config.title') != '')
 <title>{{ config('advanced-config.title') }}</title>
 @elseif(env('HOME_URL') != '')
@@ -65,10 +65,10 @@
 @include('components.favicon')
 @include('components.favicon-extension')
 
-@if(file_exists(base_path("assets/linkstack/images/").findFile('favicon')))
-<link rel="icon" type="image/png" href="{{ asset('assets/linkstack/images/'.findFile('favicon')) }}">
+@if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
+<link rel="icon" type="image/png" href="{{ asset('assets/Nexsus Tracker/images/'.findFile('favicon')) }}">
 @else
-<link rel="icon" type="image/svg+xml" href="{{ asset('assets/linkstack/images/logo.svg') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
 @endif
 
 @include('layouts.analytics')

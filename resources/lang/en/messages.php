@@ -751,10 +751,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Nexsus Tracker setup',
+    'Nexsus Tracker setup' => 'Nexsus Tracker setup',
 
-    'Setup LinkStack' => 'Setup Nexsus Tracker',
-    'Welcome to the setup for LinkStack!' => 'Welcome to the setup for Nexsus Tracker!',
+    'Setup Nexsus Tracker' => 'Setup Nexsus Tracker',
+    'Welcome to the setup for Nexsus Tracker!' => 'Welcome to the setup for Nexsus Tracker!',
     'This setup will:' => 'This setup will:',
     'Check the server dependencies' => '1. Check the server dependencies',
     'Setup the database' => '2. Setup the database',
@@ -812,7 +812,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'Update Nexsus Tracker',
+    'Update Nexsus Tracker' => 'Update Nexsus Tracker',
 
     'Latest beta version' => 'Latest beta version',
     'Installed beta version' => 'Installed beta version',
@@ -975,10 +975,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | LinkStack (Links) Page
+    | Nexsus Tracker (Links) Page
     |--------------------------------------------------------------------------
     |
-    | resources/views/linkstack/linkstack.blade.php
+    | resources/views/Nexsus Tracker/Nexsus Tracker.blade.php
     |
     */
 
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Learn more about Nexsus Tracker',
+    'Learn more about Nexsus Tracker' => 'Learn more about Nexsus Tracker',
     'Learn more' => 'Learn more',
 
     /*
@@ -1031,8 +1031,8 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'Hide this notification',
     'Help Us Out' => 'Help Us Out',
-    'Enjoying Linkstack?' => 'Enjoying Nexsus?',
-    'Support Linkstack' => 'Support Nexsus',
+    'Enjoying Nexsus Tracker?' => 'Enjoying Nexsus?',
+    'Support Nexsus Tracker' => 'Support Nexsus',
     'support.msg1' => 'If you\'re enjoying using Nexsus Tracker, we would greatly appreciate it if you could take a moment to',
     'support.msg2' => 'give our project a star on GitHub',
     'support.msg3' => 'Your support will help us reach a wider audience and improve the quality of our project.',

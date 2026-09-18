@@ -749,10 +749,10 @@ return [
     */
 
     # 標題標籤
-    'LinkStack setup' => 'Nexsus 設置',
+    'Nexsus Tracker setup' => 'Nexsus 設置',
 
-    'Setup LinkStack' => '設置 Nexsus',
-    'Welcome to the setup for LinkStack!' => '歡迎使用 Nexsus 設置！',
+    'Setup Nexsus Tracker' => '設置 Nexsus',
+    'Welcome to the setup for Nexsus Tracker!' => '歡迎使用 Nexsus 設置！',
     'This setup will:' => '本設置將：',
     'Check the server dependencies' => '1. 檢查伺服器相依性',
     'Setup the database' => '2. 設置資料庫',
@@ -810,7 +810,7 @@ return [
     */
 
     # 標題標籤
-    'Update LinkStack' => '更新 Nexsus',
+    'Update Nexsus Tracker' => '更新 Nexsus',
 
     'Latest beta version' => '最新測試版',
     'Installed beta version' => '已安裝測試版',
@@ -976,7 +976,7 @@ return [
     | Nexsus Tracker (Links) 頁面
     |--------------------------------------------------------------------------
     |
-    | resources/views/linkstack/linkstack.blade.php
+    | resources/views/Nexsus Tracker/Nexsus Tracker.blade.php
     |
     */
 
@@ -1003,7 +1003,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => '了解更多關於 Nexsus',
+    'Learn more about Nexsus Tracker' => '了解更多關於 Nexsus',
     'Learn more' => '了解更多',
 
     /*
@@ -1029,8 +1029,8 @@ return [
     # 帮助我們通知
     'Hide this notification' => '隱藏此通知',
     'Help Us Out' => '幫助我們',
-    'Enjoying Linkstack?' => '喜歡使用 Nexsus 嗎？',
-    'Support Linkstack' => '支持 Nexsus',
+    'Enjoying Nexsus Tracker?' => '喜歡使用 Nexsus 嗎？',
+    'Support Nexsus Tracker' => '支持 Nexsus',
     'support.msg1' => '如果您喜歡使用 Nexsus，我們將非常感激您如果您能花一點時間',
     'support.msg2' => '在 GitHub 上給我們的專案一個星',
     'support.msg3' => '您的支持將幫助我們吸引更廣泛的受眾，提高我們專案的品質。',

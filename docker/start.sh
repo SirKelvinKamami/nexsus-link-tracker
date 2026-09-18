@@ -32,7 +32,7 @@ if [ -n "$DATABASE_URL" ]; then
   echo "Using DATABASE_URL for connection"
   export DB_CONNECTION=pgsql
   # Parse DATABASE_URL into parts if needed (Laravel 9+ supports DATABASE_URL natively)
-  # But LinkStack may not use it, so also set individual vars
+  # But Nexsus Tracker may not use it, so also set individual vars
   export DB_HOST=$(echo "$DATABASE_URL" | sed -n 's|.*@\([^:]*\):\([0-9]*\)/.*|\1|p')
   export DB_PORT=$(echo "$DATABASE_URL" | sed -n 's|.*@\([^:]*\):\([0-9]*\)/.*|\2|p')
   export DB_DATABASE=$(echo "$DATABASE_URL" | sed -n 's|.*/\([^?]*\).*|\1|p')

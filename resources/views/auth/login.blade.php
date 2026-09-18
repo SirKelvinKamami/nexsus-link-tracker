@@ -98,7 +98,7 @@ foreach($pages as $page)
                 @else
                 <br>
                 @endif
-                @if ((env('ALLOW_REGISTRATION')) and !config('linkstack.single_user_mode'))
+                @if ((env('ALLOW_REGISTRATION')) and !config('Nexsus Tracker.single_user_mode'))
                 <p class="mt-3 text-center">
                   {{__('messages.Don’t have an account?')}} <a href="{{ route('register') }}" class="text-underline">{{__('messages.Click here to sign up')}}.</a>
                 </p>

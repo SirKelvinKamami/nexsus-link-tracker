@@ -1,15 +1,15 @@
 <p align="center">
-  <img width="200px" src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/logo/svg/logo_animated.svg"><br>
+  <img width="200px" src="https://raw.githubusercontent.com/NexsusTracker/branding/main/logo/svg/logo_animated.svg"><br>
   <br>
   <picture>
-    <source media="(prefers-color-scheme: dark)" width="400px" srcset="https://raw.githubusercontent.com/LinkStackOrg/branding/main/logo/png/wordmark_light.png">
-    <img width="400px" src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/logo/png/wordmark_dark.png">
+    <source media="(prefers-color-scheme: dark)" width="400px" srcset="https://raw.githubusercontent.com/NexsusTracker/branding/main/logo/png/wordmark_light.png">
+    <img width="400px" src="https://raw.githubusercontent.com/NexsusTracker/branding/main/logo/png/wordmark_dark.png">
   </picture>
 </p>
 
 <h3 align="center"><b>Open-Source Linktree Alternative</b></h3>
 
-<h3 align="center">LinkStack is a highly customizable link sharing platform<br>with an intuitive, easy to use user interface.</h3>
+<h3 align="center">Nexsus Tracker is a highly customizable link sharing platform<br>with an intuitive, easy to use user interface.</h3>
 
 <br>
 
@@ -30,22 +30,22 @@
 </p>
 
 <p align="center">
-<a href="https://github.com/linkstackorg/linkstack/stargazers"><img alt="GitHub Repo stars" src="https://img.tny.st/github/stars/julianprieber/littlelink-custom?label=Star%20the%20project&logo=GitHub"></a>
-<a href="https://mstdn.social/@linkstack"><img alt="Mastodon Follow" src="https://img.tny.st/mastodon/follow/110147874401985724?domain=http%3A%2F%2Fmstdn.social&style=social"></a>
-<a href="https://discord.linkstack.org"><img alt="Discord online user count" src="https://img.tny.st/discord/955765706111193118?color=4A55CC&label=Discord&logo=Discord&style=flat"></a>
+<a href="https://github.com/NexsusTracker/nexsus-tracker/stargazers"><img alt="GitHub Repo stars" src="https://img.tny.st/github/stars/julianprieber/littlelink-custom?label=Star%20the%20project&logo=GitHub"></a>
+<a href="https://mstdn.social/@nexsus"><img alt="Mastodon Follow" src="https://img.tny.st/mastodon/follow/110147874401985724?domain=http%3A%2F%2Fmstdn.social&style=social"></a>
+<a href="https://discord.nexsustracker.org"><img alt="Discord online user count" src="https://img.tny.st/discord/955765706111193118?color=4A55CC&label=Discord&logo=Discord&style=flat"></a>
 </p>
 <p align="center">
 <a href="https://github.com/sponsors/julianprieber"><img alt="GitHub spomsors" src="https://img.tny.st/github/sponsors/JulianPrieber?color=BF4B8A&logo=githubsponsors&style=flat&label=Sponsor%20us%20on%20Github"></a>
 <a href="https://patreon.com/julianprieber"><img alt="Patreon" src="https://img.tny.st/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Djulianprieber%26type%3Dpatrons&style=flat&logo=patreon"></a>
-<a href="https://liberapay.com/LinkStack"><img src="https://img.tny.st/liberapay/patrons/LinkStack?logo=liberapay&label=LiberaPay%20patrons"></a>
+<a href="https://liberapay.com/Nexsus Tracker"><img src="https://img.tny.st/liberapay/patrons/Nexsus Tracker?logo=liberapay&label=LiberaPay%20patrons"></a>
 </p>
 
 ---
 
 <p align="center">
-  <a href="https://github.com/linkstackorg/linkstack/releases/latest/download/linkstack.zip"><img src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/badges/png/download_latest.png" alt="Download latest" width="380" ></a>
+  <a href="https://github.com/NexsusTracker/nexsus-tracker/releases/latest/download/nexsus-tracker.zip"><img src="https://raw.githubusercontent.com/NexsusTracker/branding/main/badges/png/download_latest.png" alt="Download latest" width="380" ></a>
     <br>
-	<a href="https://github.com/linkstackorg/linkstack/releases"><img alt="GitHub release (latest by date)" src="https://img.tny.st/github/v/release/JulianPrieber/LittleLink-Custom?label=Latest%20release"></a>
+	<a href="https://github.com/NexsusTracker/nexsus-tracker/releases"><img alt="GitHub release (latest by date)" src="https://img.tny.st/github/v/release/JulianPrieber/LittleLink-Custom?label=Latest%20release"></a>
 </p>
 
 ---
@@ -53,20 +53,20 @@
 <a name="Function"></a>
 ## Function
 
-LinkStack: The Ultimate Link Management Solution
+Nexsus Tracker: The Ultimate Link Management Solution
 
-LinkStack is a unique platform that provides an efficient solution for managing and sharing links online. Our platform offers a website similar to Linktree, which allows users to overcome the limitation of only being able to add one link on social media platforms.
+Nexsus Tracker is a unique platform that provides an efficient solution for managing and sharing links online. Our platform offers a website similar to Linktree, which allows users to overcome the limitation of only being able to add one link on social media platforms.
 
-With LinkStack, users can easily link to their own custom page and provide their followers with access to all the links they need in one convenient location. What sets LinkStack apart from other link management platforms is its flexibility, which allows users to host their links on their own web server or web hosting provider. This provides users with complete control over their online presence and ensures that their links are easily accessible.
+With Nexsus Tracker, users can easily link to their own custom page and provide their followers with access to all the links they need in one convenient location. What sets Nexsus Tracker apart from other link management platforms is its flexibility, which allows users to host their links on their own web server or web hosting provider. This provides users with complete control over their online presence and ensures that their links are easily accessible.
 
-Additionally, LinkStack allows other users to register and create their own links, making it an ideal solution for businesses and organizations looking to manage multiple links. With our user-friendly Admin Panel, managing and accessing other users' links is easy.
+Additionally, Nexsus Tracker allows other users to register and create their own links, making it an ideal solution for businesses and organizations looking to manage multiple links. With our user-friendly Admin Panel, managing and accessing other users' links is easy.
 
 <br>
 	    
 <a name="About"></a>
 ## About
 
-With LinkStack, our mission is to provide users with a free and privacy-focused solution for managing and sharing links online. We believe that everyone should have access to a customizable link-sharing platform without sacrificing their privacy and control over their data.
+With Nexsus Tracker, our mission is to provide users with a free and privacy-focused solution for managing and sharing links online. We believe that everyone should have access to a customizable link-sharing platform without sacrificing their privacy and control over their data.
 
 To achieve this mission, we offer a self-hosted option for users who want complete control over their data without having it sold to third-party companies. Our platform can be easily implemented through a simple **drag and drop** process, eliminating the need for complex terminal commands or source code manipulation.
 
@@ -82,12 +82,12 @@ Our goal is to provide a free version of a link-sharing service, similar to Link
 <h3 align="center">Find the right instance for you</h3>
 
 <br>
-<p align="center">Our community instance program provides users with the opportunity to register on hosted instances and use Linkstack for free. Members of our community have generously provided their resources to host instances, allowing us to expand the reach of Linkstack and give back to the community</h3>
+<p align="center">Our community instance program provides users with the opportunity to register on hosted instances and use Nexsus Tracker for free. Members of our community have generously provided their resources to host instances, allowing us to expand the reach of Nexsus Tracker and give back to the community</h3>
 
 <br>
 
 <p align="center">
-  <a href="https://linkstack.org/instances"><img src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/badges/png/create_account.png" alt="Community instances" width="350" ></a>
+  <a href="https://nexsustracker.org/instances"><img src="https://raw.githubusercontent.com/NexsusTracker/branding/main/badges/png/create_account.png" alt="Community instances" width="350" ></a>
 </p>
 	    
 <a name="Themes"></a>
@@ -97,7 +97,7 @@ Our goal is to provide a free version of a link-sharing service, similar to Link
 
 <br>
 <p align="center">
-Customize the look of your LinkStack instance with themes. Themes allow you to change the look and feel of your site with a few clicks. Users can submit themes they created for everyone to download and use.
+Customize the look of your Nexsus Tracker instance with themes. Themes allow you to change the look and feel of your site with a few clicks. Users can submit themes they created for everyone to download and use.
 </p>
     
 <p align="center">
@@ -106,21 +106,21 @@ Contribute by designing your own themes. You can read more about contributing be
     
 <br>
 
-|![preview1](https://raw.githubusercontent.com/LinkStackOrg/stargazer/main/preview.png) |![preview2](https://raw.githubusercontent.com/LinkStackOrg/Magic-Kingdom/main/preview.png)|
+|![preview1](https://raw.githubusercontent.com/NexsusTracker/stargazer/main/preview.png) |![preview2](https://raw.githubusercontent.com/NexsusTracker/Magic-Kingdom/main/preview.png)|
 | ------------- |-------------|
-|![preview3](https://raw.githubusercontent.com/LinkStackOrg/polygon/main/preview.png)|![preview4](https://raw.githubusercontent.com/LinkStackOrg/PolySleek/main/preview.png)|  
+|![preview3](https://raw.githubusercontent.com/NexsusTracker/polygon/main/preview.png)|![preview4](https://raw.githubusercontent.com/NexsusTracker/PolySleek/main/preview.png)|  
 
 <br>
 
 You can find all available Themes on here:
-[linkstack.org/themes](https://linkstack.org/themes)
+[nexsustracker.org/themes](https://nexsustracker.org/themes)
 
 
 <br>
 
 ### How to add themes
-#### How to add themes to your LinkStack instance
-You can add your downloaded themes to your LinkStack instance on the Admin Panel. Navigate to the 'Themes' tab and scroll to the bottom of the page.
+#### How to add themes to your Nexsus Tracker instance
+You can add your downloaded themes to your Nexsus Tracker instance on the Admin Panel. Navigate to the 'Themes' tab and scroll to the bottom of the page.
 
 Now click on Choose file and select your downloaded theme zip file. Now click on 'Upload theme' and you should be able to select your uploaded theme now.
 
@@ -131,13 +131,13 @@ Now click on Choose file and select your downloaded theme zip file. Now click on
 If you know a bit about CSS, consider making your own theme and adding it to the public directory.
 Everything is documented in the dedicated GitHub repository.
 
-[github.com/LinkStackOrg/linkstack-themes/tree/main/contributing](https://github.com/LinkStackOrg/linkstack-themes/tree/main/contributing)
+[github.com/NexsusTracker/Nexsus Tracker-themes/tree/main/contributing](https://github.com/NexsusTracker/Nexsus Tracker-themes/tree/main/contributing)
 
 <a name="Installation"></a>
 ## Installation
 
 ### Downloading and installing steps:
-* **[Download](https://github.com/linkstackorg/linkstack/releases)** the latest release of LinkStack and simply place the folder 'linkstack' or the contents of this folder in the root directory of your website.
+* **[Download](https://github.com/NexsusTracker/Nexsus Tracker/releases)** the latest release of Nexsus Tracker and simply place the folder 'Nexsus Tracker' or the contents of this folder in the root directory of your website.
 
 ### That's it! No coding no command line setup just plug and play.
 
@@ -148,7 +148,7 @@ Everything is documented in the dedicated GitHub repository.
 When accessing your instance for the first time, you will be greeted by the first setup page.
 
 <p align="center">
-<img width="650" src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/marketing/setup_wizard.png">
+<img width="650" src="https://raw.githubusercontent.com/NexsusTracker/branding/main/marketing/setup_wizard.png">
 </p>
 
 <br>
@@ -157,17 +157,17 @@ When accessing your instance for the first time, you will be greeted by the firs
 ## Docker
 
 <p align="center">
-<a href="https://github.com/linkstackorg/linkstack-docker">
+<a href="https://github.com/NexsusTracker/Nexsus Tracker-docker">
 <picture>
-  <source media="(prefers-color-scheme: dark)" width="600px" srcset="https://raw.githubusercontent.com/LinkStackOrg/branding/main/marketing/docker_edition_dark.png">
-  <img width="600px" src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/marketing/docker_edition_light.png">
+  <source media="(prefers-color-scheme: dark)" width="600px" srcset="https://raw.githubusercontent.com/NexsusTracker/branding/main/marketing/docker_edition_dark.png">
+  <img width="600px" src="https://raw.githubusercontent.com/NexsusTracker/branding/main/marketing/docker_edition_light.png">
 </picture>
 </a>
 </p>
 
-The official docker version of [LinkStack](https://github.com/linkstackorg/linkstack). This docker image is a simple to set up solution, containing everything you need to run LinkStack.
+The official docker version of [Nexsus Tracker](https://github.com/NexsusTracker/Nexsus Tracker). This docker image is a simple to set up solution, containing everything you need to run Nexsus Tracker.
 
-The docker version of LinkStack retains all the features and customization options of the [original version](https://github.com/linkstackorg/linkstack).
+The docker version of Nexsus Tracker retains all the features and customization options of the [original version](https://github.com/NexsusTracker/Nexsus Tracker).
 
 This docker is based on [Alpine Linux](https://www.alpinelinux.org), a Linux distribution designed to be small, simple and secure. The web server is running [Apache2](https://www.apache.org), a free and open-source cross-platform web server software. The docker comes with [PHP 8.2](https://www.php.net/releases/8.2/en.php) for high compatibility and performance.
 
@@ -175,9 +175,9 @@ This docker is based on [Alpine Linux](https://www.alpinelinux.org), a Linux dis
 
 #### Pull
 
-`docker pull linkstackorg/linkstack`
+`docker pull NexsusTracker/Nexsus Tracker`
 
-#### [Learn more about the Docker version](https://github.com/LinkStackOrg/linkstack-docker)
+#### [Learn more about the Docker version](https://github.com/NexsusTracker/Nexsus Tracker-docker)
 
 <br>
 
@@ -205,7 +205,7 @@ Before updating, the updater will create a backup. Your instance won’t save mo
 
 If you switched your database to MySQL, your database will not be included in the backup.
 
-The updater may fail without throwing an error and just remain on the current version if there are unmet dependencies. This could include not having the correct version of the dependencies (eg. having php-sqlite3 pointing to php8.3-sqlite3, while LinkStack uses PHP 8.2 and needs php8.2-sqlite3). To troubleshoot, update manually and check the errors thown by the instance when accessing the website, as well as the PHP version reported.
+The updater may fail without throwing an error and just remain on the current version if there are unmet dependencies. This could include not having the correct version of the dependencies (eg. having php-sqlite3 pointing to php8.3-sqlite3, while Nexsus Tracker uses PHP 8.2 and needs php8.2-sqlite3). To troubleshoot, update manually and check the errors thown by the instance when accessing the website, as well as the PHP version reported.
 
 <a name="Discord"></a>
 ## Discord
@@ -213,7 +213,7 @@ The updater may fail without throwing an error and just remain on the current ve
 <br>
 
 <p align="center">
-  <a href="https://discord.linkstack.org"><img src="https://raw.githubusercontent.com/LinkStackOrg/branding/main/marketing/discord.png" alt="Join the Discord" width="600" ></a>
+  <a href="https://discord.nexsustracker.org"><img src="https://raw.githubusercontent.com/NexsusTracker/branding/main/marketing/discord.png" alt="Join the Discord" width="600" ></a>
 </p>
 
 <br>
@@ -235,7 +235,7 @@ Finally, any derivative works of the project must be licensed under the same lic
 
 <a name="Supporters"></a>
 ## Supporters
-You can support LinkStack [here](https://linkstack.org/sponsor).
+You can support Nexsus Tracker [here](https://nexsustracker.org/sponsor).
 
 
 **💖 Thank you:**
@@ -256,16 +256,16 @@ You can support LinkStack [here](https://linkstack.org/sponsor).
 - [sachacalibre](https://github.com/sachacalibre)
 - [John Francis Sukamto](https://github.com/bigbadmonster17)
 
-- [Add Your Name](https://linkstack.org/sponsor)
+- [Add Your Name](https://nexsustracker.org/sponsor)
 
 <br>
 
 ### Contributors
 
-Thank you for improving LinkStack!
+Thank you for improving Nexsus Tracker!
 
 <p>
-  <a href="https://github.com/linkstackorg/linkstack/graphs/contributors"><img src="https://components.linkstack.org/contributors" alt="Contributors" width="600" ></a>
+  <a href="https://github.com/NexsusTracker/Nexsus Tracker/graphs/contributors"><img src="https://components.nexsustracker.org/contributors" alt="Contributors" width="600" ></a>
 </p>
 
 <br>
@@ -275,17 +275,17 @@ Thank you for improving LinkStack!
 Thank you for all your efforts!
 
 <p>
-  <a href="https://linkstack.org/beta-tester"><img src="https://components.linkstack.org/beta-testers" alt="Contributors" width="600" ></a>
+  <a href="https://nexsustracker.org/beta-tester"><img src="https://components.nexsustracker.org/beta-testers" alt="Contributors" width="600" ></a>
 </p>
 
-[Become a beta tester](https://linkstack.org/beta-tester)
+[Become a beta tester](https://nexsustracker.org/beta-tester)
 
 <br>
 
 ### Stargazers
 
-<a href="https://star-history.com/#LinkStackOrg/LinkStack&LinkStackOrg/linkstack-docker&LinkStackOrg/linkstack-themes&Date">
-    <img alt="Star History Chart" width="700px" src="https://api.star-history.com/svg?repos=LinkStackOrg/LinkStack,LinkStackOrg/linkstack-docker,LinkStackOrg/linkstack-themes&type=Date">
+<a href="https://star-history.com/#NexsusTracker/Nexsus Tracker&NexsusTracker/Nexsus Tracker-docker&NexsusTracker/Nexsus Tracker-themes&Date">
+    <img alt="Star History Chart" width="700px" src="https://api.star-history.com/svg?repos=NexsusTracker/Nexsus Tracker,NexsusTracker/Nexsus Tracker-docker,NexsusTracker/Nexsus Tracker-themes&type=Date">
 </a>
 
 <br>

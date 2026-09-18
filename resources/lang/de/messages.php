@@ -754,10 +754,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'Nexsus-Setup',
+    'Nexsus Tracker setup' => 'Nexsus-Setup',
 
-    'Setup LinkStack' => 'Richten Sie Nexsus ein',
-    'Welcome to the setup for LinkStack!' => 'Willkommen beim Setup für Nexsus!',
+    'Setup Nexsus Tracker' => 'Richten Sie Nexsus ein',
+    'Welcome to the setup for Nexsus Tracker!' => 'Willkommen beim Setup für Nexsus!',
     'This setup will:' => 'Dieses Setup wird:',
     'Check the server dependencies' => '1. Überprüfen Sie die Serverabhängigkeiten',
     'Setup the database' => '2. Richten Sie die Datenbank ein',
@@ -815,7 +815,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'Nexsus aktualisieren',
+    'Update Nexsus Tracker' => 'Nexsus aktualisieren',
 
     'Latest beta version' => 'Neueste Beta-Version',
     'Installed beta version' => 'Installierte Beta-Version',
@@ -1012,7 +1012,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'Erfahren Sie mehr über Nexsus',
+    'Learn more about Nexsus Tracker' => 'Erfahren Sie mehr über Nexsus',
     'Learn more' => 'Erfahren Sie mehr',
 
     /*
@@ -1038,8 +1038,8 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'Diese Benachrichtigung ausblenden',
     'Help Us Out' => 'Helfen Sie uns',
-    'Enjoying Linkstack?' => 'Gefällt Ihnen Nexsus?',
-    'Support Linkstack' => 'Unterstützen Sie Nexsus',
+    'Enjoying Nexsus Tracker?' => 'Gefällt Ihnen Nexsus?',
+    'Support Nexsus Tracker' => 'Unterstützen Sie Nexsus',
     'support.msg1' => 'Wenn Ihnen die Verwendung von Nexsus gefällt, würden wir es sehr schätzen, wenn Sie sich einen Moment Zeit nehmen könnten, um',
     'support.msg2' => 'unserem Projekt auf GitHub einen Stern zu geben',
     'support.msg3' => 'Ihre Unterstützung wird uns helfen, ein größeres Publikum zu erreichen und die Qualität unseres Projekts zu verbessern.',

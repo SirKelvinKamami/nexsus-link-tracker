@@ -10,6 +10,7 @@ class Reminder extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'task_id',
         'trigger_type',
         'trigger_value',
@@ -17,6 +18,7 @@ class Reminder extends Model
         'sent',
         'sent_at',
         'user_response',
+        'responded_at',
     ];
 
     protected $casts = [

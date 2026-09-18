@@ -1,7 +1,7 @@
 {
-    "name": "linkstackorg/linkstack",
+    "name": "nexsus-tracker/nexsus-tracker",
     "type": "project",
-    "description": "LinkStack is a highly customizable link sharing platform",
+    "description": "Nexsus Tracker is a highly customizable link sharing platform",
     "keywords": ["link"],
     "license": "GPL-3.0-or-later",
     "require": {

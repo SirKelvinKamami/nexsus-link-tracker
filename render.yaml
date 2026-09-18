@@ -80,6 +80,12 @@ services:
         sync: false
       - key: MAIL_FROM_NAME
         value: "${APP_NAME}"
+      - key: CORS_ORIGINS
+        value: ""
+      - key: LOG_LEVEL
+        value: info
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
       - key: API_TOKEN
         generateValue: true
       - key: MANUAL_USER_VERIFICATION

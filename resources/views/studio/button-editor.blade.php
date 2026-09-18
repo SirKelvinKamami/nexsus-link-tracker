@@ -75,7 +75,7 @@
                   <link rel="stylesheet" href="{{asset('assets/button-editor/styles/jquery.gradientPicker.css')}}" type="text/css" />
                   <link rel="stylesheet" href="{{asset('assets/button-editor/styles/colorpicker_1.css')}}" type="text/css" />
                   <link rel="stylesheet" type="text/css" href="{{asset('assets/button-editor/themes/blackboard.css')}}">
-                  <link rel="stylesheet" href="{{asset('assets/linkstack/css/animations.css') }}">
+                  <link rel="stylesheet" href="{{asset('assets/Nexsus Tracker/css/animations.css') }}">
                   <link rel="stylesheet" type="text/css" href="{{asset('assets/button-editor/css/style.css')}}">
                   
                     <script src="{{asset('assets/button-editor/js/rainbow.js')}}"></script>
@@ -149,7 +149,7 @@
                   
                   <section id="preview">
                   @if($buttonId == 1)
-                  <center><div id="sample" style="border-radius: 8px !important; max-width: 350px; height: 48px; display: flex; align-items: center; justify-content: center;font-size: 18px;" class="button-demo button"><img class="icon-btn hvr-icon" src="{{ asset('\/assets/linkstack/icons\/') . 'custom' }}.svg">{{ $title }}</div></center>
+                  <center><div id="sample" style="border-radius: 8px !important; max-width: 350px; height: 48px; display: flex; align-items: center; justify-content: center;font-size: 18px;" class="button-demo button"><img class="icon-btn hvr-icon" src="{{ asset('\/assets/Nexsus Tracker/icons\/') . 'custom' }}.svg">{{ $title }}</div></center>
                   @else
                   <center><div id="sample" style="border-radius: 8px !important; max-width: 350px; height: 48px; display: flex; align-items: center; justify-content: center;font-size: 18px;" class="button-demo button"><img class="wicon hvr-icon" src="@if(file_exists(base_path("assets/favicon/icons/").localIcon($id))){{url('assets/favicon/icons/'.localIcon($id))}}@else{{getFavIcon($id)}}@endif">{{ $title }}</div></center>
                   @endif

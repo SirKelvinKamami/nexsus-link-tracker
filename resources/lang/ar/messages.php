@@ -751,10 +751,10 @@ return [
     */
 
     # Title Tag
-    'LinkStack setup' => 'إعداد Nexsus',
+    'Nexsus Tracker setup' => 'إعداد Nexsus',
 
-    'Setup LinkStack' => 'إعداد Nexsus',
-    'Welcome to the setup for LinkStack!' => 'مرحبًا بك في إعداد Nexsus!',
+    'Setup Nexsus Tracker' => 'إعداد Nexsus',
+    'Welcome to the setup for Nexsus Tracker!' => 'مرحبًا بك في إعداد Nexsus!',
     'This setup will:' => 'سيقوم هذا الإعداد بـ:',
     'Check the server dependencies' => '1. التحقق من تبعيات الخادم',
     'Setup the database' => '2. إعداد قاعدة البيانات',
@@ -812,7 +812,7 @@ return [
     */
 
     # Title Tag
-    'Update LinkStack' => 'تحديث Nexsus',
+    'Update Nexsus Tracker' => 'تحديث Nexsus',
 
     'Latest beta version' => 'أحدث إصدار تجريبي',
     'Installed beta version' => 'الإصدار التجريبي المثبت',
@@ -978,7 +978,7 @@ return [
     | Nexsus Tracker (Links) Page
     |--------------------------------------------------------------------------
     |
-    | resources/views/linkstack/linkstack.blade.php
+    | resources/views/Nexsus Tracker/Nexsus Tracker.blade.php
     |
     */
 
@@ -1005,7 +1005,7 @@ return [
     |
     */
 
-    'Learn more about LinkStack' => 'تعرف على المزيد عن Nexsus',
+    'Learn more about Nexsus Tracker' => 'تعرف على المزيد عن Nexsus',
     'Learn more' => 'تعرف على المزيد',
 
     /*
@@ -1031,8 +1031,8 @@ return [
     # Help Us Out Notification
     'Hide this notification' => 'إخفاء هذا الإشعار',
     'Help Us Out' => 'ساعدنا',
-    'Enjoying Linkstack?' => 'هل تستمتع بـ Nexsus؟',
-    'Support Linkstack' => 'دعم Nexsus',
+    'Enjoying Nexsus Tracker?' => 'هل تستمتع بـ Nexsus؟',
+    'Support Nexsus Tracker' => 'دعم Nexsus',
     'support.msg1' => 'إذا كنت تستمتع باستخدام Nexsus ، فسنكون ممتنين جدًا إذا استغرقت لحظة لـ',
     'support.msg2' => 'منح مشروعنا نجمة على GitHub',
     'support.msg3' => 'سيساعد دعمكنا على وصول جمهور أوسع وتحسين جودة مشروعنا.',

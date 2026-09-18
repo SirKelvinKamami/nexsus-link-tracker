@@ -817,8 +817,8 @@ class ButtonSeeder extends Seeder
             ],
 
             [
-                "name" => "linkstack",
-                "alt" => "LinkStack",
+                "name" => "nexsus",
+                "alt" => "Nexsus Tracker",
                 "exclude" => false,
                 "group" => "default",
                 "mb" => false,
