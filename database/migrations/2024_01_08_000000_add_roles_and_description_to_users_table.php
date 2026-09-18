@@ -9,19 +9,19 @@ return new class extends Migration
 {
     public function up()
     {
-        // Update existing 'user' role to 'viewer' (old default)
-        DB::table('users')->where('role', 'user')->update(['role' => 'viewer']);
-        
-        // Add description column if not exists
-        if (!Schema::hasColumn('users', 'description')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->text('description')->nullable()->after('littlelink_name');
-            });
-        }
+        // NOTE: this migration originally did
+        //   DB::table('users')->where('role', 'user')->update(['role' => 'viewer']);
+        // but the users.role CHECK constraint (users_role_check, created by the
+        // original enum() column) still only allows user/vip/admin at that
+        // point, so on Postgres with a NON-empty users table this UPDATE
+        // violates the constraint and the migration fails - which wedged
+        // production boot migrations and 500'd registration (role='viewer'
+        // insert). The constraint is replaced and legacy roles remapped in
+        // 2024_01_08_000003_replace_role_check_constraint.php instead.
     }
 
     public function down()
     {
-        DB::table('users')->where('role', 'viewer')->update(['role' => 'user']);
+        //
     }
 };

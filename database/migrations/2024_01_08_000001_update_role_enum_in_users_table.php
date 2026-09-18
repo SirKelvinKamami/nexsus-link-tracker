@@ -9,14 +9,16 @@ return new class extends Migration
 {
     public function up()
     {
-        // SQLite doesn't support ALTER COLUMN, so we need raw SQL
-        // For SQLite, we'll just update existing data
-        // The enum constraint is only enforced at application level in SQLite
-        DB::table('users')->where('role', 'user')->update(['role' => 'viewer']);
+        // Originally updated role data ('user' -> 'viewer'), but the enum
+        // CHECK constraint still forbids 'viewer' at this point, so on
+        // Postgres this fails on any non-empty users table. Data remapping
+        // happens in 2024_01_08_000003_replace_role_check_constraint.php
+        // AFTER the constraint is replaced. SQLite enforces nothing at the
+        // DB level; Postgres does - see production incident 2026-09-18.
     }
 
     public function down()
     {
-        DB::table('users')->where('role', 'viewer')->update(['role' => 'user']);
+        //
     }
 };
