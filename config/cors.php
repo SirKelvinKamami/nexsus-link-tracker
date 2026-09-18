@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => explode(',', env('CORS_ORIGINS', '')),
+    'allowed_origins' => !empty(env('CORS_ORIGINS', '')) ? explode(',', env('CORS_ORIGINS', '')) : [],
 
     'allowed_origins_patterns' => [],
 
