@@ -1040,6 +1040,32 @@ if (empty($id)) {
         return back();
     }
 
+    // Show privacy settings
+    public function showPrivacy()
+    {
+        $userId = Auth::user()->id;
+        $privacy = Auth::user()->getPrivacy();
+        return view('studio.privacy', ['privacy' => $privacy]);
+    }
+
+    // Save privacy settings
+    public function editPrivacy(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $privacy = Auth::user()->getPrivacy();
+
+        $privacy->update([
+            'profile_visible' => $request->boolean('profile_visible'),
+            'email_visible' => $request->boolean('email_visible'),
+            'links_visible' => $request->boolean('links_visible'),
+            'analytics_visible' => $request->boolean('analytics_visible'),
+            'allow_comments' => $request->boolean('allow_comments'),
+            'default_link_permission' => $request->input('default_link_permission', 'private'),
+        ]);
+
+        return back()->with('success', 'Privacy settings updated');
+    }
+
     //Show user theme credit page
     public function theme(request $request)
     {

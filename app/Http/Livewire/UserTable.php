@@ -49,7 +49,25 @@ class UserTable extends DataTableComponent
                 ->html(),
             Column::make(__('messages.Role'), "role")
                 ->sortable()
-                ->searchable(),
+                ->searchable()
+                ->format(function ($value, $row, Column $column) {
+                    if ($row->id === 1) {
+                        return '<span class="badge bg-danger">Admin</span>';
+                    }
+                    $roles = ['viewer' => 'Viewer', 'commenter' => 'Commenter', 'editor' => 'Editor', 'admin' => 'Admin'];
+                    $route = route('updateRole', ['id' => $row->id]);
+                    $currentRole = $row->role ?? 'viewer';
+                    $html = '<form action="'.$route.'" method="POST" style="display:inline">';
+                    $html .= '@csrf ';
+                    $html .= '<select name="role" class="form-select form-select-sm" onchange="this.form.submit()" style="width:auto;display:inline-block;">';
+                    foreach ($roles as $key => $label) {
+                        $selected = $currentRole === $key ? 'selected' : '';
+                        $html .= '<option value="'.$key.'" '.$selected.'>'.$label.'</option>';
+                    }
+                    $html .= '</select></form>';
+                    return $html;
+                })
+                ->html(),
             Column::make(__('messages.Links'), "id")
                 ->format(function ($value, $row) {
                     $linkCount = Link::where('user_id', $row->id)->count();

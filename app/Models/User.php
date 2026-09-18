@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use App\Models\UserPrivacy;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -26,26 +27,39 @@ class User extends Authenticatable implements MustVerifyEmail
         'provider_id',
         'email_verified_at',
         'littlelink_name',
+        'role',
+        'block',
+        'description',
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isEditor(): bool
+    {
+        return in_array($this->role, ['admin', 'editor']);
+    }
+
+    public function isBlocked(): bool
+    {
+        return $this->block === 'yes';
+    }
+
+    public function canComment(): bool
+    {
+        return in_array($this->role, ['admin', 'editor', 'commenter']);
+    }
 
     public function visits()
     {
@@ -55,6 +69,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function socialAccounts()
     {
         return $this->hasMany(SocialAccount::class);
+    }
+
+    public function privacy()
+    {
+        return $this->hasOne(UserPrivacy::class);
+    }
+
+    public function getPrivacy(): UserPrivacy
+    {
+        return $this->privacy ?? UserPrivacy::create(array_merge(
+            UserPrivacy::defaults(),
+            ['user_id' => $this->id]
+        ));
     }
 
     protected static function boot()

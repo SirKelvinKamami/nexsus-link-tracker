@@ -28,10 +28,6 @@ services:
       # does not resolve from web services. External hostname is required:
       - key: DB_HOST
         value: dpg-dalgunu7bikc7389rh50-a.oregon-postgres.render.com
-      # Internal-hostname form kept for reference / paid-plan switch:
-      #   fromDatabase:
-      #     name: nexsus-db
-      #     property: host
       - key: DB_PORT
         fromDatabase:
           name: nexsus-db
@@ -58,6 +54,10 @@ services:
         value: database
       - key: LOG_CHANNEL
         value: stderr
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nexsus-db
+          property: connectionString
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST

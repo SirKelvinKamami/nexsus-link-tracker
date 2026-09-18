@@ -25,7 +25,7 @@ if (!function_exists('getFavIcon')) {
             return url('assets/favicon/icons/' . $filename);
         } catch (Exception $e) {
             // Handle the exception by copying the default SVG favicon
-            $defaultIcon = base_path('assets/linkstack/icons/website.svg');
+            $defaultIcon = base_path('assets/nexsus/images/favicon.svg');
             $filename = $id . '.svg';
             $filepath = base_path('assets/favicon/icons') . '/' . $filename;
             if (!is_dir(dirname($filepath))) {

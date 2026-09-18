@@ -78,26 +78,25 @@ class AdminController extends Controller
       ->take(5)
       ->get();
 
-    $pageStats = [
-      "visitors" => [
-        "all" => visits("App\Models\User", $littlelink_name)->count(),
-        "day" => visits("App\Models\User", $littlelink_name)
-          ->period("day")
-          ->count(),
-        "week" => visits("App\Models\User", $littlelink_name)
-          ->period("week")
-          ->count(),
-        "month" => visits("App\Models\User", $littlelink_name)
-          ->period("month")
-          ->count(),
-        "year" => visits("App\Models\User", $littlelink_name)
-          ->period("year")
-          ->count(),
-      ],
-      "os" => visits("App\Models\User", $littlelink_name)->operatingSystems(),
-      "referers" => visits("App\Models\User", $littlelink_name)->refs(),
-      "countries" => visits("App\Models\User", $littlelink_name)->countries(),
-    ];
+    try {
+      $pageStats = [
+        "visitors" => [
+          "all" => visits("App\Models\User", $littlelink_name)->count(),
+          "day" => visits("App\Models\User", $littlelink_name)->period("day")->count(),
+          "week" => visits("App\Models\User", $littlelink_name)->period("week")->count(),
+          "month" => visits("App\Models\User", $littlelink_name)->period("month")->count(),
+          "year" => visits("App\Models\User", $littlelink_name)->period("year")->count(),
+        ],
+        "os" => visits("App\Models\User", $littlelink_name)->operatingSystems(),
+        "referers" => visits("App\Models\User", $littlelink_name)->refs(),
+        "countries" => visits("App\Models\User", $littlelink_name)->countries(),
+      ];
+    } catch (\Throwable $e) {
+      $pageStats = [
+        "visitors" => ["all" => 0, "day" => 0, "week" => 0, "month" => 0, "year" => 0],
+        "os" => [], "referers" => [], "countries" => [],
+      ];
+    }
 
     return view("panel/index", [
       "lastMonthCount" => $lastMonthCount,
@@ -111,8 +110,6 @@ class AdminController extends Controller
       "clicks" => $clicks,
       "pageStats" => $pageStats,
       "littlelink_name" => $littlelink_name,
-      "links" => $links,
-      "clicks" => $clicks,
       "siteLinks" => $siteLinks,
       "siteClicks" => $siteClicks,
       "userNumber" => $userNumber,
@@ -162,7 +159,28 @@ class AdminController extends Controller
 
     User::where("id", $id)->update(["block" => $block]);
 
-    return redirect("admin/users/all");
+    return redirect("admin/users");
+  }
+
+  // Update user role
+  public function updateRole(Request $request)
+  {
+    $id = $request->id;
+    $role = $request->role;
+
+    $validRoles = ['viewer', 'commenter', 'editor', 'admin'];
+    if (!in_array($role, $validRoles)) {
+      return redirect()->back()->with('error', 'Invalid role');
+    }
+
+    // Prevent removing own admin role
+    if ($id == Auth::id() && $role !== 'admin') {
+      return redirect()->back()->with('error', 'Cannot remove your own admin role');
+    }
+
+    User::where("id", $id)->update(["role" => $role]);
+
+    return redirect("admin/users")->with('success', 'Role updated to ' . $role);
   }
 
   //Verify user
