@@ -876,5 +876,11 @@ $usrhandl = Auth::user()->littlelink_name;
 
 @stack('sidebar-scripts')
 
+{{-- The settings offcanvas (.offcanvas-end) sits translated offscreen even
+     when hidden, which widens the page by its width on studio pages and
+     causes a horizontal scrollbar. Bootstrap apps this guard itself only
+     while the offcanvas is OPEN; keep it permanently. --}}
+<style>html, body { overflow-x: hidden; }</style>
+
   </body>
 </html>
