@@ -274,7 +274,7 @@ class AnalyticsController extends BaseController
                 '"' . str_replace('"', '""', $link->link ?? '') . '"',
                 $link->type,
                 $clickCount,
-                $lastClicked ? $lastClicked->toIso8601String() : '',
+                $lastClicked ? $lastClicked : '',
                 $link->created_at->toIso8601String(),
             ]) . "\n";
         }

@@ -196,6 +196,8 @@ Route::post('/studio/background', [UserController::class, 'themeBackground'])->n
 Route::get('/studio/rem-background', [UserController::class, 'removeBackground'])->name('removeBackground');
 Route::get('/studio/profile', [UserController::class, 'showProfile'])->name('showProfile');
 Route::post('/studio/profile', [UserController::class, 'editProfile'])->name('editProfile');
+Route::get('/studio/privacy', [UserController::class, 'showPrivacy'])->name('showPrivacy');
+Route::post('/studio/privacy', [UserController::class, 'editPrivacy'])->name('editPrivacy');
 Route::post('/edit-icons', [UserController::class, 'editIcons'])->name('editIcons');
 Route::get('/clearIcon/{id}', [UserController::class, 'clearIcon'])->name('clearIcon')->middleware('link-id');
 Route::get('/studio/page/delprofilepicture', [UserController::class, 'delProfilePicture'])->name('delProfilePicture');
@@ -234,6 +236,7 @@ Route::group([
     Route::get('/admin/links/{id}', [AdminController::class, 'showLinksUser'])->name('showLinksUser');
     Route::get('/admin/deleteLink/{id}', [AdminController::class, 'deleteLinkUser'])->name('deleteLinkUser');
     Route::get('/admin/users/block/{block}/{id}', [AdminController::class, 'blockUser'])->name('blockUser');
+    Route::post('/admin/users/role/{id}', [AdminController::class, 'updateRole'])->name('updateRole');
     Route::get('/admin/users/verify/{verify}/{id}', [AdminController::class, 'verifyCheckUser'])->name('verifyCheckUser');
     Route::get('/admin/users/verify-mail/{verify}/{id}', [AdminController::class, 'verifyUser'])->name('verifyUser');
     Route::get('/admin/edit-user/{id}', [AdminController::class, 'showUser'])->name('showUser');

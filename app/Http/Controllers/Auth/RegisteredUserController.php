@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisteredUserController extends Controller
 {
-
     public function create()
     {
         return view('auth.register');
@@ -43,43 +42,23 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:8',
         ]);
 
-        $name = $request->input('name');
+        $manualVerification = filter_var(env('MANUAL_USER_VERIFICATION', false), FILTER_VALIDATE_BOOLEAN);
+        $block = $manualVerification ? 'yes' : 'no';
 
-        if(env('MANUAL_USER_VERIFICATION') == true){
-            $block = 'yes';
-        } else {
-            $block = 'no';
-        }
-
-        Auth::login($user = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'littlelink_name' => $request->littlelink_name,
             'password' => Hash::make($request->password),
-            'role' => 'user',
-        ]));
+            'role' => 'viewer',
+            'block' => $block,
+        ]);
 
-        $user->block = $block;
-        $user->save();
+        Auth::login($user);
 
-
-            $user = $request->name;
-            $email = $request->email;
-            
-            if(env('REGISTER_AUTH') == 'verified'){
-                if(env('MANUAL_USER_VERIFICATION') == true){
-                try {
-                Mail::send('auth.user-confirmation', ['user' => $user, 'email' => $email], function ($message) use ($user) {
-                    $message->to(env('ADMIN_EMAIL'))
-                            ->subject('New user registration');
-                });
-            } catch (\Exception $e) {}
-        }
-    
-            try {
+        try {
             $request->user()->sendEmailVerificationNotification();
-            } catch (\Exception $e) {}
-        }
+        } catch (\Exception $e) {}
 
         event(new Registered($user));
 

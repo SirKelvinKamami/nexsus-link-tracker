@@ -13,7 +13,7 @@ class DocumentController extends BaseController
      */
     public function index(Request $request)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
         $perPage = $request->input('per_page', 50);
 
         $query = Link::where('user_id', $userId)
@@ -55,9 +55,9 @@ class DocumentController extends BaseController
     /**
      * Get a single document by ID.
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $doc = Link::where('id', $id)
             ->where('user_id', $userId)
@@ -92,9 +92,9 @@ class DocumentController extends BaseController
     /**
      * Get download statistics for a document.
      */
-    public function stats($id)
+    public function stats(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $doc = Link::where('id', $id)
             ->where('user_id', $userId)
@@ -159,9 +159,9 @@ class DocumentController extends BaseController
     /**
      * Delete a document.
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $userId = $this->getUserId();
+        $userId = $this->getUserId($request);
 
         $doc = Link::where('id', $id)
             ->where('user_id', $userId)

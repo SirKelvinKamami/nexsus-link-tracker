@@ -11,19 +11,19 @@
               <a href="{{ url('') }}" class="d-flex align-items-center mb-3">
                 <!--Logo start-->
                 <div class="logo-main">
-                    @if(file_exists(base_path("assets/linkstack/images/").findFile('avatar')))
+                    @if(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
                     <div class="logo-normal">
-                      <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
+                      <img class="img logo" src="{{ asset('assets/nexsus/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
                   </div>
                   <div class="logo-mini">
-                    <img class="img logo" src="{{ asset('assets/linkstack/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
+                    <img class="img logo" src="{{ asset('assets/nexsus/images/'.findFile('avatar')) }}" style="width:auto;height:30px;">
                   </div>
                     @else
                     <div class="logo-normal">
-                      <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
+                      <img class="img logo" type="image/svg+xml" src="{{ asset('assets/nexsus/images/logo.svg') }}" width="30px" height="30px">
                   </div>
                   <div class="logo-mini">
-                    <img class="img logo" type="image/svg+xml" src="{{ asset('assets/linkstack/images/logo.svg') }}" width="30px" height="30px">
+                    <img class="img logo" type="image/svg+xml" src="{{ asset('assets/nexsus/images/logo.svg') }}" width="30px" height="30px">
                   </div>
                     @endif
                     </div>

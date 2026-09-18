@@ -70,5 +70,6 @@ class Kernel extends HttpKernel
         'max.users' => \App\Http\Middleware\MaxUsers::class,
         'impersonate' => \App\Http\Middleware\Impersonate::class,
         'api.token' => \App\Http\Middleware\ApiTokenAuth::class,
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

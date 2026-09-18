@@ -507,6 +507,7 @@ $usrhandl = Auth::user()->littlelink_name;
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="{{ url('/studio/page') }}"><i class="bi bi-person-fill"></i> {{__('messages.Profile')}}</a></li>
+                    <li><a class="dropdown-item" href="{{ url('/studio/privacy') }}"><i class="bi bi-shield-lock-fill"></i> Privacy</a></li>
                     <li><a class="dropdown-item" href="{{ url('/studio/profile') }}"><i class="bi bi-gear-fill"></i> {{__('messages.Settings')}}</a></li>
                     <li><a class="dropdown-item" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" role="button" aria-controls="offcanvasExample"><i class="bi bi-brush-fill"></i> {{__('messages.Styling')}}</a></li>
                     <li><hr class="dropdown-divider"></li>
