@@ -54,21 +54,19 @@ return [
         'from' => [
 			'address' => env('MAIL_FROM_ADDRESS'),
 			'name' => env('MAIL_FROM_NAME'),
-			],
-        ],
-
+			],        ],
 
     /*
     |--------------------------------------------------------------------------
     | Built in SMTP server
     |--------------------------------------------------------------------------
     |
-    | LinkStack now includes an open and free to use SMTP server. 
+    | LinkStack now includes an open and free to use SMTP server. 
     | Mails from this service may only be used for
     | password recovery and registration purposes involving
     | users personal LinkStack or LittleLink Admin pages.
     | Users of this service must abide by our Terms and Conditions
-    | found at https://linkstack.org/mail.
+    | found at https://linkstack.org/mail.
     |
     */
 
@@ -85,6 +83,18 @@ return [
 			'address' => 'littlelink-custom@mail.llc.ovh',
 			'name' => env('MAIL_FROM_NAME'),
 			],
+        ],
+
+        // Mailer for local/CI environments: writes emails to
+        // storage/logs/laravel.log instead of delivering. Without it,
+        // MAIL_MAILER=log throws "Mailer [log] is not defined".
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+            'from' => [
+                'address' => env('MAIL_FROM_ADDRESS', 'nexsus@example.test'),
+                'name' => env('MAIL_FROM_NAME', 'Nexsus'),
+            ],
         ],
 
     ],

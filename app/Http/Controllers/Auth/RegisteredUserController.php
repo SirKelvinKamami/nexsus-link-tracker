@@ -56,9 +56,20 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        try {
-            $request->user()->sendEmailVerificationNotification();
-        } catch (\Exception $e) {}
+        // Only send a verification email when registration actually requires
+        // verification (REGISTER_AUTH=verified). Laravel's Registered-event
+        // listener (SendEmailVerificationNotification, EventServiceProvider)
+        // fires OUTSIDE any try/catch, so an unconditional send 500s
+        // registration whenever mail is not configured — and would also
+        // double-send alongside the explicit call below.
+        $registerAuth = env('REGISTER_AUTH');
+        if ($registerAuth == 'verified') {
+            try {
+                $request->user()->sendEmailVerificationNotification();
+            } catch (\Throwable $e) {
+                report($e); // logged, never blocks registration
+            }
+        }
 
         event(new Registered($user));
 
