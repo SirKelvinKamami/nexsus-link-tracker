@@ -14,8 +14,11 @@ class Impersonate
     {
       if(Schema::hasColumn('users', 'auth_as')) {
         $adminUser = User::where('role', 'admin')->where(function ($query) {
-            $query->where('auth_as', '!=', null)
-                ->where('auth_as', '!=', '');
+            // auth_as is an integer column: comparing it to '' throws
+            // SQLSTATE[22P02] on Postgres (MySQL silently coerces). Binding
+            // integer 0 keeps the original "not set" semantics on both engines.
+            $query->whereNotNull('auth_as')
+                ->where('auth_as', '!=', 0);
         })->first();
 
         if ($adminUser && is_numeric($adminUser->auth_as)) {
