@@ -111,7 +111,11 @@ Route::get('/block-asset/{type}', [LinkTypeViewController::class, 'blockAsset'])
 Route::middleware(['auth', 'blocked', 'impersonate'])->group(function () {
 //User route
 Route::group([
-    'middleware' => env('REGISTER_AUTH'),
+    // REGISTER_AUTH is optional (e.g. "verified" to require email
+    // verification). Unset/empty must mean NO middleware: passing null or ''
+    // makes Laravel try to load a class named "" and 500 every authed page
+    // ("Target class [] does not exist" — hit in production 2026-09-18).
+    'middleware' => env('REGISTER_AUTH') ?: [],
 ], function () {
 if(env('FORCE_ROUTE_HTTPS') == 'true'){URL::forceScheme('https');}
 if(isset($_COOKIE['LinkCount'])){if($_COOKIE['LinkCount'] == '20'){$LinkPage = 'showLinks20';}elseif($_COOKIE['LinkCount'] == '30'){$LinkPage = 'showLinks30';}elseif($_COOKIE['LinkCount'] == 'all'){$LinkPage = 'showLinksAll';} else {$LinkPage = 'showLinks';}} else {$LinkPage = 'showLinks';} //Shows correct link number

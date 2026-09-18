@@ -100,6 +100,26 @@ jobs:
             fi
           done
 
+      - name: Authenticated smoke (register, then dashboard)
+        run: |
+          base="http://127.0.0.1:8000"
+          jar=$(mktemp)
+          rnd=$RANDOM
+          csrf=$(curl -s -c "$jar" "$base/register" | grep -o 'name="_token" value="[^"]*"' | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf" ]; then echo "FAIL: no CSRF token on /register"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/register" \
+            --data-urlencode "_token=$csrf" \
+            --data-urlencode "name=CI User" \
+            --data-urlencode "littlelink_name=ciuser$rnd" \
+            --data-urlencode "email=ciuser$rnd@example.test" \
+            --data-urlencode "password=ciPassword1" \
+            --data-urlencode "password_confirmation=ciPassword1")
+          echo "POST /register -> $code (expect 302)"
+          if [ "$code" != "302" ]; then echo "FAIL: registration did not auto-login"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' "$base/dashboard")
+          echo "GET /dashboard -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
+
       - name: Upload logs on failure
         if: failure()
         uses: actions/upload-artifact@v7
@@ -197,6 +217,26 @@ jobs:
               exit 1
             fi
           done
+
+      - name: Authenticated smoke (Postgres, register then dashboard)
+        run: |
+          base="http://127.0.0.1:8000"
+          jar=$(mktemp)
+          rnd=$RANDOM
+          csrf=$(curl -s -c "$jar" "$base/register" | grep -o 'name="_token" value="[^"]*"' | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf" ]; then echo "FAIL: no CSRF token on /register"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/register" \
+            --data-urlencode "_token=$csrf" \
+            --data-urlencode "name=CI User" \
+            --data-urlencode "littlelink_name=ciuser$rnd" \
+            --data-urlencode "email=ciuser$rnd@example.test" \
+            --data-urlencode "password=ciPassword1" \
+            --data-urlencode "password_confirmation=ciPassword1")
+          echo "POST /register -> $code (expect 302)"
+          if [ "$code" != "302" ]; then echo "FAIL: registration did not auto-login"; exit 1; fi
+          code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' "$base/dashboard")
+          echo "GET /dashboard -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
 
       - name: Upload logs on failure
         if: failure()
