@@ -71,9 +71,9 @@ COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
 # port from $PORT at boot; /var/lib/nginx so nginx can run unprivileged.
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
     && chown -R www-data:www-data storage bootstrap/cache database \
-    && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx \
-    && mkdir -p /var/lib/nginx/logs /run/nginx /var/log/supervisor \
-    && chown -R www-data:www-data /run/nginx /var/log/supervisor
+    && mkdir -p /var/lib/nginx/logs /var/log/nginx /run/nginx /var/log/supervisor \
+    && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx /var/log/nginx /run/nginx /var/log/supervisor \
+    && sed -i -e 's|/var/log/nginx/error.log|/dev/stderr|g' -e 's|/var/log/nginx/access.log|/dev/stdout|g' /etc/nginx/nginx.conf || true
 
 # Production opcache: timestamps disabled (immutable image), generous caches
 RUN { \
