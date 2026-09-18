@@ -1,4 +1,4 @@
-@extends('studio.layouts.sidebar')
+@extends('layouts.sidebar')
 
 @section('content')
 <div class="container-fluid">
