@@ -72,7 +72,7 @@ COPY --from=build --chown=www-data:www-data /var/www/html /var/www/html
 RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
     && chown -R www-data:www-data storage bootstrap/cache database \
     && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx \
-    && mkdir -p /run/nginx /var/log/supervisor \
+    && mkdir -p /var/lib/nginx/logs /run/nginx /var/log/supervisor \
     && chown -R www-data:www-data /run/nginx /var/log/supervisor
 
 # Production opcache: timestamps disabled (immutable image), generous caches

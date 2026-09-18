@@ -14,17 +14,21 @@ services:
         value: false
       - key: APP_KEY
         generateValue: true
+      # fromService property: host resolved to the bare service name, not the
+      # FQDN — pin the public URL explicitly instead.
       - key: APP_URL
-        fromService:
-          name: nexsus-link-tracker
-          type: web
-          property: host
+        value: https://nexsus-link-tracker.onrender.com
       - key: DB_CONNECTION
         value: pgsql
+      # NOTE: on the free Postgres plan private networking is unavailable —
+      # property: host resolves to the internal "dpg-...-a" hostname which
+      # does not resolve from web services. External hostname is required:
       - key: DB_HOST
-        fromDatabase:
-          name: nexsus-db
-          property: host
+        value: dpg-dalgunu7bikc7389rh50-a.oregon-postgres.render.com
+      # Internal-hostname form kept for reference / paid-plan switch:
+      #   fromDatabase:
+      #     name: nexsus-db
+      #     property: host
       - key: DB_PORT
         fromDatabase:
           name: nexsus-db

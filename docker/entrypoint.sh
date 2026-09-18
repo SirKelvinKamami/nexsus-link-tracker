@@ -23,7 +23,7 @@ if [ "$DB_CONNECTION" != "sqlite" ] && [ -n "$DB_HOST" ]; then
     db_ok=0
     try=1
     while [ $try -le 15 ]; do
-        if php -r '
+        if PDO_TRY="$try" php -r '
             try {
                 new PDO(
                     sprintf("%s:host=%s;port=%s;dbname=%s", getenv("DB_CONNECTION"), getenv("DB_HOST"), getenv("DB_PORT"), getenv("DB_DATABASE")),
@@ -33,7 +33,7 @@ if [ "$DB_CONNECTION" != "sqlite" ] && [ -n "$DB_HOST" ]; then
                 );
                 exit(0);
             } catch (Throwable $e) {
-                fwrite(STDERR, "PDO attempt $try failed: ".$e->getMessage()."\n");
+                fwrite(STDERR, "PDO attempt ".getenv("PDO_TRY")." failed: ".$e->getMessage()."\n");
                 exit(1);
             }
         '; then
@@ -81,7 +81,10 @@ php artisan config:clear 2>/dev/null || true
 # Bind nginx to the platform-provided port (Render sets PORT; default 8080).
 # Matches whichever numeric listen the build baked in (80/10000/8080).
 LISTEN_PORT="${PORT:-8080}"
-sed -i "s/^    listen [0-9]*;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
+# nginx.conf must contain EXACTLY ONE listen directive (enforced there);
+# busybox sed has no GNU 0,/re/ address form, and a global rewrite is safe
+# only while the one-listen invariant holds.
+sed -i "s/    listen [0-9]*;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
 echo "nginx listening on port ${LISTEN_PORT}"
 
 echo "Entrypoint complete — starting services."
