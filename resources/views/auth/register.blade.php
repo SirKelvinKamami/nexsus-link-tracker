@@ -73,9 +73,12 @@ foreach($pages as $page)
                       </div>
                     </div>
                   </div>                  
-                <div class="d-flex justify-content-center">
-                  <button id="submit-btn" type="submit" class="btn btn-primary">{{__('messages.Sign Up')}}</button>
-                </div>
+                 <div class="d-flex justify-content-center">
+                   <button id="submit-btn" type="submit" class="btn btn-primary">{{__('messages.Sign Up')}}</button>
+                 </div>
+                 <p class="mt-3 text-center">
+                   {{__('messages.Already have an account?')}} <a href="{{ route('login') }}" class="text-underline">{{__('messages.Sign In')}}</a>
+                 </p>
                 @if(env('ENABLE_SOCIAL_LOGIN') == 'true')
                 <p class="text-center my-3">{{__('messages.or sign in with other accounts?')}}</p>
                 <div class="d-flex justify-content-center">

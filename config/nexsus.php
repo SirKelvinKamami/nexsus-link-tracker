@@ -12,7 +12,11 @@ return [
     |
     */
 
-    'single_user_mode' => env('SINGLE_USER_MODE', 'false'),
+    'single_user_mode' => in_array(
+        strtolower((string) env('SINGLE_USER_MODE', 'false')),
+        ['true', '1', 'yes', 'auth'],
+        true
+    ),
 
     /*
     |--------------------------------------------------------------------------
