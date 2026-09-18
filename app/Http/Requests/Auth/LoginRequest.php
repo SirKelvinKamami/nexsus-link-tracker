@@ -11,21 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
     public function authorize()
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         return [
@@ -34,19 +24,35 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * Attempt to authenticate the request's credentials.
-     *
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
+        if (RateLimiter::attempts($this->throttleKey()) >= 3) {
+            $expected = $this->session()->get('login_captcha_answer');
+            if ($expected === null) {
+                $a = random_int(1, 9);
+                $b = random_int(1, 9);
+                $this->session()->put('login_captcha_answer', $a + $b);
+                $this->session()->put('login_captcha_question', "$a + $b = ?");
+                throw ValidationException::withMessages([
+                    'captcha' => __('Please solve the CAPTCHA: ') . $this->session()->get('login_captcha_question'),
+                ]);
+            }
+            if (!$this->filled('captcha') || (string) $this->input('captcha') !== (string) $expected) {
+                RateLimiter::hit($this->throttleKey());
+                throw ValidationException::withMessages([
+                    'captcha' => __('Please solve the CAPTCHA correctly.'),
+                ]);
+            }
+        }
+
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password, 'block' => 'no'] , $this->filled('remember'))) {
             RateLimiter::hit($this->throttleKey());
+            $a = random_int(1, 9);
+            $b = random_int(1, 9);
+            $this->session()->put('login_captcha_answer', $a + $b);
+            $this->session()->put('login_captcha_question', "$a + $b = ?");
 
             throw ValidationException::withMessages([
                 'email' => __('messages.failed'),
@@ -54,18 +60,12 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+        $this->session()->forget(['login_captcha_answer', 'login_captcha_question']);
     }
 
-    /**
-     * Ensure the login request is not rate limited.
-     *
-     * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
-     */
     public function ensureIsNotRateLimited()
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
+        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 10)) {
             return;
         }
 
@@ -81,11 +81,6 @@ class LoginRequest extends FormRequest
         ]);
     }
 
-    /**
-     * Get the rate limiting throttle key for the request.
-     *
-     * @return string
-     */
     public function throttleKey()
     {
         return Str::lower($this->input('email')).'|'.$this->ip();
