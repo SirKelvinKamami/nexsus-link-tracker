@@ -15,6 +15,11 @@ if (!function_exists('getFavIcon')) {
             $favicon = file_get_contents($faviconUrl);
             $filename = $id . '.png';
             $filepath = base_path('assets/favicon/icons') . '/' . $filename;
+            // gitignored runtime dir: create it on first use (fresh deploys
+            // do not have it, and file_put_contents would fatal without it)
+            if (!is_dir(dirname($filepath))) {
+                mkdir(dirname($filepath), 0775, true);
+            }
             file_put_contents($filepath, $favicon);
 
             return url('assets/favicon/icons/' . $filename);
@@ -23,6 +28,9 @@ if (!function_exists('getFavIcon')) {
             $defaultIcon = base_path('assets/linkstack/icons/website.svg');
             $filename = $id . '.svg';
             $filepath = base_path('assets/favicon/icons') . '/' . $filename;
+            if (!is_dir(dirname($filepath))) {
+                mkdir(dirname($filepath), 0775, true);
+            }
             copy($defaultIcon, $filepath);
 
             return url('assets/favicon/icons/' . $filename);

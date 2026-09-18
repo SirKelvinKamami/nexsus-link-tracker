@@ -17,6 +17,12 @@ class ButtonSeeder extends Seeder
      */
     public function run()
     {
+        // Raw Button::insert below is NOT idempotent and this seeder runs on
+        // every container boot (entrypoint db:seed). Skip when already seeded.
+        if (Button::count() > 0) {
+            return;
+        }
+
         $buttons = [
             [
                 "name" => "custom",
