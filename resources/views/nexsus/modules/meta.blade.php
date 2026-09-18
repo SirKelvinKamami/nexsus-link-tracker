@@ -15,7 +15,7 @@
 @if(env('CUSTOM_META_TAGS') == 'true')
   @include('layouts.meta')
 @else
-  <meta name="description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+  <meta name="description" content="{{ strip_tags($userinfo->bio) }}">
   <meta name="author" content="{{ $userinfo->name }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 @endif
@@ -24,10 +24,10 @@
   <!-- This shows a preview for title, description and avatar image of users profiles if shared on social media sites -->
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
+    <meta property="og:url" content="{{ url('') }}/{{ "@" . $handle }}">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ $userinfo->name }}">
-    <meta property="og:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+    <meta property="og:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta property="og:image" content="{{ url(findAvatar($userinfo->id)) }}">
     @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
@@ -38,10 +38,10 @@
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
-    <meta property="twitter:url" content="{{ url('') }}/{{ "@" . $littlelink_name }}">
-    <meta name="twitter:title" content="{{ $userinfo->littlelink_name }}">
-    <meta name="twitter:description" content="{{ strip_tags($userinfo->littlelink_description) }}">
+    <meta property="twitter:domain" content="{{ url('') }}/{{ "@" . $handle }}">
+    <meta property="twitter:url" content="{{ url('') }}/{{ "@" . $handle }}">
+    <meta name="twitter:title" content="{{ $userinfo->handle }}">
+    <meta name="twitter:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta name="twitter:image" content="{{ url(findAvatar($userinfo->id)) }}">
     @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))

@@ -35,7 +35,7 @@ class AdminController extends Controller
   public function index()
   {
     $userId = Auth::user()->id;
-    $littlelink_name = Auth::user()->littlelink_name;
+    $handle = Auth::user()->handle;
     $links = Link::where("user_id", $userId)->select("link")->count();
     $clicks = Link::where("user_id", $userId)->sum("click_number");
 
@@ -81,15 +81,15 @@ class AdminController extends Controller
     try {
       $pageStats = [
         "visitors" => [
-          "all" => visits("App\Models\User", $littlelink_name)->count(),
-          "day" => visits("App\Models\User", $littlelink_name)->period("day")->count(),
-          "week" => visits("App\Models\User", $littlelink_name)->period("week")->count(),
-          "month" => visits("App\Models\User", $littlelink_name)->period("month")->count(),
-          "year" => visits("App\Models\User", $littlelink_name)->period("year")->count(),
+          "all" => visits("App\Models\User", $handle)->count(),
+          "day" => visits("App\Models\User", $handle)->period("day")->count(),
+          "week" => visits("App\Models\User", $handle)->period("week")->count(),
+          "month" => visits("App\Models\User", $handle)->period("month")->count(),
+          "year" => visits("App\Models\User", $handle)->period("year")->count(),
         ],
-        "os" => visits("App\Models\User", $littlelink_name)->operatingSystems(),
-        "referers" => visits("App\Models\User", $littlelink_name)->refs(),
-        "countries" => visits("App\Models\User", $littlelink_name)->countries(),
+        "os" => visits("App\Models\User", $handle)->operatingSystems(),
+        "referers" => visits("App\Models\User", $handle)->refs(),
+        "countries" => visits("App\Models\User", $handle)->countries(),
       ];
     } catch (\Throwable $e) {
       $pageStats = [
@@ -109,7 +109,7 @@ class AdminController extends Controller
       "links" => $links,
       "clicks" => $clicks,
       "pageStats" => $pageStats,
-      "littlelink_name" => $littlelink_name,
+      "handle" => $handle,
       "siteLinks" => $siteLinks,
       "siteClicks" => $siteClicks,
       "userNumber" => $userNumber,
@@ -343,7 +343,7 @@ class AdminController extends Controller
       "name" => "",
       "email" => "",
       "password" => "",
-      "littlelink_name" => "",
+      "handle" => "",
     ]);
 
     $id = $request->id;
@@ -351,8 +351,8 @@ class AdminController extends Controller
     $email = $request->email;
     $password = Hash::make($request->password);
     $profilePhoto = $request->file("image");
-    $littlelink_name = $request->littlelink_name;
-    $littlelink_description = $request->littlelink_description;
+      $handle = $request->handle;
+      $bio = $request->bio;
     $role = $request->role;
     $customBackground = $request->file("background");
     $theme = $request->theme;
@@ -367,8 +367,8 @@ class AdminController extends Controller
       User::where("id", $id)->update([
         "name" => $name,
         "email" => $email,
-        "littlelink_name" => $littlelink_name,
-        "littlelink_description" => $littlelink_description,
+        "handle" => $handle,
+        "bio" => $bio,
         "role" => $role,
         "theme" => $theme,
       ]);
@@ -377,8 +377,8 @@ class AdminController extends Controller
         "name" => $name,
         "email" => $email,
         "password" => $password,
-        "littlelink_name" => $littlelink_name,
-        "littlelink_description" => $littlelink_description,
+        "handle" => $handle,
+        "bio" => $bio,
         "role" => $role,
         "theme" => $theme,
       ]);

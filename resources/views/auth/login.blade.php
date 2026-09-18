@@ -57,6 +57,22 @@ foreach($pages as $page)
                     </div>
                     <a href="{{ route('password.request') }}">{{__('messages.Forgot Password?')}}</a>
                   </div>
+                  @php
+                    $captchaNeeded = false;
+                    $captchaQuestion = session('login_captcha_question', '3 + 4 = ?');
+                    if(old('email')) {
+                        try { $captchaNeeded = \Illuminate\Support\Facades\RateLimiter::attempts(\Illuminate\Support\Str::lower(old('email')).'|'.request()->ip()) >= 3; } catch (\Throwable $e) {}
+                    }
+                  @endphp
+                  @if($captchaNeeded)
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <label for="captcha" class="form-label">{{__('Solve CAPTCHA')}}: <strong>{{ $captchaQuestion }}</strong></label>
+                      <input type="text" inputmode="numeric" autocomplete="off" class="form-control" id="captcha" name="captcha" placeholder="{{__('Enter answer')}}" required>
+                      <small class="text-muted">{{__('Required after 3 failed attempts')}}</small>
+                    </div>
+                  </div>
+                  @endif
                 </div>
                 <div class="d-flex justify-content-center">
                   <button type="submit" class="btn btn-primary">{{__('messages.Sign In')}}</button>

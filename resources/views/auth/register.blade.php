@@ -46,10 +46,10 @@ foreach($pages as $page)
                     </div>
                     <div class="col-lg-12">
                       <div class="form-group">
-                        <label for="littlelink_name" class="form-label">{{__('messages.Page URL')}}</label>
+                        <label for="handle" class="form-label">{{__('messages.Page URL')}}</label>
                         <div class="input-group mb-3 has-validation">
                           <span class="input-group-text" id="basic-addon3">{{str_replace(['http://', 'https://'], '', url(''))}}/@</span>
-                          <input type="littlelink_name" class="form-control" id="littlelink_name" name="littlelink_name" aria-describedby="littlelink_name" placeholder=" " :value="old('littlelink_name')" required autofocus >
+                          <input type="text" class="form-control" id="handle" name="handle" aria-describedby="handle" placeholder=" " :value="old('handle')" required autofocus >
                         </div>
                       </div>
                     </div>
@@ -73,9 +73,12 @@ foreach($pages as $page)
                       </div>
                     </div>
                   </div>                  
-                <div class="d-flex justify-content-center">
-                  <button id="submit-btn" type="submit" class="btn btn-primary">{{__('messages.Sign Up')}}</button>
-                </div>
+                 <div class="d-flex justify-content-center">
+                   <button id="submit-btn" type="submit" class="btn btn-primary">{{__('messages.Sign Up')}}</button>
+                 </div>
+                 <p class="mt-3 text-center">
+                   {{__('messages.Already have an account?')}} <a href="{{ route('login') }}" class="text-underline">{{__('messages.Sign In')}}</a>
+                 </p>
                 @if(env('ENABLE_SOCIAL_LOGIN') == 'true')
                 <p class="text-center my-3">{{__('messages.or sign in with other accounts?')}}</p>
                 <div class="d-flex justify-content-center">

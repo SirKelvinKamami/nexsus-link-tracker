@@ -48,7 +48,7 @@
                                 @if(env('USE_THEME_PREVIEW_IFRAME') === false or $page->littlelink_name == '')
                                 <center><img style="width:95%;max-width:700px;argin-left:1rem!important;" src="@if(file_exists(base_path() . '/themes/' . $page->theme . '/preview.png')){{url('/themes/' . $page->theme . '/preview.png')}}@elseif($page->theme === 'default' or empty($page->theme)){{url('/assets/Nexsus Tracker/images/themes/default.png')}}@else{{url('/assets/Nexsus Tracker/images/themes/no-preview.png')}}@endif"></img></center>
                                  @else
-                                <iframe frameborder="0" allowtransparency="true" id="frPreview" style="background: #FFFFFF;height:400px;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">{{__('messages.No compatible browser')}}</iframe>
+                                <iframe frameborder="0" allowtransparency="true" id="frPreview" style="background: #FFFFFF;height:400px;" class='w-100' src="{{ url('') }}/@<?= Auth::user()->handle ?>">{{__('messages.No compatible browser')}}</iframe>
                                 @endif
                               </div>
                             </div>
@@ -192,7 +192,7 @@ $(window).on('load', function() {
 
                 <form action="{{ route('editTheme') }}" enctype="multipart/form-data" method="post">
                 @csrf
-                <select id="theme-select" style="display:none;" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>"><option value="default" selected></option></select>
+                                <select id="theme-select" style="display:none;" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->handle ?>"><option value="default" selected></option></select>
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="card shadow-lg @if($page->theme == "" or $page->theme == "default") bg-primary @else bg-soft-primary @endif">

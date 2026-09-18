@@ -251,8 +251,8 @@ function text($key){
 <select style="max-width:600px" class="form-control" name="value">
 @if($configValue2 != '')<option>{{$configValue2}}</option>@endif
 @if($configValue2 != 'default')<option value="default">{{__('messages.default')}}</option>@endif
-<?php $users = DB::table('users')->where('littlelink_name', '!=', '')->get();
-foreach($users as $user){if($user->littlelink_name != $configValue2){echo '<option>' . $user->littlelink_name . '</option>';}} ?>
+<?php $users = DB::table('users')->where('handle', '!=', '')->get();
+foreach($users as $user){if($user->handle != $configValue2){echo '<option>' . $user->handle . '</option>';}} ?>
 </select>
 
 </div></div>

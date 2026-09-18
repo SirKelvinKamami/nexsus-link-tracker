@@ -72,8 +72,8 @@ class InstallerController extends Controller
             'email' => $email,
             'email_verified_at' => '0001-01-01 00:00:00',
             'password' => Hash::make($password),
-            'littlelink_name' => $handle,
-            'littlelink_description' => 'admin page',
+            'handle' => $handle,
+            'bio' => 'admin page',
             'block' => 'no',
         ]);
 
@@ -129,7 +129,7 @@ class InstallerController extends Controller
     {
 
         $user = User::find(1);
-        $llName = $user->littlelink_name;
+        $llName = $user->handle;
 
         if($request->register == 'Yes'){ 
             if(EnvEditor::keyExists('ALLOW_REGISTRATION')){EnvEditor::editKey('ALLOW_REGISTRATION', 'true');}else{EnvEditor::addKey('ALLOW_REGISTRATION', 'true');}

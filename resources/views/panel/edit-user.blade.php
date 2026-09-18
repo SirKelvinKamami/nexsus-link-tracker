@@ -65,7 +65,7 @@
 
                             <label>{{__('messages.Select theme')}}</label>
                               <div class="form-group col-lg-8">
-                                  <select id="theme-select" style="margin-bottom: 40px;" class="form-control" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->littlelink_name ?>">
+                                   <select id="theme-select" style="margin-bottom: 40px;" class="form-control" name="theme" data-base-url="{{ url('') }}/@<?= Auth::user()->handle ?>">
                                       <?php
                                           if ($handle = opendir('themes')) {
                                               while (false !== ($entry = readdir($handle))) {
@@ -110,13 +110,13 @@
                             <div class="input-group-prepend">
                             <div class="input-group-text">{{ url('') }}/@</div>
                             </div>
-                            <input type="text" class="form-control" name="littlelink_name" value="{{ $user->littlelink_name }}">
+                                   <input type="text" class="form-control" name="handle" value="{{ $user->handle }}">
                           </div>
                         </div>
                             
                             <div class="form-group col-lg-8">
                               <label> {{__('messages.Page description')}}</label>
-                              <textarea class="form-control" name="littlelink_description" rows="3">{{ $user->littlelink_description }}</textarea>
+                              <textarea class="form-control" name="bio" rows="3">{{ $user->bio }}</textarea>
                             </div>
                             <div class="form-group col-lg-8">
                               <label for="exampleFormControlSelect1">{{__('messages.Role')}}</label>

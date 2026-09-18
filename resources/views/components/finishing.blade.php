@@ -410,14 +410,14 @@ try {
 } catch (exception $e) {
 }
 
-// Changes saved profile images from littlelink_name to IDs.
+// Changes saved profile images from handle to IDs.
 // This runs every time the updater runs.
 // Not sure if this will cause any issues.
 // If it works, I won't touch it.
 try {
     $users = DB::table('users')->get();
     foreach ($users as $user) {
-        $oldName = $user->littlelink_name . '.png';
+        $oldName = $user->handle . '.png';
         $newName = $user->id . '.png';
         $oldPath = base_path('assets/img/' . $oldName);
         $newPath = base_path('assets/img/' . $newName);

@@ -1,7 +1,7 @@
 @php
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Models\User;
-$usrhandl = Auth::user()->littlelink_name;
+$usrhandl = Auth::user()->handle;
 @endphp
 <!doctype html>
 @include('layouts.lang')
@@ -346,7 +346,7 @@ $usrhandl = Auth::user()->littlelink_name;
               <ul class="mb-2 navbar-nav ms-auto align-items-center navbar-list mb-lg-0">
                 <li class="me-0 me-xl-2">
                   <div class="dropdown d-flex flex-row align-items-center">
-                    <a target="_blank" href="{{url('/@'.Auth::user()->littlelink_name)}}">
+                    <a target="_blank" href="{{url('/@'.Auth::user()->handle)}}">
                       <button style="border-bottom-right-radius:0;border-top-right-radius:0;" type="button" class="btn btn-primary btn-sm pe-2">{{__('messages.View Page')}}</button>
                     </a>
                     <button style="border-bottom-left-radius:0;border-top-left-radius:0;" class="btn btn-primary btn-sm dropdown-toggle ms-auto px-1" type="button" id="dropdownMenuButtonSM" data-bs-toggle="dropdown" aria-expanded="false">
@@ -358,13 +358,13 @@ $usrhandl = Auth::user()->littlelink_name;
                       @php $sDomains = str_replace(' ', '', env('SUPPORTED_DOMAINS')); $sDomains = explode(',', $sDomains); @endphp
                         @foreach ($sDomains as $myvar)
                             <li>
-                                <a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{'https://'.$myvar.'/@'.Auth::user()->littlelink_name}}">
+                                <a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{'https://'.$myvar.'/@'.Auth::user()->handle}}">
                                     <i class="bi bi-files"></i> {{ $myvar }}
                                 </a>
                             </li>
                         @endforeach         
                       @else
-                      <li><a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{url('').'/@'.Auth::user()->littlelink_name}}"><i class="bi bi-files"></i> {{ str_replace(['http://', 'https://'], '', url('')) }}                      </a></li>
+                      <li><a class="dropdown-item share-button" style="cursor:pointer!important;" data-share="{{url('').'/@'.Auth::user()->handle}}"><i class="bi bi-files"></i> {{ str_replace(['http://', 'https://'], '', url('')) }}                      </a></li>
                       @endif
                       <li><hr class="dropdown-divider"></li>
                       <li><a class="dropdown-item" data-bs-toggle="modal" style="cursor:pointer!important;" data-bs-target="#staticBackdrop"><i class="bi bi-qr-code-scan"></i> {{__('messages.QR Code')}}</a></li>

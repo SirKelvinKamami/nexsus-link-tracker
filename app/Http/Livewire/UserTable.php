@@ -36,12 +36,12 @@ class UserTable extends DataTableComponent
             Column::make(__('messages.E-Mail'), "email")
                 ->sortable()
                 ->searchable(),
-            Column::make(__('messages.Page'), "littlelink_name")
+            Column::make(__('messages.Page'), "handle")
                 ->sortable()
                 ->searchable()
                 ->format(function ($value, $row, Column $column) {
-                    if (!$row->littlelink_name == NULL) {
-                        return "<a href='" . url('') . "/@" . htmlspecialchars($row->littlelink_name) . "' target='_blank' class='text-info'><i class='bi bi-box-arrow-up-right'></i>&nbsp; " . htmlspecialchars($row->littlelink_name) . " </a>";
+                    if (!$row->handle == NULL) {
+                        return "<a href='" . url('') . "/@" . htmlspecialchars($row->handle) . "' target='_blank' class='text-info'><i class='bi bi-box-arrow-up-right'></i>&nbsp; " . htmlspecialchars($row->handle) . " </a>";
                     } else {
                         return 'N/A';
                     }

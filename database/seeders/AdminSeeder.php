@@ -23,8 +23,8 @@ class AdminSeeder extends Seeder
                 'email_verified_at' => now(),
                 'password' => Hash::make('12345678'),
                 'role' => 'admin',
-                'littlelink_name' => 'admin',
-                'littlelink_description' => 'admin page',
+                'handle' => 'admin',
+                'bio' => 'admin page',
             ]
         ];
 

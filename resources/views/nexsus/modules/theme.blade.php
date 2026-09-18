@@ -52,7 +52,7 @@ $customBackgroundExists = file_exists($customBackgroundPath)
   <!-- Nexsus Tracker Theme: "{{$info->theme}}" -->
 
   <!-- Theme details: -->
-  <meta name="designer" href="{{ url('') . "/theme/@" . $littlelink_name}}" content="{{ url('') . "/theme/@" . $littlelink_name}}">
+   <meta name="designer" href="{{ url('') . "/theme/@" . $handle}}" content="{{ url('') . "/theme/@" . $handle}}">
 
   <link rel="stylesheet" href="themes/{{$info->theme}}/share.button.css">
   @if(theme('use_default_buttons') == "true")

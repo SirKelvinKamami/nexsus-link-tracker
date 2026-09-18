@@ -212,7 +212,7 @@
                 @foreach($pages as $page)
                 <form action="{{ route('editPage') }}" enctype="multipart/form-data" method="post">
                     @csrf
-                    @if($page->littlelink_name != '')
+                    @if($page->handle != '')
                     <div class="form-group col-lg-8">
                       <label class="form-label" for="customFile">{{__('messages.Profile Picture')}}</label>
                       <input type="file" accept="image/jpeg,image/jpg,image/png,image/webp" name="image" class="form-control" id="customFile">
@@ -221,7 +221,7 @@
                 
                     <!--<div class="form-group col-lg-8">
                             <label>Path name</label>
-                            @<input type="text" class="form-control" name="pageName" value="{{ $page->littlelink_name ?? '' }}">
+                            @<input type="text" class="form-control" name="pageName" value="{{ $page->handle ?? '' }}">
                           </div>-->
                 
                     <div class="form-group col-lg-8">
@@ -229,12 +229,12 @@
                             $url = $_SERVER['REQUEST_URI'];
                              if( strpos( $url, "no_page_name" ) == true ) echo '<span style="color:#FF0000; font-size:120%;">You do not have a Page URL</span>'; ?>
                         <br>
-                        <label for="littlelink_name" class="form-label">{{__('messages.Page URL')}}</label>
+                        <label for="handle" class="form-label">{{__('messages.Page URL')}}</label>
                         <div class="input-group mb-3 has-validation">
                           <span class="input-group-text" id="basic-addon3">{{str_replace(['http://', 'https://'], '', url(''))}}/@</span>
-                          <input type="littlelink_name" class="form-control" id="littlelink_name" name="littlelink_name" aria-describedby="littlelink_name" value="{{ $page->littlelink_name ?? '' }}" :value="old('littlelink_name')" required autofocus >
+                          <input type="text" class="form-control" id="handle" name="handle" aria-describedby="handle" value="{{ $page->handle ?? '' }}" :value="old('handle')" required autofocus >
                         </div>
-                        <script>var exceptionvar = " value="{{ $page->littlelink_name }}";</script>
+                         <script>var exceptionvar = " value="{{ $page->handle }}";</script>
                         @include('auth.url-validation')
                 
                          <label style="margin-top:15px">{{__('messages.Display name')}}</label>
@@ -248,7 +248,7 @@
                 
                     <div class="form-group col-lg-8">
                         <label>{{__('messages.Page Description')}}</label>
-                        <textarea class="form-control @if(env('ALLOW_USER_HTML') === true) ckeditor @endif" name="pageDescription" rows="3">{{ $page->littlelink_description ?? '' }}</textarea>
+                        <textarea class="form-control @if(env('ALLOW_USER_HTML') === true) ckeditor @endif" name="pageDescription" rows="3">{{ $page->bio ?? '' }}</textarea>
                     </div>
                 
                     @if(auth()->user()->role == 'admin' || auth()->user()->role == 'vip')

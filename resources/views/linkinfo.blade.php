@@ -104,8 +104,8 @@
                                 @endif
                             </div>
                             <h5 class="card-title">{{$userData->name}}</h5>
-                            <p class="card-text"><a href="{{url("/@".$userData->littlelink_name)}}">{{url("/@".$userData->littlelink_name)}} <i style="font-size:80%" class="bi bi-box-arrow-up-right"></i></a></p>
-                            <p class="card-text mt-2">{!!$userData->littlelink_description!!}</p>
+                            <p class="card-text"><a href="{{url("/@".$userData->handle)}}">{{url("/@".$userData->handle)}} <i style="font-size:80%" class="bi bi-box-arrow-up-right"></i></a></p>
+                            <p class="card-text mt-2">{{ $userData->bio }}</p>
                         </div>
                     </div>
                 </div>
@@ -119,7 +119,7 @@
                         <code class=" language-markup">
                             {{__('messages.ID')}}: {{$id}}
                             {{__('messages.Name')}}: {{$userData->name}}
-                            {{__('messages.Handle:')}} {{$userData->littlelink_name}}
+                            {{__('messages.Handle:')}} {{$userData->handle}}
                             {{__('messages.Email')}}: {{$userData->email}}
                             {{__('messages.Role')}}: {{$userData->role}}
                             {{__('messages.Created at')}}: {{$userData->created_at}}
