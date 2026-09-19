@@ -220,19 +220,19 @@ class UserController extends Controller
     public function littlelink(request $request)
     {
         if(isset($request->useif)){
-            $handle = User::select('handle')->where('id', $request->littlelink)->value('handle');
+            $handle = User::select(User::handleColumn())->where('id', $request->littlelink)->value(User::handleColumn());
             $id = $request->littlelink;
         } else {
             $handle = $request->littlelink;
-            $id = User::select('id')->where('handle', $handle)->value('id');
+            $id = User::select('id')->where(User::handleColumn(), $handle)->value('id');
         }
 
         if (empty($id)) {
             return abort(404);
         }
      
-        $userinfo = User::select('id', 'name', 'handle', 'bio', 'theme', 'role', 'block')->where('id', $id)->first();
-        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('id', 'name', User::handleColumn(), User::bioColumn(), 'theme', 'role', 'block')->where('id', $id)->first();
+        $information = User::select('name', User::handleColumn(), User::bioColumn(), 'theme')->where('id', $id)->get();
         
         if ($userinfo->block == 'yes') {
             return abort(404);
@@ -266,14 +266,14 @@ class UserController extends Controller
             }
         }
 
-        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'littlelink_name' => $littlelink_name]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links]);
     }
 
     //Show littlelink page as home page if set in config
     public function littlelinkhome(request $request)
     {
         $handle = env('HOME_URL');
-        $id = User::select('id')->where('handle', $handle)->value('id');
+        $id = User::select('id')->where(User::handleColumn(), $handle)->value('id');
 
 if (empty($id)) {
             return abort(404);
@@ -285,8 +285,8 @@ if (empty($id)) {
             report($e);
         }
 
-        $userinfo = User::select('id', 'name', 'handle', 'bio', 'theme', 'role', 'block')->where('id', $id)->first();
-        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('id', 'name', User::handleColumn(), User::bioColumn(), 'theme', 'role', 'block')->where('id', $id)->first();
+        $information = User::select('name', User::handleColumn(), User::bioColumn(), 'theme')->where('id', $id)->get();
         
         $links = DB::table('links')
         ->join('buttons', 'buttons.id', '=', 'links.button_id')
@@ -310,14 +310,14 @@ if (empty($id)) {
             }
         }
 
-        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'littlelink_name' => $littlelink_name]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links]);
     }
 
     //Redirect to user page
     public function userRedirect(request $request)
     {
         $id = $request->id;
-        $user = User::select('handle')->where('id', $id)->value('handle');
+        $user = User::select(User::handleColumn())->where('id', $id)->value(User::handleColumn());
 
         if (empty($id)) {
             return abort(404);
@@ -778,7 +778,7 @@ if (empty($id)) {
     {
         $userId = Auth::user()->id;
 
-        $data['pages'] = User::where('id', $userId)->select('handle', 'bio', 'image', 'name')->get();
+        $data['pages'] = User::where('id', $userId)->select(User::handleColumn(), User::bioColumn(), 'image', 'name')->get();
 
         return view('/studio/page', $data);
     }
@@ -826,8 +826,8 @@ if (empty($id)) {
         }
     
         User::where('id', $userId)->update([
-            'handle' => $pageName,
-            'bio' => $pageDescription,
+            User::handleColumn() => $pageName,
+            User::bioColumn() => $pageDescription,
             'name' => $name
         ]);
     
@@ -933,7 +933,7 @@ if (empty($id)) {
     {
         $userId = Auth::user()->id;
 
-        $data['pages'] = User::where('id', $userId)->select('handle', 'theme')->get();
+        $data['pages'] = User::where('id', $userId)->select(User::handleColumn(), 'theme')->get();
 
         return view('/studio/theme', $data);
     }
@@ -1070,14 +1070,14 @@ if (empty($id)) {
     public function theme(request $request)
     {
         $handle = $request->littlelink;
-        $id = User::select('id')->where('handle', $handle)->value('id');
+        $id = User::select('id')->where(User::handleColumn(), $handle)->value('id');
 
         if (empty($id)) {
             return abort(404);
         }
 
-        $userinfo = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->first();
-        $information = User::select('name', 'handle', 'bio', 'theme')->where('id', $id)->get();
+        $userinfo = User::select('name', User::handleColumn(), User::bioColumn(), 'theme')->where('id', $id)->first();
+        $information = User::select('name', User::handleColumn(), User::bioColumn(), 'theme')->where('id', $id)->get();
 
         $links = DB::table('links')->join('buttons', 'buttons.id', '=', 'links.button_id')->select('links.link', 'links.id', 'links.button_id', 'links.title', 'links.custom_css', 'links.custom_icon', 'buttons.name')->where('user_id', $id)->orderBy('up_link', 'asc')->orderBy('order', 'asc')->get();
 

@@ -8,6 +8,7 @@ use DB;
 
 use App\Models\Page;
 use App\Models\Button;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -22,7 +23,7 @@ class HomeController extends Controller
         // Postgres requires every selected column to be grouped or aggregated
         // (MySQL-only behavior upstream). Grouping by the selected user columns
         // is semantically identical: user_id determines them via the PK join.
-        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.handle', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.handle', 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
+        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.' . User::handleColumn(), 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.' . User::handleColumn(), 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
 
         return view('home', ['message' => $message, 'countButton' => $countButton, 'updatedPages' => $updatedPages]);
     }
@@ -35,7 +36,7 @@ class HomeController extends Controller
         $countButton = Button::count();
 
         // Same Postgres GROUP BY fix as home()
-        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.handle', 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.handle', 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
+        $updatedPages = DB::table('links')->join('users', 'users.id', '=', 'links.user_id')->select('users.' . User::handleColumn(), 'users.image', DB::raw('max(links.created_at) as created_at'))->groupBy('links.user_id', 'users.' . User::handleColumn(), 'users.image')->orderBy('created_at', 'desc')->take(4)->get();
 
         return view('demo', ['message' => $message, 'countButton' => $countButton, 'updatedPages' => $updatedPages]);
     }

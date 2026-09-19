@@ -111,6 +111,24 @@ class User extends Authenticatable implements MustVerifyEmail
         ));
     }
 
+    public static function handleColumn(): string
+    {
+        try {
+            return \Illuminate\Support\Facades\Schema::hasColumn('users', 'handle') ? 'handle' : 'littlelink_name';
+        } catch (\Throwable $e) {
+            return 'handle';
+        }
+    }
+
+    public static function bioColumn(): string
+    {
+        try {
+            return \Illuminate\Support\Facades\Schema::hasColumn('users', 'bio') ? 'bio' : 'littlelink_description';
+        } catch (\Throwable $e) {
+            return 'bio';
+        }
+    }
+
     protected static function boot()
     {
         parent::boot();

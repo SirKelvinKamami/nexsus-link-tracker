@@ -36,7 +36,7 @@ class UserTable extends DataTableComponent
             Column::make(__('messages.E-Mail'), "email")
                 ->sortable()
                 ->searchable(),
-            Column::make(__('messages.Page'), "handle")
+            Column::make(__('messages.Page'), User::handleColumn())
                 ->sortable()
                 ->searchable()
                 ->format(function ($value, $row, Column $column) {

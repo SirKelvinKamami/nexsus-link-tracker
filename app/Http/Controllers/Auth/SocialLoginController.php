@@ -42,7 +42,7 @@ class SocialLoginController extends Controller
                     'email' => $social_user->getEmail(),
                     'name' => $social_user->getName(),
                     'image' => $social_user->getAvatar(),
-                    'handle' => $social_user->getNickname(),
+                    User::handleColumn() => $social_user->getNickname(),
                     'email_verified_at' => now(),
                 ]);
             }

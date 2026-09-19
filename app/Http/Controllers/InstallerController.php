@@ -72,8 +72,8 @@ class InstallerController extends Controller
             'email' => $email,
             'email_verified_at' => '0001-01-01 00:00:00',
             'password' => Hash::make($password),
-            'handle' => $handle,
-            'bio' => 'admin page',
+            User::handleColumn() => $handle,
+            User::bioColumn() => 'admin page',
             'block' => 'no',
         ]);
 

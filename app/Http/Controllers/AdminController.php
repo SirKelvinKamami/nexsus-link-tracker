@@ -367,8 +367,8 @@ class AdminController extends Controller
       User::where("id", $id)->update([
         "name" => $name,
         "email" => $email,
-        "handle" => $handle,
-        "bio" => $bio,
+        User::handleColumn() => $handle,
+        User::bioColumn() => $bio,
         "role" => $role,
         "theme" => $theme,
       ]);
@@ -377,8 +377,8 @@ class AdminController extends Controller
         "name" => $name,
         "email" => $email,
         "password" => $password,
-        "handle" => $handle,
-        "bio" => $bio,
+        User::handleColumn() => $handle,
+        User::bioColumn() => $bio,
         "role" => $role,
         "theme" => $theme,
       ]);

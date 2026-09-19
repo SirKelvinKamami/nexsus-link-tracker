@@ -188,7 +188,7 @@ class AnalyticsController extends BaseController
     {
         $userId = $this->getUserId($request);
         $handle = $userId
-            ? \App\Models\User::where('id', $userId)->value('handle')
+            ? \App\Models\User::where('id', $userId)->value(\App\Models\User::handleColumn())
             : null;
 
         if (!$handle) {

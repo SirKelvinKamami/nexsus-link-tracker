@@ -23,7 +23,7 @@ class RegisteredUserController extends Controller
     public function validateHandle(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'handle' => 'required|string|max:50|unique:users|regex:/^[\p{L}0-9-_]+$/u',
+            'handle' => 'required|string|max:50|unique:users,' . User::handleColumn() . '|regex:/^[\p{L}0-9-_]+$/u',
         ]);
     
         if ($validator->fails()) {
@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'handle' => 'required|string|max:50|unique:users|regex:/^[\p{L}0-9-_]+$/u',
+            'handle' => 'required|string|max:50|unique:users,' . User::handleColumn() . '|regex:/^[\p{L}0-9-_]+$/u',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
         ]);
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'handle' => $request->handle,
+            User::handleColumn() => $request->handle,
             'password' => Hash::make($request->password),
             'role' => 'viewer',
             'block' => $block,
