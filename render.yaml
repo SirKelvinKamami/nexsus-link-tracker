@@ -3,7 +3,21 @@ services:
     name: nexsus-link-tracker
     env: docker
     dockerfilePath: ./Dockerfile
-    autoDeploy: true
+    # Deploys are gated on CI, not on the push itself. With autoDeploy:true
+    # every push to main shipped whether or not the test suite passed — CI was
+    # red for 8 consecutive runs on a migration that aborted partway through
+    # the chain, and all 8 deployed anyway, leaving production on a
+    # permanently half-migrated schema.
+    #
+    # The `deploy` job in .github/workflows/ci.yml now POSTs this service's
+    # deploy hook, and it only runs after both test jobs pass. It needs the
+    # RENDER_DEPLOY_HOOK_URL repository secret (the job prints setup steps if
+    # it is missing).
+    #
+    # NOTE: this field only takes effect when Render re-syncs the blueprint.
+    # The dashboard toggle (Settings -> Build & Deploy -> Auto-Deploy) is
+    # authoritative — confirm it reads "No" after merging.
+    autoDeploy: false
     healthCheckPath: /api/v1/health/live
     envVars:
       - key: APP_NAME

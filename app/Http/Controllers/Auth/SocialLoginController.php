@@ -44,6 +44,10 @@ class SocialLoginController extends Controller
                     'image' => $social_user->getAvatar(),
                     User::handleColumn() => $social_user->getNickname(),
                     'email_verified_at' => now(),
+                    // Always explicit: the users.role column default is a
+                    // legacy value that users_role_check rejects.
+                    'role' => 'viewer',
+                    'block' => 'no',
                 ]);
             }
 

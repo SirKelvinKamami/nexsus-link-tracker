@@ -14,10 +14,10 @@
       @endif
 
       <!-- Favicon -->
-      @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
-      <link rel="icon" type="image/png" href="{{ asset('assets/Nexsus Tracker/images/'.findFile('favicon')) }}">
+      @if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+      <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
       @else
-      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
+      <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
       @endif
       
       <script src="{{asset('assets/js/detect-dark-mode.js')}}"></script>
@@ -54,11 +54,11 @@
 
 @php
 
-if ($_SERVER['QUERY_STRING'] != '') { 
+if (($_SERVER['QUERY_STRING'] ?? '') != '') { 
 
     try {
 
-    $id = $_SERVER['QUERY_STRING'];
+    $id = ($_SERVER['QUERY_STRING'] ?? '');
     $user = \App\Models\User::where('id', $id)->first();
     $name = $user->handle;
     if ($name != null)$url = url('') . '/@' . $name;

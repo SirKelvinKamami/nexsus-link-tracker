@@ -3,8 +3,8 @@
 
 @include('layouts.fonts')
 
-<style>{!! file_get_contents(base_path("assets/Nexsus Tracker/css/normalize.css")) !!}</style>
-<style>{!! file_get_contents(base_path("assets/Nexsus Tracker/css/animate.css")) !!}</style>
+<style>{!! file_get_contents(base_path("assets/nexsus/css/normalize.css")) !!}</style>
+<style>{!! file_get_contents(base_path("assets/nexsus/css/animate.css")) !!}</style>
 
 <script>{!! file_get_contents(base_path("assets/js/dynamic-contrast.min.js")) !!}</script>
 <script>{!! file_get_contents(base_path("assets/js/jquery.min.js")) !!}</script>

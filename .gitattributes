@@ -6,3 +6,10 @@ CHANGELOG.md export-ignore
 
 # Shell scripts must stay LF (CRLF breaks /bin/sh in Alpine containers)
 *.sh text eol=lf
+
+# Blade/PHP sources must stay UTF-8 + LF. A UTF-16LE login.blade.php (written
+# by a PowerShell redirect) made Blade emit the template verbatim - no <form>,
+# no @csrf - so every login POST failed. CI additionally hard-fails on any
+# UTF-16 or BOM-prefixed source file.
+*.php text eol=lf
+*.blade.php text eol=lf

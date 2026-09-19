@@ -5,11 +5,11 @@
 <div class="container">
 
 
-@if($_SERVER['QUERY_STRING'] === '')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '')
 <?php //landing page ?>
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
            <div class="logo-centered">l</div>
         </div>
         <h1>{{__('messages.Backup')}}</h1>
@@ -22,18 +22,18 @@
         @endif
 
 
-@if($_SERVER['QUERY_STRING'] === 'backup')
+@if(($_SERVER['QUERY_STRING'] ?? '') === 'backup')
 <?php //creating backup... ?>
 @Push('updater-head')
 <meta http-equiv="refresh" content="2; URL={{url()->current()}}/?backups" />
 @endpush
         <div class="logo-container fadein">
-         <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo-loading.svg') }}" alt="Logo">
+         <img class="logo-img" src="{{ asset('assets/nexsus/images/logo-loading.svg') }}" alt="Logo">
         </div>
         <h1 class="loadingtxt">{{__('messages.Creating backup')}}</h1>
 @endif
 
-@if($_SERVER['QUERY_STRING'] === 'backups')
+@if(($_SERVER['QUERY_STRING'] ?? '') === 'backups')
 <?php 
 try {Artisan::call('backup:clean');}
 catch (exception $e) {}
@@ -45,11 +45,11 @@ header("Location: ".$URL."?success");
 exit(); ?>
 @endif
 
-@if($_SERVER['QUERY_STRING'] === 'success')
+@if(($_SERVER['QUERY_STRING'] ?? '') === 'success')
       <?php //after successfully updating ?>
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Success!')}}</h1>
         <h4 class="">{{__('messages.The backup was successful')}}</h4>

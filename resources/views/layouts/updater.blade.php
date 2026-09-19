@@ -12,32 +12,32 @@
 
   <title>{{__('messages.Update Nexsus Tracker')}}</title>
   @include('layouts.fonts') 
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/normalize.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/brands.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/hover-min.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/animate.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/normalize.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/brands.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/hover-min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animate.css') }}">
   <script src="{{ asset('assets/external-dependencies/fontawesome.js') }}" crossorigin="anonymous"></script>
-  @if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
-  <link rel="icon" type="image/png" href="{{ asset('assets/Nexsus Tracker/images/'.findFile('favicon')) }}">
+  @if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+  <link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
   @else
-  <link rel="icon" type="image/svg+xml" href="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
   @endif
 
                                                         {{-- custom font for logo text --}}
-  <style>@font-face{font-family:'ll';src:url({{ asset('assets/Nexsus Tracker/fonts/littlelink-custom.otf') }}) format("opentype")}</style>
+  <style>@font-face{font-family:'ll';src:url({{ asset('assets/nexsus/fonts/littlelink-custom.otf') }}) format("opentype")}</style>
 
   <?php // override dark/light mode if override cookie is set
   $color_scheme_override = isset($_COOKIE["color_scheme_override"]) ? $_COOKIE["color_scheme_override"] : false; ?>
   @if ($color_scheme_override == 'dark')
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-dark.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-dark.css') }}">
   @elseif ($color_scheme_override == 'light')
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-light.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-light.css') }}">
   @elseif (config('advanced-config.theme') == 'dark')
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-dark.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-dark.css') }}">
   @elseif (config('advanced-config.theme') == 'light')
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-light.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-light.css') }}">
   @else
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-auto.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-auto.css') }}">
   @endif
 
 <style>

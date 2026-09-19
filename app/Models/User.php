@@ -35,6 +35,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'description',
     ];
 
+    /**
+     * handle/bio are the canonical names; littlelink_name/littlelink_description
+     * are the pre-rename column names. Which one physically exists depends on
+     * whether 2026_09_18_000001 / 2026_09_19_000001 have run, so reads fall back
+     * and writes target ONLY the column that is actually present.
+     *
+     * Writing both unconditionally (the previous behaviour) puts a non-existent
+     * column in the INSERT/UPDATE statement and 500s every user create the
+     * moment the rename migration lands.
+     */
     public function getHandleAttribute($value)
     {
         if ($value !== null && $value !== '') return $value;
@@ -43,8 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setHandleAttribute($value)
     {
-        $this->attributes['handle'] = $value;
-        $this->attributes['littlelink_name'] = $value;
+        $this->attributes[static::handleColumn()] = $value;
     }
 
     public function getBioAttribute($value)
@@ -55,8 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setBioAttribute($value)
     {
-        $this->attributes['bio'] = $value;
-        $this->attributes['littlelink_description'] = $value;
+        $this->attributes[static::bioColumn()] = $value;
     }
 
     protected $hidden = [
@@ -111,22 +119,35 @@ class User extends Authenticatable implements MustVerifyEmail
         ));
     }
 
+    /** Resolved column names, memoized per request (schema lookups hit the DB). */
+    protected static $columnCache = [];
+
+    protected static function resolveColumn(string $preferred, string $legacy): string
+    {
+        if (isset(static::$columnCache[$preferred])) {
+            return static::$columnCache[$preferred];
+        }
+
+        try {
+            $resolved = \Illuminate\Support\Facades\Schema::hasColumn('users', $preferred)
+                ? $preferred
+                : $legacy;
+        } catch (\Throwable $e) {
+            // Schema unreachable (e.g. during early boot): assume post-rename.
+            return $preferred;
+        }
+
+        return static::$columnCache[$preferred] = $resolved;
+    }
+
     public static function handleColumn(): string
     {
-        try {
-            return \Illuminate\Support\Facades\Schema::hasColumn('users', 'handle') ? 'handle' : 'littlelink_name';
-        } catch (\Throwable $e) {
-            return 'handle';
-        }
+        return static::resolveColumn('handle', 'littlelink_name');
     }
 
     public static function bioColumn(): string
     {
-        try {
-            return \Illuminate\Support\Facades\Schema::hasColumn('users', 'bio') ? 'bio' : 'littlelink_description';
-        } catch (\Throwable $e) {
-            return 'bio';
-        }
+        return static::resolveColumn('bio', 'littlelink_description');
     }
 
     protected static function boot()
