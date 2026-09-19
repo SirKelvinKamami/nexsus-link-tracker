@@ -352,6 +352,30 @@ php artisan tinker --execute="echo bin2hex(random_bytes(32));"
 | Analytics 500 (SQLite) | `ProductivityTracker::detectPeakHours()` used MySQL `HOUR()` function | Added DB driver detection: `strftime('%H', ...)` for SQLite, `HOUR(...)` for MySQL |
 | Reminder creation 422 (CHECK constraint) | `reminder_logs.action` enum lacked `'created'` value | Updated existing migration enum + new migration `2026_09_16_000006` (raw SQL for SQLite compatibility) |
 
+### 2026-09-19: Onboarding broken end to end — users could not sign up or log in
+
+| Bug | Root Cause | Fix |
+|-----|-----------|-----|
+| No login ever succeeded | `resources/views/auth/login.blade.php` was UTF-16LE encoded (written via a PowerShell redirect in `d4255c0`). Blade compiles UTF-8 bytes, so no directive matched and the template was emitted verbatim — no `<form>`, no `@csrf`, so every login POST failed CSRF | Re-encoded UTF-8/LF, stripped BOM, repaired mojibake'd translation key. CAPTCHA revert preserved |
+| Production stuck on a half-migrated schema | `2026_09_16_000006` used `$table->enum(...)->change()`, which routes through Doctrine DBAL (no `enum` type) and threw on **Postgres**, not just MySQL. `entrypoint.sh` ran `migrate --force \|\| true`, so the failure was swallowed and every later migration never ran | Rewrote as raw driver-specific DDL (pgsql CHECK swap / sqlite rebuild / mysql MODIFY) |
+| Migrations aborted on SQLite | `2026_09_18_000001` called `renameColumn` twice in one `Schema::table` closure; SQLite rejects more than one per modification | Split into separate guarded `Schema::table` calls, idempotent in both directions |
+| 500 on `/` and `/dashboard` | `findFile()` pointed at `assets/Nexsus Tracker/images/` (real dir `assets/nexsus/`) — rebrand artifact, made `scandir()` fatal | Repointed all 178 `assets/Nexsus Tracker/` references |
+| Every public profile page 500'd | `littlelink()`/`littlelinkhome()` computed `$handle` but never passed it to the view, which dereferences it | Added `'handle' => $handle` to both `view()` calls |
+| `View [Nexsus Tracker.modules.meta] not found` | 15 `@include`/`@extends` used the literal `Nexsus Tracker.` view prefix | Repointed to `nexsus.` |
+| User cap and single-user mode silently unenforced | 8 `config('Nexsus Tracker.*')` calls resolved to a non-existent config file and returned `null` | Repointed to `config('nexsus.*')` |
+| Social signup and installer failed | `users.role` column default was legacy `'user'`, rejected by `users_role_check` (`viewer\|commenter\|editor\|admin`) | Migration `2026_09_19_000002` aligns the default and repairs legacy rows; `role` now explicit at every creation site |
+| User inserts broke after the rename | `User::setHandleAttribute` wrote to both `handle` and `littlelink_name`, putting a non-existent column in every INSERT | Mutators now target only the column that exists; resolver memoized per request |
+
+### 2026-09-19: Security and pipeline
+
+| Issue | Detail | Fix |
+|-------|--------|-----|
+| Default admin credentials in production | `AdminSeeder` hard-coded `admin@admin.com` / `12345678` and `db:seed --force` runs on every boot | Driven by `ADMIN_EMAIL`/`ADMIN_PASSWORD`; random generated password in production. **Existing accounts are not fixed by this** — rotate with `php artisan nexsus:rotate-admin-password --all-weak` |
+| Repo contents publicly downloadable | Docroot is the repo root and `docker/nginx.conf` had none of the protections `.htaccess` defines — logs, a sqlite DB, manifests, `artisan` and internal docs were served, and any `.php` (incl. `vendor/`) was executable | Only `/index.php` executes; sensitive paths, types and root metadata denied |
+| BOM emitted into responses | 13 `resources/lang/*/messages.php` files were UTF-8-with-BOM; a BOM before `<?php` is echoed when that locale loads | Stripped |
+| Red CI still deployed | `render.yaml` had `autoDeploy: true`, so all 8 consecutive red runs shipped anyway — the direct cause of the half-migrated schema | `autoDeploy: false` + a `deploy` job gated on both test jobs (needs `RENDER_DEPLOY_HOOK_URL` secret) |
+| Registration smoke passed on failure | CI posted `littlelink_name` where the form requires `handle`; validation failure also returns 302, so the assertion passed | Corrected the field, added a logout → login round trip (login had no coverage at all), plus guards failing on any UTF-16/BOM source or surviving `Nexsus Tracker` identifier |
+
 ---
 
 ## Das-Hub Integration
@@ -380,9 +404,13 @@ const daily = await trackerService.getDailyClicks();
 
 ---
 
-**Last Updated:** 2026-09-18
+**Last Updated:** 2026-09-19
 **Authority:** SirKelvin Kamami (Boss)
 **Phase 1-3 Status:** Complete
 **Phase 4.0-4.5 Status:** Complete (Task Management, NLP Parsing, Smart Scheduling, Reminders, Analytics, Bio Page Integration)
 **Phase 5 Status:** Complete (Production hardening, API token management)
 **Next:** Ongoing — monitor, optimize, expand
+
+**Open operator actions (2026-09-19):**
+1. Add the `RENDER_DEPLOY_HOOK_URL` repository secret before merging the deploy gate — without it the `deploy` job fails instead of shipping, and confirm Render's **Auto-Deploy** toggle reads **No**.
+2. Rotate the seeded admin password *at* deploy, not after: login is currently broken in production, which is the only thing making `admin@admin.com` / `12345678` unreachable. Restoring login makes it usable. Run `php artisan nexsus:rotate-admin-password --all-weak` in the Render shell.
