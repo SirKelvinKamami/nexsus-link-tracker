@@ -43,7 +43,7 @@ jobs:
           # instead of Render Postgres, and safe stand-ins for dashboard-only
           # secrets (MAIL_* sync:false, generated API_TOKEN).
           CI_API_TOKEN=$(openssl rand -hex 20)
-          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\nALLOW_REGISTRATION=true\nFORCE_HTTPS=false\nFORCE_ROUTE_HTTPS=false\nMANUAL_USER_VERIFICATION=false\nMAIL_MAILER=smtp\nMAIL_HOST=localhost\nMAIL_PORT=587\nMAIL_ENCRYPTION=tls\nMAIL_FROM_ADDRESS=nexsus@example.test\nMAIL_FROM_NAME=Nexsus\nAPI_TOKEN=%s\nREDIS_HOST=127.0.0.1\nREDIS_PORT=6379\n' "$GITHUB_WORKSPACE" "$CI_API_TOKEN" > .env
+          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=sqlite\nDB_DATABASE=%s/database/ci.sqlite\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\nALLOW_REGISTRATION=true\nADMIN_PASSWORD=ciAdminPassw0rd\nFORCE_HTTPS=false\nFORCE_ROUTE_HTTPS=false\nMANUAL_USER_VERIFICATION=false\nMAIL_MAILER=smtp\nMAIL_HOST=localhost\nMAIL_PORT=587\nMAIL_ENCRYPTION=tls\nMAIL_FROM_ADDRESS=nexsus@example.test\nMAIL_FROM_NAME=Nexsus\nAPI_TOKEN=%s\nREDIS_HOST=127.0.0.1\nREDIS_PORT=6379\n' "$GITHUB_WORKSPACE" "$CI_API_TOKEN" > .env
           # The sqlite file must exist BEFORE composer install: the
           # post-autoload-dump hook boots artisan, which opens the DB connection.
           touch database/ci.sqlite
@@ -242,7 +242,7 @@ jobs:
       - name: Create environment file (Postgres, mirrors render.yaml)
         run: |
           CI_API_TOKEN=$(openssl rand -hex 20)
-          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=pgsql\nDB_HOST=127.0.0.1\nDB_PORT=5432\nDB_DATABASE=nexsus_ci\nDB_USERNAME=nexsus_ci\nDB_PASSWORD=nexsus_ci_pw\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\nALLOW_REGISTRATION=true\nFORCE_HTTPS=false\nFORCE_ROUTE_HTTPS=false\nMANUAL_USER_VERIFICATION=false\nMAIL_MAILER=smtp\nMAIL_HOST=localhost\nMAIL_PORT=587\nMAIL_ENCRYPTION=tls\nMAIL_FROM_ADDRESS=nexsus@example.test\nMAIL_FROM_NAME=Nexsus\nAPI_TOKEN=%s\nREDIS_HOST=127.0.0.1\nREDIS_PORT=6379\n' "$CI_API_TOKEN" > .env
+          printf 'APP_NAME=Nexsus\nAPP_ENV=production\nAPP_KEY=\nAPP_DEBUG=false\nAPP_URL=http://127.0.0.1:8000\nLOG_CHANNEL=stderr\nDB_CONNECTION=pgsql\nDB_HOST=127.0.0.1\nDB_PORT=5432\nDB_DATABASE=nexsus_ci\nDB_USERNAME=nexsus_ci\nDB_PASSWORD=nexsus_ci_pw\nSESSION_DRIVER=database\nCACHE_DRIVER=database\nQUEUE_CONNECTION=database\nALLOW_REGISTRATION=true\nADMIN_PASSWORD=ciAdminPassw0rd\nFORCE_HTTPS=false\nFORCE_ROUTE_HTTPS=false\nMANUAL_USER_VERIFICATION=false\nMAIL_MAILER=smtp\nMAIL_HOST=localhost\nMAIL_PORT=587\nMAIL_ENCRYPTION=tls\nMAIL_FROM_ADDRESS=nexsus@example.test\nMAIL_FROM_NAME=Nexsus\nAPI_TOKEN=%s\nREDIS_HOST=127.0.0.1\nREDIS_PORT=6379\n' "$CI_API_TOKEN" > .env
 
       - name: Install PHP dependencies
         run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
