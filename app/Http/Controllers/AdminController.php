@@ -254,7 +254,9 @@ class AdminController extends Controller
       "name" => "Admin-Created-" . $newNumber,
       "email" => strtolower(random_str(8)) . "@" . $domain,
       "password" => Hash::make(random_str(32)),
-      "role" => "user",
+      // 'user' is a legacy role and is rejected by users_role_check
+      // (viewer|commenter|editor|admin) -> constraint violation / 500.
+      "role" => "viewer",
       "block" => "no",
     ]);
 
@@ -457,7 +459,7 @@ class AdminController extends Controller
     if (!empty($logo)) {
       // Delete existing image
       $path = findFile("avatar");
-      $path = base_path("/assets/Nexsus Tracker/images/" . $path);
+      $path = base_path("/assets/nexsus/images/" . $path);
 
       // Delete existing image
       if (File::exists($path)) {
@@ -465,7 +467,7 @@ class AdminController extends Controller
       }
 
       $logo->move(
-        base_path("/assets/Nexsus Tracker/images/"),
+        base_path("/assets/nexsus/images/"),
         "avatar" . "_" . time() . "." . $request->file("image")->extension(),
       );
     }
@@ -473,7 +475,7 @@ class AdminController extends Controller
     if (!empty($icon)) {
       // Delete existing image
       $path = findFile("favicon");
-      $path = base_path("/assets/Nexsus Tracker/images/" . $path);
+      $path = base_path("/assets/nexsus/images/" . $path);
 
       // Delete existing image
       if (File::exists($path)) {
@@ -481,7 +483,7 @@ class AdminController extends Controller
       }
 
       $icon->move(
-        base_path("/assets/Nexsus Tracker/images/"),
+        base_path("/assets/nexsus/images/"),
         "favicon" . "_" . time() . "." . $request->file("icon")->extension(),
       );
     }
@@ -492,7 +494,7 @@ class AdminController extends Controller
   public function delAvatar()
   {
     $path = findFile("avatar");
-    $path = base_path("/assets/Nexsus Tracker/images/" . $path);
+    $path = base_path("/assets/nexsus/images/" . $path);
 
     // Delete existing image
     if (File::exists($path)) {
@@ -507,7 +509,7 @@ class AdminController extends Controller
   {
     // Delete existing image
     $path = findFile("favicon");
-    $path = base_path("/assets/Nexsus Tracker/images/" . $path);
+    $path = base_path("/assets/nexsus/images/" . $path);
 
     // Delete existing image
     if (File::exists($path)) {

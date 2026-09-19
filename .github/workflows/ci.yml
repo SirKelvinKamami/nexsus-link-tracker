@@ -55,6 +55,23 @@ jobs:
         run: |
           find app routes config database/seeders database/migrations -name '*.php' -print0 | xargs -0 -n1 php -l
 
+      - name: Guard source encoding and rebrand artifacts
+        run: |
+          # Blade/PHP sources must be UTF-8 without a BOM. A UTF-16 login view
+          # (PowerShell redirect artifact) silently disabled the login form.
+          bad=$(find app routes config database resources/views resources/lang blocks themes \
+                  -type f \( -name '*.php' -o -name '*.blade.php' \) -print0 \
+                | xargs -0 file | grep -E 'UTF-16|with BOM' || true)
+          if [ -n "$bad" ]; then echo "FAIL: non-UTF-8 source files:"; echo "$bad"; exit 1; fi
+
+          # The rebrand produced literal "Nexsus Tracker" in filesystem paths,
+          # view names and config keys. Those resolve to nothing at runtime
+          # (500s / silently-disabled features), so fail the build on any.
+          refs=$(grep -rnE "(assets/Nexsus Tracker/|(config|view|@include|@extends)\('Nexsus Tracker\.)" \
+                   --include='*.php' --include='*.blade.php' \
+                   app resources routes config database blocks themes || true)
+          if [ -n "$refs" ]; then echo "FAIL: unresolvable 'Nexsus Tracker' paths/identifiers:"; echo "$refs"; exit 1; fi
+
       - name: Install Node dependencies and build assets
         run: |
           npm ci --no-audit --no-fund
@@ -110,7 +127,7 @@ jobs:
           code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/register" \
             --data-urlencode "_token=$csrf" \
             --data-urlencode "name=CI User" \
-            --data-urlencode "littlelink_name=ciuser$rnd" \
+            --data-urlencode "handle=ciuser$rnd" \
             --data-urlencode "email=ciuser$rnd@example.test" \
             --data-urlencode "password=ciPassword1" \
             --data-urlencode "password_confirmation=ciPassword1")
@@ -119,6 +136,29 @@ jobs:
           code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' "$base/dashboard")
           echo "GET /dashboard -> $code (expect 200)"
           if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
+
+          # Logout, then log back in with the account just created. Login had
+          # NO coverage before: the login view shipped UTF-16LE encoded, so
+          # Blade emitted it verbatim (no <form>, no @csrf) and every login
+          # POST failed CSRF. Registration auto-logins, so the old smoke chain
+          # never exercised the login form at all.
+          lcsrf=$(curl -s -b "$jar" -c "$jar" "$base/dashboard" | grep -o 'name="_token" value="[^"]*"' | head -1 | sed 's/.*value="//;s/"//')
+          curl -s -b "$jar" -c "$jar" -o /dev/null -X POST "$base/logout" --data-urlencode "_token=$lcsrf"
+          jar2=$(mktemp)
+          loginpage=$(mktemp)
+          curl -s -c "$jar2" -o "$loginpage" "$base/login"
+          if ! grep -q '<form' "$loginpage"; then echo "FAIL: /login rendered no <form> (view encoding/compile bug)"; exit 1; fi
+          csrf3=$(grep -o 'name="_token" value="[^"]*"' "$loginpage" | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf3" ]; then echo "FAIL: no CSRF token on /login"; exit 1; fi
+          code=$(curl -s -b "$jar2" -c "$jar2" -o /dev/null -w '%{http_code}' -X POST "$base/login" \
+            --data-urlencode "_token=$csrf3" \
+            --data-urlencode "email=ciuser$rnd@example.test" \
+            --data-urlencode "password=ciPassword1")
+          echo "POST /login -> $code (expect 302)"
+          code=$(curl -s -b "$jar2" -c "$jar2" -o /dev/null -w '%{http_code}' "$base/dashboard")
+          echo "GET /dashboard after login -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: login does not work"; exit 1; fi
+          jar="$jar2"
 
           # Full user flow: create a link, then verify it renders on the
           # share page. This is the exact chain that broke in production
@@ -155,7 +195,8 @@ jobs:
           if-no-files-found: ignore
 
   # Production runs Postgres on Render; the sqlite job above cannot catch
-  # MySQL/SQLite-only SQL (e.g. loose GROUP BY, dialect functions). This job  # mirrors the production database engine and runs the same build + smoke.
+  # MySQL/SQLite-only SQL (e.g. loose GROUP BY, dialect functions). This job
+  # mirrors the production database engine and runs the same build + smoke.
   build-and-smoke-postgres:
     runs-on: ubuntu-latest
 
@@ -210,6 +251,23 @@ jobs:
         run: |
           find app routes config database/seeders database/migrations -name '*.php' -print0 | xargs -0 -n1 php -l
 
+      - name: Guard source encoding and rebrand artifacts
+        run: |
+          # Blade/PHP sources must be UTF-8 without a BOM. A UTF-16 login view
+          # (PowerShell redirect artifact) silently disabled the login form.
+          bad=$(find app routes config database resources/views resources/lang blocks themes \
+                  -type f \( -name '*.php' -o -name '*.blade.php' \) -print0 \
+                | xargs -0 file | grep -E 'UTF-16|with BOM' || true)
+          if [ -n "$bad" ]; then echo "FAIL: non-UTF-8 source files:"; echo "$bad"; exit 1; fi
+
+          # The rebrand produced literal "Nexsus Tracker" in filesystem paths,
+          # view names and config keys. Those resolve to nothing at runtime
+          # (500s / silently-disabled features), so fail the build on any.
+          refs=$(grep -rnE "(assets/Nexsus Tracker/|(config|view|@include|@extends)\('Nexsus Tracker\.)" \
+                   --include='*.php' --include='*.blade.php' \
+                   app resources routes config database blocks themes || true)
+          if [ -n "$refs" ]; then echo "FAIL: unresolvable 'Nexsus Tracker' paths/identifiers:"; echo "$refs"; exit 1; fi
+
       - name: Install Node dependencies and build assets
         run: |
           npm ci --no-audit --no-fund
@@ -252,7 +310,7 @@ jobs:
           code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' -X POST "$base/register" \
             --data-urlencode "_token=$csrf" \
             --data-urlencode "name=CI User" \
-            --data-urlencode "littlelink_name=ciuser$rnd" \
+            --data-urlencode "handle=ciuser$rnd" \
             --data-urlencode "email=ciuser$rnd@example.test" \
             --data-urlencode "password=ciPassword1" \
             --data-urlencode "password_confirmation=ciPassword1")
@@ -261,6 +319,29 @@ jobs:
           code=$(curl -s -b "$jar" -c "$jar" -o /dev/null -w '%{http_code}' "$base/dashboard")
           echo "GET /dashboard -> $code (expect 200)"
           if [ "$code" != "200" ]; then echo "FAIL: authed dashboard broken (middleware/env class of bug)"; exit 1; fi
+
+          # Logout, then log back in with the account just created. Login had
+          # NO coverage before: the login view shipped UTF-16LE encoded, so
+          # Blade emitted it verbatim (no <form>, no @csrf) and every login
+          # POST failed CSRF. Registration auto-logins, so the old smoke chain
+          # never exercised the login form at all.
+          lcsrf=$(curl -s -b "$jar" -c "$jar" "$base/dashboard" | grep -o 'name="_token" value="[^"]*"' | head -1 | sed 's/.*value="//;s/"//')
+          curl -s -b "$jar" -c "$jar" -o /dev/null -X POST "$base/logout" --data-urlencode "_token=$lcsrf"
+          jar2=$(mktemp)
+          loginpage=$(mktemp)
+          curl -s -c "$jar2" -o "$loginpage" "$base/login"
+          if ! grep -q '<form' "$loginpage"; then echo "FAIL: /login rendered no <form> (view encoding/compile bug)"; exit 1; fi
+          csrf3=$(grep -o 'name="_token" value="[^"]*"' "$loginpage" | head -1 | sed 's/.*value="//;s/"//')
+          if [ -z "$csrf3" ]; then echo "FAIL: no CSRF token on /login"; exit 1; fi
+          code=$(curl -s -b "$jar2" -c "$jar2" -o /dev/null -w '%{http_code}' -X POST "$base/login" \
+            --data-urlencode "_token=$csrf3" \
+            --data-urlencode "email=ciuser$rnd@example.test" \
+            --data-urlencode "password=ciPassword1")
+          echo "POST /login -> $code (expect 302)"
+          code=$(curl -s -b "$jar2" -c "$jar2" -o /dev/null -w '%{http_code}' "$base/dashboard")
+          echo "GET /dashboard after login -> $code (expect 200)"
+          if [ "$code" != "200" ]; then echo "FAIL: login does not work"; exit 1; fi
+          jar="$jar2"
 
           # Full user flow: create a link, then verify it renders on the
           # share page. This is the exact chain that broke in production

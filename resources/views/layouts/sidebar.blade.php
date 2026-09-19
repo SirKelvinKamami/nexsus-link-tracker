@@ -59,8 +59,8 @@ $usrhandl = Auth::user()->handle;
       <link rel="stylesheet" href="{{asset('assets/css/rtl.min.css')}}" />
       
 	  <meta name="csrf-token" content="{{ csrf_token() }}">
-	  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/hover-min.css') }}">
-	  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/animate.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/hover-min.css') }}">
+	  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animate.css') }}">
 	  <link rel="stylesheet" href="{{ asset('assets/external-dependencies/bootstrap-icons.css') }}">
 
   </head>
@@ -487,10 +487,10 @@ $usrhandl = Auth::user()->handle;
                   <a class="py-0 nav-link d-flex align-items-center dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-target="#navbarDropdownIcon">
 					@if(file_exists(base_path(findAvatar(Auth::user()->id))))
 					<img src="{{ url(findAvatar(Auth::user()->id)) }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded" style="object-fit:cover;">
-          @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
-          <img src="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
+          @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+          <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" alt="User-Profile" class="img logo" style="width:auto;height:30px;">
 					@else
-					<img src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
+					<img src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="User-Profile" class="img-fluid avatar avatar-40 avatar-rounded">
 					@endif
                     <div class="caption ms-3 d-none d-md-block ">
                         <h6 class="mb-0 caption-title">{{Auth::user()->name}}</h6>
@@ -759,7 +759,7 @@ $usrhandl = Auth::user()->handle;
                 }
 
               } catch(exception $e) {
-                $imgSrc = url('/assets/Nexsus Tracker/images/themes/no-preview.png');
+                $imgSrc = url('/assets/nexsus/images/themes/no-preview.png');
                 $imgType = NULL;
               }
               @endphp

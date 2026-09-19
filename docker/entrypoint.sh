@@ -73,9 +73,32 @@ chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
 
 # Run pending migrations on every deploy (seeders are idempotent) —
 # but only when the database answered; never block the web server on it.
+#
+# Failures are still non-fatal (the web port must open regardless), but they
+# are now LOUD. Previously this was a bare `|| true`: when
+# 2026_09_16_000006 died on Postgres the output scrolled past unremarked and
+# every subsequent migration silently never ran, leaving production on a
+# half-migrated schema for days. Any non-zero exit is now banner-logged and
+# the remaining pending migrations are listed.
 if [ "${db_ok:-0}" = "1" ]; then
-    php artisan migrate --force || true
-    php artisan db:seed --force || true
+    if php artisan migrate --force; then
+        echo "Migrations applied cleanly."
+    else
+        echo "############################################################"
+        echo "## MIGRATIONS FAILED - schema is INCOMPLETE."
+        echo "## The app is starting anyway, but expect broken pages."
+        echo "## Still pending:"
+        php artisan migrate:status 2>/dev/null | grep -i "pending" || true
+        echo "############################################################"
+    fi
+
+    if php artisan db:seed --force; then
+        echo "Seeders applied cleanly."
+    else
+        echo "############################################################"
+        echo "## SEEDERS FAILED - baseline data may be missing."
+        echo "############################################################"
+    fi
 else
     echo "Skipping migrations: database unreachable."
 fi

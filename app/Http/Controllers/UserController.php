@@ -266,7 +266,7 @@ class UserController extends Controller
             }
         }
 
-        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'handle' => $handle]);
     }
 
     //Show littlelink page as home page if set in config
@@ -310,7 +310,7 @@ if (empty($id)) {
             }
         }
 
-        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links]);
+        return view('nexsus.nexsus', ['userinfo' => $userinfo, 'information' => $information, 'links' => $links, 'handle' => $handle]);
     }
 
     //Redirect to user page

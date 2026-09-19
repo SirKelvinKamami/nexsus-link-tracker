@@ -67,8 +67,8 @@ if (!function_exists('preloadDirectoryFiles')) {
 
 function findFile($name)
 {
-    $directory = base_path("/assets/Nexsus Tracker/images/");
-    $files = preloadDirectoryFiles($directory, 'Nexsus Tracker_images_files');
+    $directory = base_path("/assets/nexsus/images/");
+    $files = preloadDirectoryFiles($directory, 'nexsus_images_files');
 
     $pattern = '/^' . preg_quote($name, '/') . '(_\w+)?\.\w+$/i';
     foreach ($files as $file) {

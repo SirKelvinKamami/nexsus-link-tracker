@@ -4,7 +4,7 @@
 @Push('installer-body')
 <div class="container">
 
-@if($_SERVER['QUERY_STRING'] === '')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '')
 {{-- Landing page --}}
 
 @if(!DB::table('users')->get()->isEmpty())
@@ -14,7 +14,7 @@
     @endphp
 @else
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">
@@ -72,11 +72,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === 'error')
+@if(($_SERVER['QUERY_STRING'] ?? '') === 'error')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup failed')}}</h1>
         <p class="inst-txt">{{__('messages.An error has occured. Please try again')}}</p>
@@ -86,11 +86,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === '2')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '2')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Dependency check')}}</h1>
         <p class="inst-txt">{{__('messages.Required PHP modules:')}}</p>
@@ -124,11 +124,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === '3')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '3')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Select a database type')}}</p>
@@ -150,11 +150,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === 'mysql')
+@if(($_SERVER['QUERY_STRING'] ?? '') === 'mysql')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">MySQL</p>
@@ -182,11 +182,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === '4')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '4')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Create an admin account')}}</p>
@@ -212,11 +212,11 @@
       
 @endif
 
-@if($_SERVER['QUERY_STRING'] === '5')
+@if(($_SERVER['QUERY_STRING'] ?? '') === '5')
 {{-- Landing page --}}
         
         <div class="logo-container fadein">
-           <img class="logo-img" src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" alt="Logo">
+           <img class="logo-img" src="{{ asset('assets/nexsus/images/logo.svg') }}" alt="Logo">
         </div>
         <h1>{{__('messages.Setup Nexsus Tracker')}}</h1>
         <p class="inst-txt">{{__('messages.Configure your page')}}</p>
