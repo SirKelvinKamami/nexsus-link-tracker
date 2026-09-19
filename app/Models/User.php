@@ -27,10 +27,37 @@ class User extends Authenticatable implements MustVerifyEmail
         'provider_id',
         'email_verified_at',
         'handle',
+        'littlelink_name',
+        'bio',
+        'littlelink_description',
         'role',
         'block',
         'description',
     ];
+
+    public function getHandleAttribute($value)
+    {
+        if ($value !== null && $value !== '') return $value;
+        return $this->attributes['littlelink_name'] ?? null;
+    }
+
+    public function setHandleAttribute($value)
+    {
+        $this->attributes['handle'] = $value;
+        $this->attributes['littlelink_name'] = $value;
+    }
+
+    public function getBioAttribute($value)
+    {
+        if ($value !== null && $value !== '') return $value;
+        return $this->attributes['littlelink_description'] ?? null;
+    }
+
+    public function setBioAttribute($value)
+    {
+        $this->attributes['bio'] = $value;
+        $this->attributes['littlelink_description'] = $value;
+    }
 
     protected $hidden = [
         'password',
@@ -89,11 +116,11 @@ class User extends Authenticatable implements MustVerifyEmail
         parent::boot();
 
         static::creating(function ($user) {
-            if (config('Nexsus Tracker.disable_random_user_ids') != 'true') {
+            if (config('nexsus.disable_random_user_ids') != 'true') {
                 if (is_null(User::first())) {
                     $user->id = 1;
                 } else {
-                    $numberOfDigits = config('Nexsus Tracker.user_id_length') ?? 6;
+                    $numberOfDigits = config('nexsus.user_id_length') ?? 6;
     
                     $minIdValue = 10**($numberOfDigits - 1);
                     $maxIdValue = 10**$numberOfDigits - 1;

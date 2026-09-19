@@ -16,8 +16,8 @@ class Link extends Model
         parent::boot();
 
         static::creating(function ($link) {
-          if (config('Nexsus Tracker.disable_random_link_ids') != 'true') {
-            $numberOfDigits = config('Nexsus Tracker.link_id_length') ?? 9;
+          if (config('nexsus.disable_random_link_ids') != 'true') {
+            $numberOfDigits = config('nexsus.link_id_length') ?? 9;
 
             $minIdValue = 10**($numberOfDigits - 1);
             $maxIdValue = 10**$numberOfDigits - 1;
