@@ -40,7 +40,16 @@ php artisan db:seed --class="ButtonSeeder"
 8. Issue that pull request!
 
 ### Credentials for your development environment
-The default seeded user is `admin@admin.com` with password `12345678` as set in [AdminSeeder.php](database/seeders/AdminSeeder.php)
+[AdminSeeder.php](database/seeders/AdminSeeder.php) creates `admin@admin.com`. The password comes from `ADMIN_PASSWORD`; with that unset it is `password` in a local/dev environment.
+
+In production (`APP_ENV=production`) there is **no** default: an unset `ADMIN_PASSWORD` makes the seeder generate a random password and print it once to the deploy log. Set `ADMIN_PASSWORD` (and optionally `ADMIN_EMAIL`, `ADMIN_HANDLE`) if you want to choose it yourself.
+
+> The seeder previously hard-coded `12345678`, and `db:seed --force` runs on every container boot — so any instance deployed before this changed still has that password. Changing the seeder does not fix an existing account: it skips emails that already exist. Audit and rotate with:
+>
+> ```bash
+> php artisan nexsus:rotate-admin-password --audit      # report, change nothing
+> php artisan nexsus:rotate-admin-password --all-weak   # rotate every weak account
+> ```
 
 ## Any contributions you make will be under the GPL-3.0 Software License
 

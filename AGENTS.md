@@ -90,7 +90,7 @@ nexsus-link-tracker/           (Laravel 9, PHP 8.2)
 - [x] Nexsus Tracker cloned and configured (SQLite, APP_KEY, seeds)
 - [x] npm install + Tailwind/Mix build
 - [x] Dev server running on 127.0.0.1:8000
-- [x] Admin user: `admin` / `12345678`, page `@admin`
+- [x] Admin user: `admin`, page `@admin` (password from `ADMIN_PASSWORD`; `password` in dev, randomly generated and printed to the deploy log in production — see CONTRIBUTING.md)
 
 ### Phase 1 — Core Tracker ✅
 - [x] `link_clicks` table (20 columns: link_id, user_id, UTM fields, device/browser/OS, etc.)

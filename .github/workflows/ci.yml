@@ -376,3 +376,51 @@ jobs:
             storage/logs/*.log
             server.log
           if-no-files-found: ignore
+
+  # ---------------------------------------------------------------------------
+  # Deploy gate.
+  #
+  # Render was configured with autoDeploy:true, so EVERY push to main shipped
+  # regardless of CI. CI was red for 8 consecutive runs on a migration that
+  # aborted mid-chain, and each of those runs still deployed — which is how
+  # production ended up on a permanently half-migrated schema.
+  #
+  # render.yaml now sets autoDeploy:false and the deploy is triggered here
+  # instead, so it can only happen after BOTH test jobs pass.
+  # ---------------------------------------------------------------------------
+  deploy:
+    name: Deploy to Render
+    needs: [build-and-smoke, build-and-smoke-postgres]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: render-deploy
+      cancel-in-progress: false
+
+    steps:
+      - name: Trigger Render deploy
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
+            echo "::error::RENDER_DEPLOY_HOOK_URL is not set, so nothing was deployed."
+            echo "Tests passed — this step only gates the deploy. To finish setup:"
+            echo "  1. Render dashboard -> nexsus-link-tracker -> Settings -> Deploy Hook -> copy URL"
+            echo "  2. GitHub -> Settings -> Secrets and variables -> Actions -> New repository secret"
+            echo "     Name: RENDER_DEPLOY_HOOK_URL"
+            echo "  3. Confirm Settings -> Build & Deploy -> Auto-Deploy reads 'No'"
+            echo "     (render.yaml sets autoDeploy:false, but that only applies once the"
+            echo "      blueprint re-syncs; the dashboard toggle is authoritative.)"
+            echo "Until then, deploy manually from the Render dashboard."
+            exit 1
+          fi
+
+          code=$(curl -sS -X POST -o /tmp/render-response -w '%{http_code}' "$RENDER_DEPLOY_HOOK_URL")
+          echo "Render deploy hook responded $code"
+          cat /tmp/render-response 2>/dev/null || true
+          echo
+          if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
+            echo "::error::Render deploy hook failed with HTTP $code"
+            exit 1
+          fi
+          echo "Deploy triggered. Watch it in the Render dashboard."

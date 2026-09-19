@@ -196,7 +196,7 @@
 <label>{{__('messages.Admin email:')}}</label>
 <input style="max-width:275px;" class="form-control" placeholder="admin@admin.com" name="email" type="email" required>
 <label>{{__('messages.Admin password:')}}</label>
-<input style="max-width:275px;" class="form-control" placeholder="12345678" name="password" type="password" required>
+<input style="max-width:275px;" class="form-control" placeholder="{{__('At least 8 characters')}}" name="password" type="password" required>
 <label>{{__('messages.Handle:')}}</label>
 <div class="input-group">
 <div class="input-group-prepend"><div class="input-group-text">@</div></div>

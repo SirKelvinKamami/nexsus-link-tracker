@@ -99,6 +99,13 @@ if [ "${db_ok:-0}" = "1" ]; then
         echo "## SEEDERS FAILED - baseline data may be missing."
         echo "############################################################"
     fi
+
+    # Warn if any account still holds a known-default password. Deployments
+    # seeded before AdminSeeder was fixed still have admin@admin.com /
+    # 12345678: the seeder skips accounts that already exist, so a weak hash
+    # survives every later deploy and no amount of redeploying clears it.
+    # Advisory only - never blocks boot.
+    php artisan nexsus:rotate-admin-password --audit || true
 else
     echo "Skipping migrations: database unreachable."
 fi
