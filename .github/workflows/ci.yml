@@ -398,29 +398,31 @@ jobs:
       cancel-in-progress: false
 
     steps:
-      - name: Trigger Render deploy
+      - name: Trigger Render deploy (API)
         env:
-          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
         run: |
-          if [ -z "$RENDER_DEPLOY_HOOK_URL" ]; then
-            echo "::error::RENDER_DEPLOY_HOOK_URL is not set, so nothing was deployed."
-            echo "Tests passed — this step only gates the deploy. To finish setup:"
-            echo "  1. Render dashboard -> nexsus-link-tracker -> Settings -> Deploy Hook -> copy URL"
-            echo "  2. GitHub -> Settings -> Secrets and variables -> Actions -> New repository secret"
-            echo "     Name: RENDER_DEPLOY_HOOK_URL"
-            echo "  3. Confirm Settings -> Build & Deploy -> Auto-Deploy reads 'No'"
-            echo "     (render.yaml sets autoDeploy:false, but that only applies once the"
-            echo "      blueprint re-syncs; the dashboard toggle is authoritative.)"
+          if [ -z "$RENDER_API_KEY" ] || [ -z "$RENDER_SERVICE_ID" ]; then
+            echo "::error::RENDER_API_KEY / RENDER_SERVICE_ID are not set, so nothing was deployed."
+            echo "Tests passed — this step only gates the deploy. Add both under"
+            echo "GitHub -> Settings -> Secrets and variables -> Actions."
             echo "Until then, deploy manually from the Render dashboard."
             exit 1
           fi
 
-          code=$(curl -sS -X POST -o /tmp/render-response -w '%{http_code}' "$RENDER_DEPLOY_HOOK_URL")
-          echo "Render deploy hook responded $code"
+          # Render's API trigger deploys the service's configured branch (main)
+          # and works even though this service exposes no deploy-hook URL.
+          http=$(curl -sS -X POST -o /tmp/render-response -w '%{http_code}' \
+            -H "Authorization: Bearer $RENDER_API_KEY" \
+            "https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys")
+          echo "Render deploy trigger responded $http"
           cat /tmp/render-response 2>/dev/null || true
           echo
-          if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
-            echo "::error::Render deploy hook failed with HTTP $code"
+          if [ "$http" -lt 200 ] || [ "$http" -ge 300 ]; then
+            echo "::error::Render deploy trigger failed with HTTP $http"
             exit 1
           fi
+          dep=$(php -r 'echo json_decode(file_get_contents("/tmp/render-response"),true)["id"] ?? "";')
+          echo "deploy_id=$dep"
           echo "Deploy triggered. Watch it in the Render dashboard."
