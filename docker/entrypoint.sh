@@ -3,16 +3,32 @@ set -e
 
 cd /var/www/html
 
-# Regenerate the package manifest for the installed (no-dev) dependency set,
-# in case the image copied in a stale one
-php artisan package:discover --ansi || true
-
 # Upstream components (geo-sot/laravel-env-editor, used by the finishing
 # blade component) read AND write a physical .env file and fatal if it is
 # missing - the case on Render, where config comes from real env vars and
 # .env is gitignored. An empty file is a no-op for dotenv (existing
 # environment variables are never overridden), but EnvEditor needs it.
 touch .env
+
+# PR preview instances copy every env var from the base service — including
+# the PRODUCTION database connection. Booting a branch against prod would run
+# its migrations on the live database. Make previews self-contained: a
+# throwaway sqlite database, database drivers (their tables ship in the
+# migration chain), and the preview's own URL instead of the prod APP_URL.
+if [ "$IS_PULL_REQUEST" = "true" ] && [ "$DB_CONNECTION" != "sqlite" ]; then
+    echo "PR preview detected: switching to a throwaway sqlite database."
+    export DB_CONNECTION=sqlite
+    export DB_DATABASE="${DB_DATABASE:-/var/www/html/database/preview.sqlite}"
+    unset DB_HOST DB_PORT DB_USERNAME DB_PASSWORD
+    export SESSION_DRIVER=database CACHE_DRIVER=database QUEUE_CONNECTION=database
+fi
+
+# A preview instance must advertise its own onrender.com URL (absolute links,
+# share URLs, password-reset links) rather than the production APP_URL it
+# inherited.
+if [ "$IS_PULL_REQUEST" = "true" ] && [ -n "$RENDER_EXTERNAL_URL" ]; then
+    export APP_URL="$RENDER_EXTERNAL_URL"
+fi
 
 # Generate APP_KEY on first boot if none was provided
 if [ -z "$APP_KEY" ]; then
@@ -21,42 +37,6 @@ if [ -z "$APP_KEY" ]; then
     touch .env
     grep -q "^APP_KEY=" .env || echo "APP_KEY=" >> .env
     php artisan key:generate --force --no-interaction
-fi
-
-# Wait for the database to accept connections (skip for sqlite)
-# Wait (bounded) for the database — but NEVER block the web port from opening.
-if [ "$DB_CONNECTION" != "sqlite" ] && [ -n "$DB_HOST" ]; then
-    echo "Waiting for database at $DB_HOST:$DB_PORT (max 15 attempts)..."
-    db_ok=0
-    try=1
-    while [ $try -le 15 ]; do
-        if PDO_TRY="$try" php -r '
-            try {
-                new PDO(
-                    sprintf("%s:host=%s;port=%s;dbname=%s", getenv("DB_CONNECTION"), getenv("DB_HOST"), getenv("DB_PORT"), getenv("DB_DATABASE")),
-                    getenv("DB_USERNAME"),
-                    getenv("DB_PASSWORD"),
-                    [PDO::ATTR_TIMEOUT => 3]
-                );
-                exit(0);
-            } catch (Throwable $e) {
-                fwrite(STDERR, "PDO attempt ".getenv("PDO_TRY")." failed: ".$e->getMessage()."\n");
-                exit(1);
-            }
-        '; then
-            db_ok=1
-            echo "Database is up (attempt $try)."
-            break
-        fi
-        echo "  database not ready (attempt $try/15), retrying in 2s..."
-        try=$((try + 1))
-        sleep 2
-    done
-    if [ "$db_ok" != "1" ]; then
-        echo "WARNING: database unreachable after 15 attempts - starting web server anyway."
-    fi
-else
-    db_ok=1
 fi
 
 # Create the SQLite database file when using sqlite
@@ -68,47 +48,6 @@ fi
 # Make sure storage and cache directories are writable by the fpm pool user
 # (busybox /bin/sh has no brace expansion — list paths explicitly)
 mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache
-chown -R www-data:www-data storage bootstrap/cache database 2>/dev/null || true
-chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
-
-# Run pending migrations on every deploy (seeders are idempotent) —
-# but only when the database answered; never block the web server on it.
-#
-# Failures are still non-fatal (the web port must open regardless), but they
-# are now LOUD. Previously this was a bare `|| true`: when
-# 2026_09_16_000006 died on Postgres the output scrolled past unremarked and
-# every subsequent migration silently never ran, leaving production on a
-# half-migrated schema for days. Any non-zero exit is now banner-logged and
-# the remaining pending migrations are listed.
-if [ "${db_ok:-0}" = "1" ]; then
-    if php artisan migrate --force; then
-        echo "Migrations applied cleanly."
-    else
-        echo "############################################################"
-        echo "## MIGRATIONS FAILED - schema is INCOMPLETE."
-        echo "## The app is starting anyway, but expect broken pages."
-        echo "## Still pending:"
-        php artisan migrate:status 2>/dev/null | grep -i "pending" || true
-        echo "############################################################"
-    fi
-
-    if php artisan db:seed --force; then
-        echo "Seeders applied cleanly."
-    else
-        echo "############################################################"
-        echo "## SEEDERS FAILED - baseline data may be missing."
-        echo "############################################################"
-    fi
-
-    # Warn if any account still holds a known-default password. Deployments
-    # seeded before AdminSeeder was fixed still have admin@admin.com /
-    # 12345678: the seeder skips accounts that already exist, so a weak hash
-    # survives every later deploy and no amount of redeploying clears it.
-    # Advisory only - never blocks boot.
-    php artisan nexsus:rotate-admin-password --audit || true
-else
-    echo "Skipping migrations: database unreachable."
-fi
 
 # Ensure no stale config cache can short-circuit env() feature flags —
 # this app reads env() directly in routes/middleware, which returns null
@@ -124,5 +63,17 @@ LISTEN_PORT="${PORT:-8080}"
 sed -i "s/    listen [0-9]*;/    listen ${LISTEN_PORT};/" /etc/nginx/http.d/default.conf 2>/dev/null || true
 echo "nginx listening on port ${LISTEN_PORT}"
 
-echo "Entrypoint complete — starting services."
+# Fire the slow, idempotent work (package:discover, migrations, seeding,
+# admin audit, view-cache warm) in the BACKGROUND and start supervisord
+# NOW: the web port opens while boot still runs. The health endpoint can
+# answer before migrations finish, cutting free-tier cold-start time by the
+# entire serial DB-wait + migrate + seed tail. The script is written to /tmp
+# and run from there because the entrypoint never blocks, so an image update
+# mid-boot can't rewrite the file out from under the running shell; output
+# goes to stderr so Render's log stream still shows migration progress.
+cp docker/boot-tasks.sh /tmp/boot-tasks.sh 2>/dev/null || true
+chmod +x /tmp/boot-tasks.sh 2>/dev/null || true
+/tmp/boot-tasks.sh 1>&2 2>&1 &
+
+echo "Entrypoint complete — starting services (boot tasks running in background)."
 exec "$@"

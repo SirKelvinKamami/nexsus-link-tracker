@@ -11,10 +11,13 @@ import { expect, test } from '@playwright/test';
  * #email, #password), the block-type modal on the add-link page, and the
  * fields injected from blocks/link/form.blade.php.
  */
-const runId = Date.now().toString(36);
+// Time + random: the nightly live-probe runs this against PRODUCTION, where
+// previous runs' accounts persist — a pure-timestamp suffix can collide, and
+// a duplicate handle/email fails signup. Randomness makes repeat runs safe.
+const runId = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
 const handle = `e2e${runId}`;
 const linkTitle = 'E2E Test Link';
-const linkUrl = `https://example.com/e2e-${runId}`;
+const linkUrl = `https://example.com/e2e-${handle}`;
 
 test('signup, create a link, and see it on the share page', async ({ page }) => {
     // --- 1. Sign up (ALLOW_REGISTRATION=true; auto-login on success) ---
