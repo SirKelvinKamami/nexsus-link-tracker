@@ -389,12 +389,59 @@ jobs:
   # instead, so it can only happen after BOTH test jobs pass.
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------
-  # Browser E2E, as a reusable workflow so both the deploy gate (needs:) and
-  # the weekly cron (.github/workflows/e2e.yml) share one job definition.
+  # Browser E2E. Deliberately defined HERE and not as a reusable workflow:
+  # required status checks need a stable context name, and called workflows
+  # report "<parent> / <job>", which changes per trigger. Keep this job in
+  # sync with .github/workflows/e2e.yml (same suite, weekly cron + dispatch).
   # ---------------------------------------------------------------------------
   playwright:
     name: E2E (browser)
-    uses: ./.github/workflows/e2e.yml
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, fileinfo, sqlite3, pdo_sqlite
+          coverage: none
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+
+      - name: Composer dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
+
+      - name: Laravel readiness (env, key, storage dirs)
+        run: |
+          mkdir -p storage/framework/cache storage/framework/data storage/framework/sessions storage/framework/testing storage/framework/views
+          cp .env.example .env
+          php artisan key:generate --force
+          # No DB bootstrap here: the Playwright webServer command builds the
+          # throwaway sqlite database itself (config comment explains why —
+          # readiness is polled before globalSetup would ever run).
+
+      - name: Install Playwright + Chromium
+        working-directory: tests/e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run E2E suite (boots its own server on :8010)
+        working-directory: tests/e2e
+        run: npx playwright test --reporter=line
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            tests/e2e/test-results
+            tests/e2e/playwright-report
+          retention-days: 7
 
   deploy:
     name: Deploy to Render

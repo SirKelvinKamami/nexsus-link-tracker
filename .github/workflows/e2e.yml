@@ -1,19 +1,19 @@
 name: E2E (browser)
 
-# A REUSABLE workflow holding the single definition of the browser E2E job:
-#
-#   - called by CI (.github/workflows/ci.yml) on every push to main and every
-#     pull request, where its result gates the Render deploy (needs:)
-#   - scheduled weekly here as a soak against drift (asset rot, selector rot,
-#     seeding) — scheduled workflows run only from the default branch and are
-#     auto-disabled after 60 days without repo activity; re-enable from the
-#     Actions tab if that happens
+# The weekly soak of the browser E2E suite (and a manual dispatch button).
+# The push/PR copy of this job lives INLINE in .github/workflows/ci.yml:
+# required status checks need a stable context name, and reusable workflows
+# report "<parent> / <job>", which changes per trigger. Keep the two job
+# definitions in sync.
 #
 # The suite is self-contained: it boots its own Laravel server on :8010 with
 # a throwaway sqlite database (tests/e2e), so it never touches other jobs.
+#
+# Note: scheduled workflows run only from the default branch and are
+# auto-disabled after 60 days without repo activity — re-enable from the
+# Actions tab if that happens.
 
 on:
-  workflow_call:
   schedule:
     - cron: '0 6 * * 1' # Mondays 06:00 UTC
   workflow_dispatch:
