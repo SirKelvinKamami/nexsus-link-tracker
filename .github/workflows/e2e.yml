@@ -43,11 +43,9 @@ jobs:
           mkdir -p storage/framework/cache storage/framework/data storage/framework/sessions storage/framework/testing storage/framework/views
           cp .env.example .env
           php artisan key:generate --force
-          # The sqlite file must exist before the webServer starts: Playwright
-          # waits for the health URL BEFORE running globalSetup, and the health
-          # route opens the DB connection (a fatal with no response there
-          # deadlocks readiness on Linux).
-          php -r "touch('database/e2e.sqlite');"
+          # No DB bootstrap here: the Playwright webServer command builds the
+          # throwaway sqlite database itself (config comment explains why -
+          # readiness is polled before globalSetup would ever run).
 
       - name: Install Playwright + Chromium
         working-directory: tests/e2e

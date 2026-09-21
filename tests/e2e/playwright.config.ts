@@ -13,7 +13,6 @@ import { e2eEnv } from './e2eEnv';
  *   (assets ship prebuilt at the repo root: assets/, css/, js/ - no build step)
  */
 export default defineConfig({
-    globalSetup: './globalSetup.ts',
     testDir: '.',
     timeout: 60_000,
     retries: process.env.CI ? 1 : 0,
@@ -26,11 +25,15 @@ export default defineConfig({
         trace: 'retain-on-failure',
     },
     webServer: {
-        // -t pins the docroot to the repo root: php -S defaults the docroot to
-        // its working directory, which would make every /assets/* request 404
-        // (server.php returns false for real files; PHP then resolves them
-        // against the cwd). Relative paths resolve against cwd (tests/e2e).
-        command: 'php -S 127.0.0.1:8010 -t ../../ ../../server.php',
+        // The suite is fully self-bootstrapping: Playwright starts the
+        // webServer and waits for its health URL BEFORE running any global
+        // setup, so the database must be built inside the server command.
+        // (A separate globalSetup can never run: readiness blocks it, and on
+        // a fresh checkout readiness fails forever because the sqlite file is
+        // empty.) cd to the repo root so relative paths resolve; DB_DATABASE
+        // is already absolute (see e2eEnv.ts).
+        command:
+            "cd ../.. && php -r \"touch('database/e2e.sqlite');\" && php artisan migrate:fresh --force && php artisan db:seed --force && php -S 127.0.0.1:8010 -t . server.php",
         url: 'http://127.0.0.1:8010/api/v1/health/live',
         timeout: 120_000,
         cwd: __dirname,
