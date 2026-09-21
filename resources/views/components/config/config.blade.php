@@ -226,7 +226,7 @@ function text($key){
 
 <a name="Application"><h2 class="ch2">{{__('messages.Application')}}</h2></a>
 
-@if(!config('Nexsus Tracker.single_user_mode'))
+@if(!config('nexsus.single_user_mode'))
 {{toggle('ALLOW_REGISTRATION')}}
 
 
@@ -343,7 +343,7 @@ document.getElementById("MAINTENANCE_MODE-form").addEventListener("change", func
 {{toggle('CUSTOM_META_TAGS')}}
 
 
-@if(!config('Nexsus Tracker.single_user_mode'))
+@if(!config('nexsus.single_user_mode'))
 {{toggle('ENABLE_SOCIAL_LOGIN')}}
 @endif
 

@@ -1,4 +1,4 @@
-﻿<?php /* Translated by RILuse & Paul (https://paul.bid) www.paul.bid@gmail.com */
+<?php /* Translated by RILuse & Paul (https://paul.bid) www.paul.bid@gmail.com */
 
 return [
 

@@ -30,10 +30,10 @@
     <meta property="og:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta property="og:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
-    <meta property="og:image" content="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}">
+    @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+    <meta property="og:image" content="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}">
     @else
-    <meta property="og:image" content="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
+    <meta property="og:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
 
     <!-- Twitter Meta Tags -->
@@ -44,10 +44,10 @@
     <meta name="twitter:description" content="{{ strip_tags($userinfo->bio) }}">
     @if(file_exists(base_path(findAvatar($userinfo->id))))
     <meta name="twitter:image" content="{{ url(findAvatar($userinfo->id)) }}">
-    @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
-    <meta name="twitter:image" content="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}">
+    @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+    <meta name="twitter:image" content="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}">
     @else
-    <meta name="twitter:image" content="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
+    <meta name="twitter:image" content="{{ asset('assets/nexsus/images/logo.svg') }}">
     @endif
 
 <!--#### END Meta Tags social media preview images  ####-->
@@ -65,10 +65,10 @@
 @include('components.favicon')
 @include('components.favicon-extension')
 
-@if(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('favicon')))
-<link rel="icon" type="image/png" href="{{ asset('assets/Nexsus Tracker/images/'.findFile('favicon')) }}">
+@if(file_exists(base_path("assets/nexsus/images/").findFile('favicon')))
+<link rel="icon" type="image/png" href="{{ asset('assets/nexsus/images/'.findFile('favicon')) }}">
 @else
-<link rel="icon" type="image/svg+xml" href="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}">
+<link rel="icon" type="image/svg+xml" href="{{ asset('assets/nexsus/images/logo.svg') }}">
 @endif
 
 @include('layouts.analytics')

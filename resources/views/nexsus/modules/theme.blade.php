@@ -56,7 +56,7 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 
   <link rel="stylesheet" href="themes/{{$info->theme}}/share.button.css">
   @if(theme('use_default_buttons') == "true")
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/brands.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/brands.css') }}">
   @else
   <link rel="stylesheet" href="themes/{{$info->theme}}/brands.css">
   @endif
@@ -64,14 +64,14 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @if(file_exists(base_path('themes/' . $info->theme . '/animations.css')))
   <link rel="stylesheet" href="<?php echo asset('themes/' . $info->theme . '/animations.css') ?>">
 @else
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/animations.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animations.css') }}">
 @endif
 
 @else
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/share.button.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/animations.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/brands.css') }}">
-  <link rel="stylesheet" href="{{ asset('assets/Nexsus Tracker/css/skeleton-auto.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/share.button.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/animations.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/brands.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/nexsus/css/skeleton-auto.css') }}">
 @endif
 <style>.container{word-break: break-word;}</style>
 @endpush
@@ -104,4 +104,4 @@ $customBackgroundExists = file_exists($customBackgroundPath)
 @push('Nexsus Tracker-body-end')
 @if(theme('enable_custom_code') == "true" and theme('enable_custom_body_end') == "true" and env('ALLOW_CUSTOM_CODE_IN_THEMES') == 'true')@include($GLOBALS['themeName'] . '.extra.custom-body-end')@endif
 @endpush
-@include('Nexsus Tracker.modules.dynamic-contrast')
+@include('nexsus.modules.dynamic-contrast')

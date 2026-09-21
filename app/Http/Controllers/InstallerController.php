@@ -74,6 +74,7 @@ class InstallerController extends Controller
             'password' => Hash::make($password),
             User::handleColumn() => $handle,
             User::bioColumn() => 'admin page',
+            'role' => 'admin',
             'block' => 'no',
         ]);
 

@@ -99,10 +99,10 @@ if(Auth::user()->id == $userinfo->id){
                  <a class="ab-item" aria-haspopup="true" href="#"><span class="display-name">{{Auth::user()->name}}</span>
                   @if(file_exists(base_path(findAvatar(Auth::user()->id))))
                   <img src="{{ url(findAvatar(Auth::user()->id)) }}" class="avatar avatar-26 photo" height="26" width="26" style="object-fit:cover;">
-                  @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
-                  <img src="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}" class="avatar avatar-26 photo" height="26" width="26" style="width:auto;height:30px;">
+                  @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+                  <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" class="avatar avatar-26 photo" height="26" width="26" style="width:auto;height:30px;">
                   @else
-                  <img src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" class="avatar avatar-26 photo avatar-rounded" height="26" width="26" height="64" width="64">
+                  <img src="{{ asset('assets/nexsus/images/logo.svg') }}" class="avatar avatar-26 photo avatar-rounded" height="26" width="26" height="64" width="64">
                   @endif
                 </a>
                  <div class="ab-sub-wrapper">
@@ -110,10 +110,10 @@ if(Auth::user()->id == $userinfo->id){
                        <li id="Nexsus Tracker-admin-bar-user-info"><a class="ab-item" tabindex="-1" href="{{ url('/studio/page') }}">
                         @if(file_exists(base_path(findAvatar(Auth::user()->id))))
                         <img src="{{ url(findAvatar(Auth::user()->id)) }}" class="avatar avatar-64 photo" height="64" width="64" style="object-fit:cover;">
-                        @elseif(file_exists(base_path("assets/Nexsus Tracker/images/").findFile('avatar')))
-                        <img src="{{ url("assets/Nexsus Tracker/images/")."/".findFile('avatar') }}" class="avatar avatar-64 photo" height="64" width="64" style="width:auto;height:30px;">
+                        @elseif(file_exists(base_path("assets/nexsus/images/").findFile('avatar')))
+                        <img src="{{ url("assets/nexsus/images/")."/".findFile('avatar') }}" class="avatar avatar-64 photo" height="64" width="64" style="width:auto;height:30px;">
                         @else
-                        <img src="{{ asset('assets/Nexsus Tracker/images/logo.svg') }}" class="avatar avatar-64 photo avatar-rounded" height="64" width="64">
+                        <img src="{{ asset('assets/nexsus/images/logo.svg') }}" class="avatar avatar-64 photo avatar-rounded" height="64" width="64">
                         @endif
                         <span class="display-name">{{Auth::user()->name}}</span></a></li>
                        <li><a class="ab-item" href="{{ url('/studio/page') }}">{{__('messages.Edit my profile')}}</a></li>
