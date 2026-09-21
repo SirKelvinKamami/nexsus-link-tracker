@@ -181,9 +181,13 @@ function external_file_get_contents($url) {
     curl_setopt($ch, CURLOPT_HEADER, false);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0');
+    // Never block a page render on an unreachable external host (the sidebar
+    // version check runs on every studio page): 3s to connect, 5s total.
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);
     $data = curl_exec($ch);
     curl_close($ch);
-    return $data;
+    return is_string($data) ? $data : null;
 }
 
 function uri($path) {
