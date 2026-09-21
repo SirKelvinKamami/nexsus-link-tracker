@@ -68,6 +68,27 @@ class HealthController extends BaseController
 
     public function live(): JsonResponse
     {
-        return response()->json(['status' => 'alive'], 200);
+        return response()->json(['status' => 'alive', 'db' => $this->dbInfo()], 200);
+    }
+
+    /**
+     * Which database this instance is actually running on.
+     *
+     * Render PR previews inherit every env var from production — including
+     * the real Postgres connection — so the entrypoint deliberately rewrites
+     * them to a throwaway sqlite database (see docker/entrypoint.sh). This
+     * field makes that isolation OBSERVABLE: a preview answering with
+     * "driver":"sqlite" proves, from the outside, that no branch code ever
+     * touched the production database.
+     *
+     * Best-effort by design: any failure simply omits the field.
+     */
+    private function dbInfo(): array
+    {
+        try {
+            return ['driver' => DB::connection()->getDriverName()];
+        } catch (\Throwable $e) {
+            return [];
+        }
     }
 }
