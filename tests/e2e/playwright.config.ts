@@ -10,7 +10,7 @@ import { e2eEnv } from './e2eEnv';
  *
  * Prerequisites (run from repo root):
  *   composer install
- *   npm ci && npm run production   (assets in public/)
+ *   (assets ship prebuilt at the repo root: assets/, css/, js/ - no build step)
  */
 export default defineConfig({
     globalSetup: './globalSetup.ts',
@@ -26,7 +26,11 @@ export default defineConfig({
         trace: 'retain-on-failure',
     },
     webServer: {
-        command: 'php -S 127.0.0.1:8010 ../../index.php',
+        // -t pins the docroot to the repo root: php -S defaults the docroot to
+        // its working directory, which would make every /assets/* request 404
+        // (server.php returns false for real files; PHP then resolves them
+        // against the cwd). Relative paths resolve against cwd (tests/e2e).
+        command: 'php -S 127.0.0.1:8010 -t ../../ ../../server.php',
         url: 'http://127.0.0.1:8010/api/v1/health/live',
         timeout: 120_000,
         cwd: __dirname,

@@ -7,7 +7,7 @@ import { expect, test } from '@playwright/test';
  *   signup -> auto-login -> dashboard -> pick a link block -> create a link
  *   -> share page renders the link
  *
- * Selectors match the blade views: register form (#name, #littlelink_name,
+ * Selectors match the blade views: register form (#name, #handle,
  * #email, #password), the block-type modal on the add-link page, and the
  * fields injected from blocks/link/form.blade.php.
  */
@@ -22,7 +22,7 @@ test('signup, create a link, and see it on the share page', async ({ page }) => 
     await expect(page).toHaveTitle(/Nexsus/i);
 
     await page.fill('#name', 'E2E Browser User');
-    await page.fill('#littlelink_name', handle);
+    await page.fill('#handle', handle);
     await page.fill('#email', `${handle}@example.test`);
     await page.fill('#password', 'e2ePassword1');
     await page.click('form:has(#email) button[type="submit"]');
@@ -51,7 +51,9 @@ test('signup, create a link, and see it on the share page', async ({ page }) => 
 
     // --- 3. The public share page renders the created link ---
     await page.goto(`/@${handle}`);
-    await expect(page).toHaveTitle(new RegExp(handle, 'i'));
+    // Share-page title is the display name + brand, not the handle
+    // ("E2E Browser User 🔗 Nexsus").
+    await expect(page).toHaveTitle(new RegExp('E2E Browser User', 'i'));
     await expect(page.locator('body')).toContainText(linkTitle);
     const shareLink = page.locator(`a[href="${linkUrl}"]`);
     await expect(shareLink.first()).toBeVisible();

@@ -1,0 +1,65 @@
+name: E2E (browser)
+
+# Browser-level end-to-end tests: signup -> add-link modal -> AJAX type
+# params -> save -> public share page. This is the exact path that broke
+# repeatedly in production and that curl smokes cannot see (jQuery 404s,
+# dead click handlers, modal JS). Runs on every push for fast feedback and
+# weekly as a soak against drift (asset rot, selector rot, seeding).
+#
+# The suite is self-contained: it boots its own Laravel server on :8010 with
+# a throwaway sqlite database (tests/e2e), so it never touches other jobs.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1' # Mondays 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, dom, fileinfo, sqlite3, pdo_sqlite
+          coverage: none
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+
+      - name: Composer dependencies
+        run: composer install --no-dev --prefer-dist --optimize-autoloader --no-interaction --no-progress
+
+      - name: Laravel readiness (env, key, storage dirs)
+        run: |
+          mkdir -p storage/framework/cache storage/framework/data storage/framework/sessions storage/framework/testing storage/framework/views
+          cp .env.example .env
+          php artisan key:generate --force
+
+      - name: Install Playwright + Chromium
+        working-directory: tests/e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run E2E suite (boots its own server on :8010)
+        working-directory: tests/e2e
+        run: npx playwright test --reporter=line
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            tests/e2e/test-results
+            tests/e2e/playwright-report
+          retention-days: 7
