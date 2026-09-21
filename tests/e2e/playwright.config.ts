@@ -12,6 +12,11 @@ import { e2eEnv } from './e2eEnv';
  *   composer install
  *   (assets ship prebuilt at the repo root: assets/, css/, js/ - no build step)
  */
+// E2E_BASE_URL switches the suite from "boot my own isolated server" to
+// "test whatever is running at this URL" (used by the nightly live-probe
+// workflow against production).
+const liveBase = process.env.E2E_BASE_URL;
+
 export default defineConfig({
     testDir: '.',
     timeout: 60_000,
@@ -19,12 +24,15 @@ export default defineConfig({
     workers: 1,
     reporter: process.env.CI ? 'github' : 'list',
     use: {
-        baseURL: 'http://127.0.0.1:8010',
+        baseURL: liveBase ?? 'http://127.0.0.1:8010',
         headless: true,
         screenshot: 'only-on-failure',
         trace: 'retain-on-failure',
     },
-    webServer: {
+    // In live mode there is no local server to boot or wait for.
+    webServer: liveBase
+        ? undefined
+        : {
         // The suite is fully self-bootstrapping: Playwright starts the
         // webServer and waits for its health URL BEFORE running any global
         // setup, so the database must be built inside the server command.

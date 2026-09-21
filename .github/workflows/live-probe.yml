@@ -1,0 +1,89 @@
+name: Live probe (Render)
+
+# Nightly end-to-end check of PRODUCTION. CI runs the browser suite against
+# a local server, so it cannot see deployment-level breakage: a broken Render
+# build, a bad env var on the service, a database the app can't reach, or a
+# bad release that never finished rolling out. This workflow hits the live
+# site the same way a user would:
+#
+#   1. wake it (free tier spins down after ~15 min idle; the poll IS the
+#      wake-up traffic, so the elapsed time doubles as a cold-start measure)
+#   2. smoke the canaries (health JSON, home page, logo asset)
+#   3. run the SAME Playwright user flow (signup -> add link -> share page)
+#      against the live site via E2E_BASE_URL
+#
+# Failures turn the run red, and GitHub emails repo members. Note: scheduled
+# workflows run only from the default branch and are auto-disabled after 60
+# days without repo activity — re-enable from the Actions tab if that happens.
+
+on:
+  schedule:
+    - cron: '30 6 * * *' # daily 06:30 UTC
+  workflow_dispatch:
+
+env:
+  BASE: https://nexsus-link-tracker.onrender.com
+
+jobs:
+  probe:
+    name: Live site user flow
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+
+      - name: Wake the service and wait for health (cold-start tolerant)
+        run: |
+          start=$(date +%s)
+          for i in $(seq 1 40); do
+            code=$(curl -sS -o /tmp/health.json -w '%{http_code}' --max-time 90 "$BASE/api/v1/health/live" 2>/dev/null || echo 000)
+            if [ "$code" = "200" ]; then
+              echo "health 200 after $(( $(date +%s) - start ))s"
+              cat /tmp/health.json
+              echo "elapsed_seconds=$(( $(date +%s) - start ))" >> "$GITHUB_OUTPUT" || true
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "::error::health endpoint never reached 200 in ~7 minutes"
+          exit 1
+
+      - name: Canary checks
+        run: |
+          fail=0
+          for path in / /assets/js/jquery.min.js; do
+            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 60 "$BASE$path" 2>/dev/null || echo 000)
+            echo "$path -> $code"
+            [ "$code" = "200" ] || fail=1
+          done
+          curl -sS --max-time 30 "$BASE/api/v1/health/live" | grep -q '"status":"alive"' || { echo "::error::health JSON missing status:alive"; fail=1; }
+          exit $fail
+
+      - name: Install Playwright + Chromium
+        working-directory: tests/e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      # E2E_BASE_URL makes the suite target the live site instead of booting
+      # its own server; handles are time+random suffixed so repeat runs never
+      # collide with accounts that already exist in production.
+      - name: Run the user flow against production
+        working-directory: tests/e2e
+        env:
+          E2E_BASE_URL: ${{ env.BASE }}
+        run: npx playwright test --reporter=line
+
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-probe-artifacts
+          path: |
+            tests/e2e/test-results
+            tests/e2e/playwright-report
+          retention-days: 7

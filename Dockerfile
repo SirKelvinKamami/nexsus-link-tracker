@@ -45,6 +45,7 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress \
     && npm ci --no-audit --no-fund \
     && npm run production \
+    && php docker/generate-preload-classmap.php \
     && rm -rf node_modules
 
 # ---------- runtime: slim image, non-root, production opcache ----------
@@ -77,7 +78,9 @@ RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/fra
     && chown -R www-data:www-data /etc/nginx/http.d /var/lib/nginx /var/log/nginx /run/nginx /var/log/supervisor \
     && sed -i -e 's|/var/log/nginx/error.log|/dev/stderr|g' -e 's|/var/log/nginx/access.log|/dev/stdout|g' /etc/nginx/nginx.conf || true
 
-# Production opcache: timestamps disabled (immutable image), generous caches
+# Production opcache: timestamps disabled (immutable image), generous caches,
+# and a preload of the whole framework at FPM startup (first-request latency
+# after a cold start drops to only the app's own classes).
 RUN { \
         echo "opcache.enable=1"; \
         echo "opcache.enable_cli=0"; \
@@ -85,6 +88,8 @@ RUN { \
         echo "opcache.interned_strings_buffer=16"; \
         echo "opcache.max_accelerated_files=20000"; \
         echo "opcache.validate_timestamps=0"; \
+        echo "opcache.preload=/var/www/html/docker/preload.php"; \
+        echo "opcache.preload_user=www-data"; \
     } > /usr/local/etc/php/conf.d/opcache-prod.ini
 
 COPY docker/nginx.conf /etc/nginx/http.d/default.conf
