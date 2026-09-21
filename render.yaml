@@ -18,6 +18,24 @@ services:
     # The dashboard toggle (Settings -> Build & Deploy -> Auto-Deploy) is
     # authoritative — confirm it reads "No" after merging.
     autoDeploy: false
+    # Single-service PR previews (free-plan feature; full multi-service preview
+    # environments need a Pro workspace). A preview instance is a temporary
+    # copy of this service built from the PR's branch with its own
+    # onrender.com URL, auto-deleted when the PR merges or closes.
+    #
+    # DANGER: a preview COPIES every env var from this service — including
+    # the production database connection — and boot runs migrations. Safe
+    # because docker/entrypoint.sh detects IS_PULL_REQUEST=true and re-points
+    # the instance at a throwaway sqlite database and its own APP_URL, so a
+    # branch build can never migrate (or write) production data.
+    #
+    # 'manual' = a preview is created only when a PR carries the
+    # `render-preview` label or [render preview] in its title: opt-in per PR,
+    # no surprise instance spend. Use 'automatic' to get one for every PR.
+    # NOTE: only applied when Render re-syncs the blueprint; the dashboard
+    # (service -> Previews tab) is authoritative — confirm after merging.
+    previews:
+      generation: manual
     healthCheckPath: /api/v1/health/live
     envVars:
       - key: APP_NAME

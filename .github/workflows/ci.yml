@@ -388,9 +388,17 @@ jobs:
   # render.yaml now sets autoDeploy:false and the deploy is triggered here
   # instead, so it can only happen after BOTH test jobs pass.
   # ---------------------------------------------------------------------------
+  # ---------------------------------------------------------------------------
+  # Browser E2E, as a reusable workflow so both the deploy gate (needs:) and
+  # the weekly cron (.github/workflows/e2e.yml) share one job definition.
+  # ---------------------------------------------------------------------------
+  playwright:
+    name: E2E (browser)
+    uses: ./.github/workflows/e2e.yml
+
   deploy:
     name: Deploy to Render
-    needs: [build-and-smoke, build-and-smoke-postgres]
+    needs: [build-and-smoke, build-and-smoke-postgres, playwright]
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     concurrency:

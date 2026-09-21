@@ -1,25 +1,26 @@
 name: E2E (browser)
 
-# Browser-level end-to-end tests: signup -> add-link modal -> AJAX type
-# params -> save -> public share page. This is the exact path that broke
-# repeatedly in production and that curl smokes cannot see (jQuery 404s,
-# dead click handlers, modal JS). Runs on every push for fast feedback and
-# weekly as a soak against drift (asset rot, selector rot, seeding).
+# A REUSABLE workflow holding the single definition of the browser E2E job:
+#
+#   - called by CI (.github/workflows/ci.yml) on every push to main and every
+#     pull request, where its result gates the Render deploy (needs:)
+#   - scheduled weekly here as a soak against drift (asset rot, selector rot,
+#     seeding) — scheduled workflows run only from the default branch and are
+#     auto-disabled after 60 days without repo activity; re-enable from the
+#     Actions tab if that happens
 #
 # The suite is self-contained: it boots its own Laravel server on :8010 with
 # a throwaway sqlite database (tests/e2e), so it never touches other jobs.
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_call:
   schedule:
     - cron: '0 6 * * 1' # Mondays 06:00 UTC
   workflow_dispatch:
 
 jobs:
   playwright:
+    name: E2E (browser)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -44,7 +45,7 @@ jobs:
           cp .env.example .env
           php artisan key:generate --force
           # No DB bootstrap here: the Playwright webServer command builds the
-          # throwaway sqlite database itself (config comment explains why -
+          # throwaway sqlite database itself (config comment explains why —
           # readiness is polled before globalSetup would ever run).
 
       - name: Install Playwright + Chromium
