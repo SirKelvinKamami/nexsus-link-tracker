@@ -66,6 +66,40 @@
             </div>
         </div>
 
+        <!-- Analytics Dashboard (Phase 4.4) -->
+        <div class="bg-white rounded-lg shadow p-4 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold">📊 Task Analytics</h2>
+                <button onclick="loadAnalytics()" class="text-sm text-blue-600 hover:underline">Refresh</button>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                <div class="bg-gray-50 rounded p-3 text-center">
+                    <div class="text-2xl font-bold text-blue-600" id="anCreated">—</div>
+                    <div class="text-xs text-gray-500">Created</div>
+                </div>
+                <div class="bg-gray-50 rounded p-3 text-center">
+                    <div class="text-2xl font-bold text-green-600" id="anCompleted">—</div>
+                    <div class="text-xs text-gray-500">Completed</div>
+                </div>
+                <div class="bg-gray-50 rounded p-3 text-center">
+                    <div class="text-2xl font-bold text-purple-600" id="anRate">—</div>
+                    <div class="text-xs text-gray-500">Completion Rate</div>
+                </div>
+                <div class="bg-gray-50 rounded p-3 text-center">
+                    <div class="text-2xl font-bold text-orange-600" id="anScore">—</div>
+                    <div class="text-xs text-gray-500">Productivity Score</div>
+                </div>
+            </div>
+            <div class="mb-4">
+                <div class="text-sm font-semibold mb-2">Priority Distribution</div>
+                <div id="anPriority" class="space-y-1"></div>
+            </div>
+            <div>
+                <div class="text-sm font-semibold mb-2">Top Completed Tasks</div>
+                <div id="anTop" class="text-sm text-gray-600"></div>
+            </div>
+        </div>
+
         <!-- Task List -->
         <div id="taskList" class="space-y-3">
             <!-- Tasks loaded via API -->
@@ -350,8 +384,55 @@
             document.getElementById('parseResult').classList.add('hidden');
         }
 
+        async function loadAnalytics() {
+            try {
+                const [ovRes, scRes, prRes, topRes] = await Promise.all([
+                    fetch(`${API_BASE}/tasks/analytics/overview?period=30d`, { headers: { 'Authorization': `Bearer ${TOKEN}` } }),
+                    fetch(`${API_BASE}/tasks/analytics/productivity-score`, { headers: { 'Authorization': `Bearer ${TOKEN}` } }),
+                    fetch(`${API_BASE}/tasks/analytics/priority-distribution`, { headers: { 'Authorization': `Bearer ${TOKEN}` } }),
+                    fetch(`${API_BASE}/tasks/analytics/top-completed?limit=5`, { headers: { 'Authorization': `Bearer ${TOKEN}` } }),
+                ]);
+                const ov = await ovRes.json();
+                const sc = await scRes.json();
+                const pr = await prRes.json();
+                const top = await topRes.json();
+
+                if (ov.success) {
+                    document.getElementById('anCreated').textContent = ov.data.created ?? '—';
+                    document.getElementById('anCompleted').textContent = ov.data.completed ?? '—';
+                    document.getElementById('anRate').textContent = (ov.data.completion_rate ?? 0) + '%';
+                }
+                if (sc.success) {
+                    document.getElementById('anScore').textContent = sc.data.score ?? '—';
+                }
+
+                if (pr.success && pr.data) {
+                    const dist = pr.data.distribution || pr.data || [];
+                    const max = Math.max(...dist.map(d => d.count || 0), 1);
+                    document.getElementById('anPriority').innerHTML = dist.map(d => `
+                        <div class="flex items-center gap-2 text-xs">
+                            <span class="w-24 text-gray-600">${d.label || 'P' + d.priority}</span>
+                            <div class="flex-1 bg-gray-200 rounded h-4 overflow-hidden">
+                                <div class="bg-blue-500 h-4" style="width:${Math.round((d.count||0)/max*100)}%"></div>
+                            </div>
+                            <span class="w-8 text-right">${d.count || 0}</span>
+                        </div>
+                    `).join('') || '<span class="text-gray-400 text-xs">No data</span>';
+                }
+
+                if (top.success && top.data) {
+                    const items = Array.isArray(top.data) ? top.data : (top.data.tasks || []);
+                    document.getElementById('anTop').innerHTML = items.length
+                        ? items.map(t => `<div class="py-1 border-b last:border-0">${escapeHtml(t.title)} <span class="text-gray-400">(${t.priority || ''})</span></div>`).join('')
+                        : '<span class="text-gray-400 text-xs">No completed tasks yet</span>';
+                }
+            } catch (e) {
+                console.error('Failed to load analytics', e);
+            }
+        }
+
         // Load tasks on page load
-        document.addEventListener('DOMContentLoaded', loadTasks);
+        document.addEventListener('DOMContentLoaded', () => { loadTasks(); loadAnalytics(); });
     </script>
 </body>
 </html>
