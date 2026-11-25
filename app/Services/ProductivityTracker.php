@@ -61,7 +61,7 @@ class ProductivityTracker
         $dailyData = Task::forUser($userId)
             ->where('created_at', '>=', $start)
             ->selectRaw('DATE(created_at) as date')
-            ->selectRaw('SUM(CASE WHEN status = "completed" THEN 1 ELSE 0 END) as completed')
+            ->selectRaw("SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completed")
             ->selectRaw('COUNT(*) as created')
             ->groupBy('date')
             ->orderBy('date')
@@ -225,9 +225,11 @@ class ProductivityTracker
     private function detectPeakHours($userId): ?string
     {
         $driver = \DB::connection()->getDriverName();
-        $hourRaw = $driver === 'sqlite'
-            ? "strftime('%H', updated_at)"
-            : "HOUR(updated_at)";
+        $hourRaw = match ($driver) {
+            'sqlite' => "strftime('%H', updated_at)",
+            'pgsql' => "EXTRACT(HOUR FROM updated_at)",
+            default => "HOUR(updated_at)",
+        };
 
         $hourCounts = Task::forUser($userId)
             ->where('status', 'completed')
