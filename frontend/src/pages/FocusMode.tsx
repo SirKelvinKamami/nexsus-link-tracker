@@ -1,14 +1,36 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Moon, Pause, Play, Square, CheckCircle } from 'lucide-react';
-import { INITIAL_TASKS } from '../data/tasks';
+import { api } from '../lib/api';
 
 export function FocusMode({ onExit }: { onExit: () => void }) {
-  const [selectedTask, setSelectedTask] = useState(INITIAL_TASKS.filter(t => t.status !== 'completed')[0]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [selectedTask, setSelectedTask] = useState<any>(null);
   const [seconds, setSeconds] = useState(25 * 60);
   const [running, setRunning] = useState(false);
   const [pomodoro, setPomodoro] = useState(1);
   const [complete, setComplete] = useState(false);
-  const [selecting, setSelecting] = useState(!selectedTask);
+  const [selecting, setSelecting] = useState(true);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await api.listTasks({ status: 'pending,in_progress', per_page: '50' });
+        if (!cancelled && res.success) {
+          const pending = res.data.data.filter((t: any) => t.status !== 'completed' && t.status !== 'cancelled');
+          setTasks(pending);
+          if (pending.length > 0 && !selectedTask) setSelectedTask(pending[0]);
+        }
+      } catch (e) {
+        console.error('Focus mode tasks load failed', e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+      return () => { cancelled = true; };
+    })();
+  }, []);
 
   useEffect(() => {
     if (!running) return;
@@ -43,7 +65,11 @@ export function FocusMode({ onExit }: { onExit: () => void }) {
     setRunning(false);
   }
 
-  const pendingTasks = INITIAL_TASKS.filter(t => t.status !== 'completed');
+  const pendingTasks = tasks.filter((t: any) => t.status !== 'completed' && t.status !== 'cancelled');
+
+  if (loading) {
+    return <div style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'linear-gradient(135deg, #0a1a0a 0%, #1a0a1a 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading focus mode…</div>;
+  }
 
   if (selecting) {
     return (

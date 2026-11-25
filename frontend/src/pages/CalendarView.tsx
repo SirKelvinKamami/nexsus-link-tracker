@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { INITIAL_TASKS, priorityColors } from '../data/tasks';
+import { api, adaptTask } from '../lib/api';
+import { priorityColors } from '../data/tasks';
 
 const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
@@ -18,6 +19,26 @@ export function CalendarView() {
   const [year, setYear] = useState(2026);
   const [month, setMonth] = useState(8); // September
   const [view, setView] = useState<'month' | 'week'>('month');
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await api.listTasks({ per_page: '200' });
+        if (!cancelled && res.success) {
+          setTasks(res.data.data.map(t => ({ ...t, dueDate: t.due_datetime ? String(t.due_datetime).slice(0, 10) : '' })));
+        }
+      } catch (e) {
+        console.error('Calendar tasks load failed', e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+      return () => { cancelled = true; };
+    })();
+  }, []);
 
   const daysInMonth = getDaysInMonth(year, month);
   const firstDay = getFirstDayOfMonth(year, month);
@@ -28,7 +49,7 @@ export function CalendarView() {
 
   const tasksForDay = (day: number) => {
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    return INITIAL_TASKS.filter(t => t.dueDate === dateStr);
+    return tasks.filter(t => t.dueDate === dateStr);
   };
 
   function prevMonth() {
@@ -36,6 +57,10 @@ export function CalendarView() {
   }
   function nextMonth() {
     if (month === 11) { setMonth(0); setYear(y => y + 1); } else setMonth(m => m + 1);
+  }
+
+  if (loading) {
+    return <div style={{ padding: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading calendar…</div>;
   }
 
   return (
