@@ -10,8 +10,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
-    @include('partials.navbar')
-
     <main class="max-w-7xl mx-auto py-6 px-4">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold text-gray-900">Tasks</h1>
