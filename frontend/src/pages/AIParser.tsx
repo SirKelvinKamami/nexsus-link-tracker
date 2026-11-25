@@ -3,6 +3,8 @@ import { Sparkles, CheckCircle, Pencil, RefreshCw, Zap } from 'lucide-react';
 import { PriorityBadge } from '../components/PriorityBadge';
 import { Priority } from '../data/tasks';
 import { ToastData } from '../components/Toast';
+import { api } from '../lib/api';
+import { adaptParsedTask, type Task } from '../lib/adapters';
 
 const EXAMPLES = [
   'After my 3pm meeting, prepare the Q4 deck',
@@ -24,44 +26,45 @@ interface ParsedResult {
 export function AIParser({ showToast }: { showToast: (t: Omit<ToastData, 'id'>) => void }) {
   const [input, setInput] = useState('');
   const [parsing, setParsing] = useState(false);
-  const [result, setResult] = useState<ParsedResult | null>(null);
+  const [result, setResult] = useState<Task | null>(null);
   const [creating, setCreating] = useState(false);
   const [created, setCreated] = useState(false);
 
-  function handleParse() {
+  async function handleParse() {
     if (!input.trim()) return;
     setParsing(true);
     setResult(null);
-    setTimeout(() => {
+    setCreated(false);
+    try {
+      const res = await api.parseTask(input);
+      if (res.success) {
+        setResult(adaptParsedTask(res.data));
+      } else {
+        showToast({ title: 'Parse failed', description: res.data?.message || 'Unknown error', type: 'error' });
+      }
+    } catch (e) {
+      console.error('Parse failed', e);
+      showToast({ title: 'Parse failed', description: 'Network error', type: 'error' });
+    } finally {
       setParsing(false);
-      setResult({
-        title: input.includes('deck') || input.includes('present') ? 'Prepare the Q4 deck' :
-               input.includes('dentist') ? 'Call dentist' :
-               input.includes('invoice') ? 'Weekly invoice check' :
-               input.includes('API') ? 'Finish API documentation' :
-               'Complete task from description',
-        priority: input.toLowerCase().includes('high') ? 'high' :
-                  input.includes('dentist') ? 'medium' : 'high',
-        dueDate: input.includes('Friday') ? '2026-09-18' :
-                 input.includes('Tuesday') ? '2026-09-22' : '2026-09-19',
-        project: input.includes('deck') ? 'Design' :
-                 input.includes('invoice') ? 'Operations' :
-                 input.includes('dentist') ? 'Personal' : 'Engineering',
-        duration: 90,
-        subtasks: input.includes('deck') ? ['Draft outline', 'Add data slides', 'Design slides'] :
-                  input.includes('invoice') ? ['Log in to finance portal', 'Review line items'] : [],
-        provider: Math.random() > 0.3 ? 'OpenAI' : 'Anthropic',
-      });
-    }, 1800);
+    }
   }
 
-  function handleCreate() {
+  async function handleCreate() {
+    if (!result) return;
     setCreating(true);
-    setTimeout(() => {
+    try {
+      const res = await api.createTask(result);
+      if (res.success) {
+        showToast({ title: 'Task created from AI parse!', description: result.title, type: 'ai' });
+        setCreated(true);
+      }
+    } catch (e) {
+      console.error('Create failed', e);
+      showToast({ title: 'Create failed', description: 'Network error', type: 'error' });
+    } finally {
       setCreating(false);
-      setCreated(true);
-      showToast({ title: 'Task created from AI parse!', description: result?.title, type: 'ai' });
-    }, 700);
+    }
   }
 
   return (
@@ -152,8 +155,8 @@ export function AIParser({ showToast }: { showToast: (t: Omit<ToastData, 'id'>) 
               <span style={{ fontSize: '13px', fontWeight: 600, color: 'var(--text-primary)' }}>Parse Results</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: '12px', color: 'var(--text-muted)' }}>
-              <Zap size={12} style={{ color: result.provider === 'OpenAI' ? '#06d6a0' : '#7209b7' }} />
-              {result.provider}
+              <Zap size={12} style={{ color: '#7209b7' }} />
+              {result.id ? 'API' : 'OpenAI'}
             </div>
           </div>
 
@@ -161,17 +164,17 @@ export function AIParser({ showToast }: { showToast: (t: Omit<ToastData, 'id'>) 
             <Field label="TITLE" value={result.title} large />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 14 }}>
               <Field label="PRIORITY" value={<PriorityBadge priority={result.priority} />} />
-              <Field label="DUE DATE" value={result.dueDate} />
-              <Field label="PROJECT" value={result.project} />
+              <Field label="DUE DATE" value={result.dueDate || '—'} />
+              <Field label="PROJECT" value={result.project || '—'} />
             </div>
-            <Field label="DURATION" value={`${result.duration} minutes`} />
-            {result.subtasks.length > 0 && (
+            <Field label="DURATION" value={`${result.estimatedDuration} minutes`} />
+            {result.subtasks?.length > 0 && (
               <div>
                 <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.08em', color: 'var(--text-muted)', marginBottom: 8 }}>SUBTASKS</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                   {result.subtasks.map(st => (
-                    <span key={st} style={{ padding: '4px 10px', background: 'var(--bg-tertiary)', borderRadius: '4px', fontSize: '12px', color: 'var(--text-secondary)' }}>
-                      {st}
+                    <span key={st.id} style={{ padding: '4px 10px', background: 'var(--bg-tertiary)', borderRadius: '4px', fontSize: '12px', color: 'var(--text-secondary)' }}>
+                      {st.title}
                     </span>
                   ))}
                 </div>
@@ -197,7 +200,7 @@ export function AIParser({ showToast }: { showToast: (t: Omit<ToastData, 'id'>) 
                   {creating ? '◌ Creating…' : <><CheckCircle size={15} /> Create as Task</>}
                 </button>
                 <button
-                  onClick={() => { setResult(null); }}
+                  onClick={() => { setResult(null); setCreated(false); }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 8,
                     padding: '10px 20px', background: 'none', color: 'var(--text-secondary)',

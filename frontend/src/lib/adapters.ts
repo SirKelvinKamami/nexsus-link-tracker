@@ -1,5 +1,6 @@
 // src/lib/adapters.ts
 import type { Task, Priority, TaskStatus } from '../data/tasks';
+import type { ParsedTask } from './api';
 
 export function priorityFromInt(p: number): Priority {
   if (p >= 5) return 'critical';
@@ -28,7 +29,25 @@ export function adaptTask(t: any): Task {
     project: t.project || 'Personal',
     estimatedDuration: Number(t.estimated_duration ?? t.estimatedDuration ?? 30),
     progress: t.status === 'completed' ? 100 : Number(t.progress ?? 0),
-    subtasks: [],
+    subtasks: t.subtasks || [],
     createdAt: t.created_at ? String(t.created_at).slice(0, 10) : new Date().toISOString().slice(0, 10),
+  };
+}
+
+export function adaptParsedTask(p: ParsedTask) {
+  const due = p.due_datetime || '';
+  return {
+    id: Date.now().toString(),
+    title: p.title || '',
+    description: p.description || '',
+    priority: priorityFromInt(p.priority),
+    status: 'pending' as TaskStatus,
+    dueDate: due ? String(due).slice(0, 10) : '',
+    project: p.project || 'Personal',
+    estimatedDuration: Number(p.estimated_duration ?? 30),
+    progress: 0,
+    subtasks: (p.subtasks || []).map((s, i) => ({ id: `s${i}`, title: s, completed: false })),
+    createdAt: new Date().toISOString().slice(0, 10),
+    highlight: true,
   };
 }

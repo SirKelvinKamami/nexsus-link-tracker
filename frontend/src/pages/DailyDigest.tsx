@@ -1,29 +1,59 @@
+import { useState, useEffect } from 'react';
 import { CheckCircle, Clock } from 'lucide-react';
-import { INITIAL_TASKS, priorityColors } from '../data/tasks';
+import { api } from '../lib/api';
 import { PriorityBadge } from '../components/PriorityBadge';
-
-const AI_INSIGHTS = [
-  'You completed 4/5 tasks yesterday — a strong finish to the week.',
-  'Your Q3 Report is critical priority and due today. Tackle it before 11 AM for best results.',
-  'You tend to slip on follow-up emails — consider scheduling a recurring 30-minute block.',
-  'Focus time this week is up 22%. Keep it up!',
-];
-
-const YESTERDAY_STATS = {
-  completed: 4,
-  total: 5,
-  timeSpent: '3h 45m',
-  overdue: 1,
-};
+import { adaptTask } from '../lib/adapters';
 
 export function DailyDigest({ onDismiss }: { onDismiss: () => void }) {
-  const todayTasks = INITIAL_TASKS.filter(t => t.dueDate === '2026-09-16');
+  const [digest, setDigest] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await api.dailyDigest();
+        if (!cancelled && res.success) {
+          setDigest({
+            ...res.data,
+            today: res.data.today.map(adaptTask),
+          });
+        }
+      } catch (e) {
+        console.error('Daily digest load failed', e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+      return () => { cancelled = true; };
+    })();
+  }, []);
+
+  const AI_INSIGHTS = digest?.ai_insights || [
+    'You completed 4/5 tasks yesterday — a strong finish to the week.',
+    'Your Q3 Report is critical priority and due today. Tackle it before 11 AM for best results.',
+    'You tend to slip on follow-up emails — consider scheduling a recurring 30-minute block.',
+    'Focus time this week is up 22%. Keep it up!',
+  ];
+
+  const YESTERDAY_STATS = digest?.yesterday_review || {
+    completed: 4,
+    total: 5,
+    timeSpent: '3h 45m',
+    overdue: 1,
+  };
+
+  const todayTasks = digest?.today || [];
 
   const SCHEDULE = [
     { time: '9:00 AM', task: todayTasks[0] },
     { time: '11:00 AM', task: todayTasks[1] },
     { time: '2:00 PM', task: todayTasks[2] },
   ].filter(s => s.task);
+
+  if (loading) {
+    return <div style={{ padding: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading daily digest…</div>;
+  }
 
   return (
     <div style={{ padding: '32px', maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 28 }}>

@@ -1,26 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Bell, CheckCircle, Clock, Eye } from 'lucide-react';
+import { api } from '../lib/api';
 
 interface Reminder {
   id: string;
-  taskTitle: string;
-  dueInfo: string;
-  status: 'unread' | 'snoozed' | 'acknowledged';
+  task_id: string;
+  task_title: string;
+  due_info: string;
+  status: string;
   section: 'today' | 'upcoming' | 'past';
   channel: string;
-  sentAt: string;
+  sent_at: string;
   response?: string;
 }
 
-const INITIAL_REMINDERS: Reminder[] = [
-  { id: '1', taskTitle: 'Finalize Q3 Strategy Report', dueInfo: 'Due today at 5:00 PM', status: 'unread', section: 'today', channel: 'Push', sentAt: '9:00 AM', },
-  { id: '2', taskTitle: 'Client Email Follow-ups', dueInfo: 'Due today at 3:00 PM', status: 'unread', section: 'today', channel: 'Email', sentAt: '8:45 AM', },
-  { id: '3', taskTitle: 'Team Sync Prep', dueInfo: 'Due tomorrow at 10:00 AM', status: 'acknowledged', section: 'upcoming', channel: 'Push', sentAt: 'Yesterday 5:00 PM', response: 'Acknowledged' },
-  { id: '4', taskTitle: 'Review Onboarding Design', dueInfo: 'Due in 2 days', status: 'snoozed', section: 'upcoming', channel: 'Email', sentAt: 'Today 7:00 AM', response: 'Snoozed until 2:00 PM' },
-  { id: '5', taskTitle: 'Weekly Invoice Check', dueInfo: 'Was due yesterday', status: 'acknowledged', section: 'past', channel: 'Push', sentAt: 'Yesterday 9:00 AM', response: 'Acknowledged' },
-];
-
-const statusColors: Record<Reminder['status'], string> = {
+const statusColors: Record<string, string> = {
   unread: '#4361ee',
   snoozed: '#ffd166',
   acknowledged: '#06d6a0',
@@ -39,8 +33,8 @@ function ReminderCard({ reminder, onAction }: { reminder: Reminder; onAction: (i
         <Bell size={16} style={{ color: statusColors[reminder.status] }} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>{reminder.taskTitle}</div>
-        <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: 2 }}>{reminder.dueInfo}</div>
+        <div style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-primary)' }}>{reminder.task_title}</div>
+        <div style={{ fontSize: '12px', color: 'var(--text-secondary)', marginTop: 2 }}>{reminder.due_info}</div>
         {reminder.response && (
           <div style={{ fontSize: '11px', color: 'var(--text-muted)', marginTop: 3 }}>→ {reminder.response}</div>
         )}
@@ -81,10 +75,29 @@ const SECTION_LABELS: Record<string, string> = {
 };
 
 export function Reminders() {
-  const [reminders, setReminders] = useState(INITIAL_REMINDERS);
+  const [reminders, setReminders] = useState<Reminder[]>([]);
   const [emailEnabled, setEmailEnabled] = useState(true);
   const [pushEnabled, setPushEnabled] = useState(true);
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await api.listReminders();
+        if (!cancelled && res.success) {
+          setReminders(res.data.data);
+        }
+      } catch (e) {
+        console.error('Reminders load failed', e);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+      return () => { cancelled = true; };
+    })();
+  }, []);
 
   function handleAction(id: string, action: string) {
     setReminders(prev => prev.map(r =>
@@ -97,6 +110,10 @@ export function Reminders() {
   }
 
   const sections: Reminder['section'][] = ['today', 'upcoming', 'past'];
+
+  if (loading) {
+    return <div style={{ padding: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)' }}>Loading reminders…</div>;
+  }
 
   return (
     <div style={{ padding: '32px', maxWidth: 760, display: 'flex', flexDirection: 'column', gap: 28 }}>
