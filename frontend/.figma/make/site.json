@@ -1,0 +1,11 @@
+{
+  "title": "Nexsus Task Geni",
+  "description": "Create stunning, interactive prototypes for web applications with ease, tailored for designers and developers to visualize and present their ideas effectively.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

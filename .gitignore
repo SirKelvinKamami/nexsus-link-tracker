@@ -27,3 +27,8 @@ _ide_*
 /mix-manifest.json
 /js
 /css
+
+# React frontend
+/frontend/node_modules
+/frontend/dist
+

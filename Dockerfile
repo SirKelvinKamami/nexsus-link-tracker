@@ -45,8 +45,9 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress \
     && npm ci --no-audit --no-fund \
     && npm run production \
+    && cd frontend && npm ci --no-audit --no-fund && npm run build && rm -rf ../public/tasks-app && cp -r dist ../public/tasks-app && cd .. \
     && php docker/generate-preload-classmap.php \
-    && rm -rf node_modules
+    && rm -rf node_modules frontend/node_modules
 
 # ---------- runtime: slim image, non-root, production opcache ----------
 FROM base AS runtime
