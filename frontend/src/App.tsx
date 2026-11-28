@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 import {
-  CheckSquare, Calendar, BarChart2, Bell, Moon, Newspaper, Sparkles,
+  CheckSquare, Calendar, BarChart2, Bell, Moon, Newspaper, Sparkles, 
   Brain, Settings, User, Search, Menu, X, Sun, ChevronDown, LayoutGrid,
-  List, Clock,
+  List, Clock, ExternalLink,
 } from 'lucide-react';
 import { Dashboard } from './pages/Dashboard';
 import { AIParser } from './pages/AIParser';
@@ -134,6 +134,20 @@ export default function App() {
           }}
         >
           <Sparkles size={13} /> AI Parse
+        </button>
+
+        {/* Link Tracker module */}
+        <button
+          onClick={() => { window.location.href = '/dashboard'; }}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 6,
+            padding: '6px 12px', background: 'rgba(67,97,238,0.1)',
+            border: '1px solid rgba(67,97,238,0.2)', borderRadius: '8px',
+            fontSize: '12px', fontWeight: 600, color: '#4361ee',
+            cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.15s',
+          }}
+        >
+          <ExternalLink size={13} /> Link Tracker
         </button>
 
         <div style={{ flex: 1 }} />

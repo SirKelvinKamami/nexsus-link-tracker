@@ -12,6 +12,10 @@
                    <div class="col-sm-12">  
 
                     <h3 class="mb-4"><i class="bi bi-menu-up"></i> {{__('messages.Dashboard')}}</h3>
+
+                    <a href="{{ url('/tasks-app') }}" class="btn btn-primary btn-sm mb-3">
+                        <i class="bi bi-check2-square"></i> Task Tracker
+                    </a>
                     
                             <section class="mb-3 text-center p-4 w-full">
                                 <div class=" d-flex">
