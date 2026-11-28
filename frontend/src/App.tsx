@@ -80,7 +80,7 @@ export default function App() {
   }
 
   return (
-    <div className={dark ? 'dark' : ''} style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+    <div className={dark ? 'dark' : ''} style={{ height: '100vh', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--bg-primary)' }}>
       {/* Top Nav */}
       <nav style={{
         height: 'var(--topnav-height)', background: 'var(--glass-bg)',

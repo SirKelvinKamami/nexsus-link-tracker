@@ -198,7 +198,7 @@ export function Reminders() {
               >
                 <div style={{
                   position: 'absolute', top: 3, left: value ? 22 : 3, width: 18, height: 18,
-                  borderRadius: '50%', background: 'white', transition: 'left 0.2s',
+                  borderRadius: '50%', background: value ? '#4361ee' : 'var(--bg-tertiary)', transition: 'left 0.2s',
                   boxShadow: 'var(--shadow-sm)',
                 }} />
               </button>
