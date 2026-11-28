@@ -1,6 +1,6 @@
 @php
     $manifestPath = public_path('tasks-app/.vite/manifest.json');
-    $jsPath = 'tasks-app/assets/index_D_3tolSJ.js';
+    $jsPath = 'tasks-app/assets/index-D_3tolSJ.js';
     $cssPath = 'tasks-app/assets/index-Ded3ldfS.css';
     if (file_exists($manifestPath)) {
         $manifest = json_decode(file_get_contents($manifestPath), true);
