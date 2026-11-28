@@ -127,7 +127,7 @@ Route::get('/studio/edit-link/{id}', [UserController::class, 'AddUpdateLink'])->
 Route::post('/studio/sort-link', [UserController::class, 'sortLinks'])->name('sortLinks');
 Route::get('/studio/links', [UserController::class, $LinkPage])->name($LinkPage);
 Route::get('/studio/analytics', [UserController::class, 'analytics'])->name('analytics');
-Route::get('/studio/tasks-app', fn() => view('studio.tasks-app'))->name('studio.tasks-app');
+Route::get('/tasks-app', fn() => view('studio.tasks-app'))->name('tasks.app');
 Route::get('/studio/documents', [UserController::class, 'documents'])->name('documents');
 Route::get('/studio/forms', [FormController::class, 'index'])->name('forms.index');
 Route::get('/studio/forms/create', [FormController::class, 'create'])->name('forms.create');
@@ -195,7 +195,7 @@ Route::get('/studio/no_page_name', [UserController::class, 'showPage'])->name('s
 Route::post('/studio/page', [UserController::class, 'editPage'])->name('editPage');
 Route::post('/studio/background', [UserController::class, 'themeBackground'])->name('themeBackground');
 Route::get('/studio/rem-background', [UserController::class, 'removeBackground'])->name('removeBackground');
-Route::get('/studio/tasks', fn() => view('studio.tasks'))->name('studio.tasks');
+Route::get('/tasks', fn() => view('studio.tasks'))->name('tasks');
 Route::get('/studio/profile', [UserController::class, 'showProfile'])->name('showProfile');
 Route::post('/studio/profile', [UserController::class, 'editProfile'])->name('editProfile');
 Route::get('/studio/privacy', [UserController::class, 'showPrivacy'])->name('showPrivacy');
